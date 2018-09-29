@@ -11,10 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class Test {
 
 
-    @ApiOperation(value = "测试api", notes = "test: return  hello swagger ")
+    @ApiOperation(value = "测试api")
     @GetMapping(value = "hello")
-    public String hello(){
-        System.out.println("haha");
-        return "Hello swagger";
+    public TestPojo hello(){
+        return new TestPojo();
     }
 }
