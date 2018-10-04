@@ -1,7 +1,5 @@
 package com.tidc.parttimemonarch;
 
-
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
@@ -13,26 +11,24 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Configuration
 @EnableSwagger2
-public class Swagger2 {
+public class SwaggerConfig {
 
-    @Bean
-    public Docket createRestApi(){
-
+    public Docket createRestApi() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.tidc.parttimemonarch"))
+                .apis(RequestHandlerSelectors.basePackage("com.swaggerTest.controller"))
                 .paths(PathSelectors.any())
                 .build();
     }
 
-    private ApiInfo apiInfo(){
+    private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("兼职君 Restful API")
-                .description("实例")
+                .title("兼职君 APIs")
+                .description("更多请关注http://www.tidc.com")
                 .termsOfServiceUrl("http://www.tidc.com")
-                .contact("兼职君")
-                .version("1.0")
+                .contact("sunf")
+                .version("0.1")
                 .build();
     }
 }
