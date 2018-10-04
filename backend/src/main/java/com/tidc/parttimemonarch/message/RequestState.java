@@ -1,12 +1,17 @@
 package com.tidc.parttimemonarch.message;
 
-import com.tidc.parttimemonarch.enumerate.AccountCode;
+import com.tidc.parttimemonarch.enumerate.Code;
 
 public class RequestState {
     private int code;
     private String message;
 
-    public RequestState(AccountCode code) {
+
+    public RequestState() {
+        super();
+    }
+
+    public RequestState(Code code) {
         this.code = code.getCode();
         this.message = code.getMessage();
     }

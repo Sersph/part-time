@@ -32,7 +32,10 @@ public class User {
     private Date updatedAt;
 
     public User() {
-        super();
+        Date date = new Date(new java.util.Date().getTime());
+        this.setUpdatedAt(date);
+        this.setLastSignInAt(date);
+        this.setCreatedAt(date);
     }
 
     public int getId() {

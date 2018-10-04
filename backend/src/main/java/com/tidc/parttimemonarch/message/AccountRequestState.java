@@ -1,11 +1,11 @@
 package com.tidc.parttimemonarch.message;
 
-import com.tidc.parttimemonarch.enumerate.AccountCode;
+import com.tidc.parttimemonarch.enumerate.Code;
 import com.tidc.parttimemonarch.model.User;
 
 public class AccountRequestState extends RequestState {
     private User user;
-    public AccountRequestState(AccountCode code, User user) {
+    public AccountRequestState(Code code, User user) {
         super(code);
         this.user = user;
     }
