@@ -2,9 +2,12 @@
   <header class="header-nav-container">
     <div class="header-menu-list">
       <div>
-        <a class="current-location-name" @click="showSelectLocationContainer">
-          <span>{{ currentCity.name }}</span><i class="el-icon-arrow-down"></i>
-        </a>
+        <transition name="opacity" mode="out-in">
+          <a class="current-location-name" @click="showSelectCityContainer"
+             v-show="this.$route.meta.showSelectCity">
+            <span>{{ currentCity.name }}</span><i class="el-icon-arrow-down"></i>
+          </a>
+        </transition>
       </div>
       <div>
         <router-link to="/home">
@@ -15,18 +18,18 @@
         </router-link>
       </div>
     </div>
-    <select-location ref="selectLocation"/>
+    <select-city ref="selectCity"/>
   </header>
 </template>
 
 <script>
 import { mapState } from 'vuex';
-import SelectLocation from '@/components/location/SelectLocation';
+import SelectCity from '@/components/location/SelectCity';
 
 export default {
   name: 'HeaderNav',
   components: {
-    SelectLocation
+    SelectCity
   },
   computed: {
     ...mapState('location', [
@@ -34,9 +37,9 @@ export default {
     ])
   },
   methods: {
-    showSelectLocationContainer () {
+    showSelectCityContainer () {
       // 触发子组件显示
-      this.$refs.selectLocation.selectLocationContainerVisibleFlag = true;
+      this.$refs.selectCity.selectCityContainerVisibleFlag = true;
     }
   }
 };

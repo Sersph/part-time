@@ -1,11 +1,11 @@
 <template>
-  <section class="select-location-container">
-    <el-dialog title="切换城市" :visible.sync="selectLocationContainerVisibleFlag" type="text">
-      <el-form :model="form" :rules="rules" ref="selectLocationForm">
+  <section class="select-city-container">
+    <el-dialog title="切换城市" :visible.sync="selectCityContainerVisibleFlag" type="text">
+      <el-form :model="selectCityForm" :rules="selectCityFormRules" ref="selectCityForm">
         <el-row>
           <el-col :span="12">
             <el-form-item prop="provinceId">
-              <el-select class="province" placeholder="省份" filterable v-model="form.provinceId">
+              <el-select class="province" placeholder="省份" filterable v-model="selectCityForm.provinceId">
                 <el-option
                   v-for="(provinceItem, index) in provinceList"
                   :key="index"
@@ -17,7 +17,7 @@
           </el-col>
           <el-col :span="12">
             <el-form-item prop="cityId">
-              <el-select class="city" placeholder="城市" filterable v-model="form.cityId">
+              <el-select class="city" placeholder="城市" filterable v-model="selectCityForm.cityId">
                 <el-option
                   v-for="(cityItem, index) in currentOptionCityList"
                   :key="index"
@@ -30,8 +30,8 @@
         </el-row>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="selectLocationContainerVisibleFlag = false">取 消</el-button>
-        <el-button type="primary" @click="confirmCurrentLocation">确 定</el-button>
+        <el-button @click="selectCityContainerVisibleFlag = false">取 消</el-button>
+        <el-button type="primary" @click="confirm">确 定</el-button>
       </div>
     </el-dialog>
   </section>
@@ -41,13 +41,13 @@
 import { mapState, mapActions } from 'vuex';
 
 export default {
-  name: 'SelectLocation',
+  name: 'SelectCity',
   data () {
     return {
-      selectLocationContainerVisibleFlag: false,
-      form: {},
+      selectCityContainerVisibleFlag: false,
+      selectCityForm: {},
       currentOptionCityList: [],
-      rules: {
+      selectCityFormRules: {
         provinceId: [
           { required: true, message: '请选择省份', trigger: 'change' }
         ],
@@ -67,9 +67,9 @@ export default {
     ])
   },
   watch: {
-    'form.provinceId': {
+    'selectCityForm.provinceId': {
       handler (provinceId) {
-        delete this.form['cityId'];
+        delete this.selectCityForm['cityId'];
         this.currentOptionCityList = this.regionList.filter(item => item.parentId === provinceId);
       }
     }
@@ -81,20 +81,20 @@ export default {
     ...mapActions('location', [
       'initRegionList'
     ]),
-    confirmCurrentLocation () {
-      this.$refs['selectLocationForm'].validate((valid) => {
+    confirm () {
+      this.$refs['selectCityForm'].validate((valid) => {
         if (valid) {
           // url 更新兼职搜索区域
           this.$router.push({
             path: this.$router.pah,
             query: {
-              cityId: this.form.cityId
+              cityId: this.selectCityForm.cityId
             }
           });
           // 关闭区域选择框
-          this.selectLocationContainerVisibleFlag = false;
+          this.selectCityContainerVisibleFlag = false;
           // 清空表单
-          this.$refs['selectLocationForm'].resetFields();
+          this.$refs['selectCityForm'].resetFields();
         }
       });
     }
@@ -103,10 +103,7 @@ export default {
 </script>
 
 <style lang="scss">
-  .select-location-container {
-    .el-select {
-      width: 100%;
-    }
+  .select-city-container {
     .el-col-12:first-child {
       padding-right: 10px;
     }

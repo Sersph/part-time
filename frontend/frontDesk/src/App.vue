@@ -8,7 +8,9 @@
       </transition>
     </main>
     <!-- 底部菜单组件 -->
-    <footer-nav/>
+    <footer-nav
+      v-show="this.$route.meta.showFooterNav"
+    />
   </section>
 </template>
 
@@ -32,6 +34,14 @@ export default {
 </script>
 
 <style lang="scss">
+  body {
+    overflow-y: scroll;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
   #app {
     .wrapper-container {
       width: 100%;
@@ -44,14 +54,6 @@ export default {
     }
   }
 
-  body {
-    overflow-y: scroll;
-  }
-
-  a {
-    text-decoration: none;
-  }
-
   .opacity-enter-active,
   .opacity-leave-active {
     transition: opacity 150ms ease-in-out;
@@ -60,5 +62,18 @@ export default {
   .opacity-enter,
   .opacity-leave-active {
     opacity: 0;
+  }
+
+  .el-form-item.is-success .el-input__inner, .el-form-item.is-success .el-input__inner:focus, .el-form-item.is-success .el-textarea__inner, .el-form-item.is-success .el-textarea__inner:focus {
+    border-color: #409eff !important;
+  }
+
+  .el-form-item {
+    margin-bottom: 31px !important;
+  }
+
+  .el-select,
+  .el-cascader {
+    width: 100%;
   }
 </style>

@@ -38,6 +38,7 @@ export default {
     partTimeSearchCondition: {
       deep: true,
       handler (partTimeSearchCondition) {
+        console.log(partTimeSearchCondition.keyword);
         // init 搜索关键字
         if (this.keyword !== partTimeSearchCondition.keyword) {
           this.keyword = partTimeSearchCondition.keyword;

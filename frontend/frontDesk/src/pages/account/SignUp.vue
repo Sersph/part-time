@@ -1,7 +1,7 @@
 <template>
-  <section class="sign-in-container">
-    <el-tabs class="tab" v-model="signInType" :stretch="true">
-      <el-tab-pane label="个人用户登陆" name="profile">
+  <section class="sign-up-container">
+    <el-tabs class="tab" v-model="signUpType" :stretch="true">
+      <el-tab-pane label="个人用户注册" name="profile">
         <el-form :model="profileForm" :rules="profileFormRules" ref="profileForm" label-width="128px">
           <el-form-item label="用户名" prop="username">
             <el-input v-model="profileForm.username"></el-input>
@@ -10,16 +10,31 @@
             <el-input v-model="profileForm.password"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="submitProfileForm('profileForm')">立即登陆</el-button>
+            <el-button type="primary" @click="submitProfileForm('profileForm')">立即注册</el-button>
           </el-form-item>
         </el-form>
-        <p class="sign-up-tooltip">
-          <span>没有账号？</span>
-          <router-link to="/account/signUp?type=profile">个人用户注册</router-link>
-        </p>
       </el-tab-pane>
-      <el-tab-pane label="企业用户登陆" name="enterprise">
+      <el-tab-pane label="企业用户注册" name="enterprise">
         <el-form :model="enterpriseForm" :rules="enterpriseFormRules" ref="enterpriseForm" label-width="128px">
+          <el-form-item label="企业名称" prop="enterpriseName">
+            <el-input v-model="enterpriseForm.enterpriseName"></el-input>
+          </el-form-item>
+          <el-form-item label="行业类型" prop="industryType">
+            <el-cascader
+              :options="industryTypeList"
+              v-model="enterpriseForm.industryType">
+            </el-cascader>
+          </el-form-item>
+          <el-form-item label="人员规模" prop="staffSize">
+            <el-select v-model="enterpriseForm.staffSize">
+              <el-option label="1 - 50人" value="1"></el-option>
+              <el-option label="51 - 100人" value="2"></el-option>
+              <el-option label="101 - 200人" value="3"></el-option>
+              <el-option label="201 - 500人" value="4"></el-option>
+              <el-option label="501 - 1000人" value="5"></el-option>
+              <el-option label="1001及以上" value="6"></el-option>
+            </el-select>
+          </el-form-item>
           <el-form-item label="管理员用户名" prop="username">
             <el-input v-model="enterpriseForm.username"></el-input>
           </el-form-item>
@@ -27,13 +42,9 @@
             <el-input v-model="enterpriseForm.password"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="submitEnterpriseForm('enterpriseForm')">立即登陆</el-button>
+            <el-button type="primary" @click="submitEnterpriseForm('enterpriseForm')">立即注册</el-button>
           </el-form-item>
         </el-form>
-        <p class="sign-up-tooltip">
-          <span>没有账号？</span>
-          <router-link to="/account/signUp?type=enterprise">企业用户注册</router-link>
-        </p>
       </el-tab-pane>
     </el-tabs>
   </section>
@@ -44,7 +55,7 @@ export default {
   name: 'SignIn',
   data () {
     return {
-      signInType: this.$route.query.type !== undefined ? this.$route.query.type : 'profile',
+      signUpType: this.$route.query.type !== undefined ? this.$route.query.type : 'profile',
       profileForm: {
         username: '',
         password: ''
@@ -61,6 +72,16 @@ export default {
       },
       enterpriseForm: {},
       enterpriseFormRules: {
+        enterpriseName: [
+          { required: true, message: '企业名称由1-30个中文、英文、数字及合法字符组成', trigger: 'change' },
+          { min: 1, max: 30, message: '企业名称由1-30个中文、英文、数字及合法字符组成', trigger: 'change' }
+        ],
+        industryType: [
+          { required: true, message: '请选择所属行业', trigger: 'change' }
+        ],
+        staffSize: [
+          { required: true, message: '请选择人员规模', trigger: 'change' }
+        ],
         username: [
           { required: true, message: '用户名由3-20个字符组成', trigger: 'change' },
           { min: 3, max: 20, message: '用户名由3-20个字符组成', trigger: 'change' }

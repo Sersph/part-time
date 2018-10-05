@@ -3,6 +3,8 @@ import VueRouter from 'vue-router';
 
 // 非懒加载路由组件
 import SignIn from '@/pages/account/SignIn';
+import SignUp from '@/pages/account/SignUp';
+import ProfileApply from '@/pages/account/ProfileApply';
 
 // 注入 Vue Router 插件
 Vue.use(VueRouter);
@@ -20,7 +22,8 @@ export default new VueRouter({
       path: '/home',
       component: () => import('@/pages/home/Home'),
       meta: {
-        index: 1
+        showFooterNav: true,
+        showSelectCity: true
       }
     },
     {
@@ -28,11 +31,28 @@ export default new VueRouter({
       component: () => import('@/pages/account/Account'),
       children: [
         {
+          path: '/account/signUp',
+          component: SignUp,
+          meta: {
+            showFooterNav: true
+          }
+        },
+        {
           path: '/account/signIn',
           component: SignIn,
           meta: {
-            index: 2
+            showFooterNav: true
           }
+        },
+        {
+          path: '/account/profile',
+          component: () => import('@/pages/account/Profile'),
+          children: [
+            {
+              path: '/account/profile/apply',
+              component: ProfileApply
+            }
+          ]
         }
       ]
     }
