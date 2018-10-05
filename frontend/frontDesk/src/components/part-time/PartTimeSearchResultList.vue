@@ -28,36 +28,58 @@
         background
         layout="prev, pager, next"
         @current-change="searchPartTime"
-        :page-size="10"
-        :pager-count="11"
-        :total="1001">
+        :page-size="pageSize"
+        :pager-count="pageCount"
+        :current-page="currentPage"
+        :total="total">
       </el-pagination>
     </section>
   </section>
 </template>
 
 <script>
+import { mapState } from 'vuex';
+import routerUtils from '@/utils/router';
+
 export default {
   name: 'PartTimeList',
   data () {
     return {
-      partTimeSearchResultList: [
-        { id: 0, type: '派单', title: '运营实习生', location: '罗罗湖区罗湖区罗湖区罗湖区罗湖区罗湖区罗湖区罗湖区罗湖区湖区', viewCount: 233, createdAt: '2011-01-01 11:11' },
-        { id: 1, type: '销售', title: '运营实运营实习生运营实习生运营实习生习生', location: '罗湖罗湖区罗湖区区', viewCount: 233, createdAt: '2019-11-11 11:11' },
-        { id: 2, type: '临时工', title: '运营运营实习生运营实习生实习生', location: '罗湖区罗湖区', viewCount: 233233233, createdAt: '2019-11-11 11:11' },
-        { id: 3, type: '派单', title: '运营运营实习生运营实习生实习生', location: '罗湖区罗湖区', viewCount: 233223323323323323323323323323323323323323323323323323323323323323333233, createdAt: '2019-11-11 11:11' },
-        { id: 4, type: '派单派单派单', title: '运营运营实习生运营实习生实习生', location: '罗湖区罗湖区', viewCount: 233233233, createdAt: '2019-11-11 11:11' },
-        { id: 5, type: '派单派单派单', title: '运营运营实习生运营实习生实习生', location: '罗湖区罗湖区', viewCount: 233233233, createdAt: '2019-11-11 11:11' },
-        { id: 6, type: '派单派单派单', title: '运营运营实习生运营实习生实习生', location: '罗湖区罗湖区', viewCount: 2222222, createdAt: '2019-11-11 11:11' },
-        { id: 7, type: '派单', title: '运营运营实运营运营实习生运营实习生实习生运营运营实习生运营实习生实习生习生运营实习生实习生', location: '222', viewCount: 1, createdAt: '2019-09-09 12:12' },
-        { id: 8, type: '派单', title: '运营实习生', location: '罗湖区', viewCount: 233, createdAt: '2011-01-01 11:11' },
-        { id: 9, type: '派单派单', title: '运营实运营实习生运营实习生运营实习生习生', location: '罗湖罗湖区罗湖区区', viewCount: 233, createdAt: '2019-11-11 11:11' }
-      ]
+      pageSize: 10,
+      pageCount: 11,
+      currentPage: 5,
+      total: 1000
     };
   },
+  computed: {
+    ...mapState('partTime', [
+      'partTimeSearchCondition',
+      'partTimeSearchResultList'
+    ])
+  },
+  watch: {
+    partTimeSearchCondition: {
+      deep: true,
+      handler (partTimeSearchCondition) {
+        // init 分页
+        if (this.currentPage !== partTimeSearchCondition.limitStart / 10) {
+          this.currentPage = partTimeSearchCondition.limitStart / 10;
+        }
+      }
+    }
+  },
   methods: {
-    searchPartTime (currentPage) {
-      console.log(currentPage);
+    async searchPartTime (currentPage) {
+      const limitStart = currentPage * this.pageSize;
+      const limitSize = this.pageSize;
+      // url 更新兼职搜索分页
+      this.$router.push({
+        path: this.$router.pah,
+        query: routerUtils.getNewPartTimeSearchConditionUrlParams(this.$route.query, {
+          limitStart,
+          limitSize
+        })
+      });
     }
   }
 };
@@ -106,7 +128,7 @@ export default {
             width: 20px;
             height: 20px;
             margin-right: 10px;
-            font-size: 20px;
+            font-size: 21px;
           }
         }
         .part-time-species {
@@ -151,8 +173,8 @@ export default {
     .part-time-search-result-p {
       display: flex;
       justify-content: center;
-      padding-top:  30px;
-      padding-bottom: 200px;
+      padding-top: 30px;
+      padding-bottom: 100px;
       .el-pagination.is-background {
         button,
         li {

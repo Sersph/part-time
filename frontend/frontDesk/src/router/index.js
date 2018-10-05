@@ -1,12 +1,8 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
-// 路由组件
+// 非懒加载路由组件
 import SignIn from '@/pages/account/SignIn';
-
-// 路由懒加载
-const Home = () => import('@/pages/home/Home');
-const Account = () => import('@/pages/account/Account');
 
 // 注入 Vue Router 插件
 Vue.use(VueRouter);
@@ -22,14 +18,14 @@ export default new VueRouter({
     },
     {
       path: '/home',
-      component: Home,
+      component: () => import('@/pages/home/Home'),
       meta: {
         index: 1
       }
     },
     {
       path: '/account',
-      component: Account,
+      component: () => import('@/pages/account/Account'),
       children: [
         {
           path: '/account/signIn',

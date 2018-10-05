@@ -1,22 +1,20 @@
 <template>
-  <header class="header-container">
-    <el-col :span="20">
-      <div class="header-menu-list">
-        <div>
-          <a class="current-location-name" @click="showSelectLocationContainer">
-            <span>深圳</span><i class="el-icon-arrow-down"></i>
-          </a>
-        </div>
-        <div>
-          <router-link to="/home">
-            <span>首页</span>
-          </router-link>
-          <router-link to="/account/signIn">
-            <span>登陆 / 注册</span>
-          </router-link>
-        </div>
+  <header class="header-nav-container">
+    <div class="header-menu-list">
+      <div>
+        <a class="current-location-name" @click="showSelectLocationContainer">
+          <span>{{ currentCity.name }}</span><i class="el-icon-arrow-down"></i>
+        </a>
       </div>
-    </el-col>
+      <div>
+        <router-link to="/home">
+          <span>首页</span>
+        </router-link>
+        <router-link to="/account/signIn">
+          <span>登陆 / 注册</span>
+        </router-link>
+      </div>
+    </div>
     <select-location ref="selectLocation"/>
   </header>
 </template>
@@ -32,7 +30,7 @@ export default {
   },
   computed: {
     ...mapState('location', [
-      'currentLocation'
+      'currentCity'
     ])
   },
   methods: {
@@ -45,11 +43,12 @@ export default {
 </script>
 
 <style lang="scss">
-  .header-container {
+  .header-nav-container {
     display: flex;
     justify-content: center;
     background-color: #409EFF;
     .header-menu-list {
+      width: 83.33333%;
       display: flex;
       justify-content: space-between;
       div {

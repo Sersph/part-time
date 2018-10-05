@@ -3,15 +3,14 @@
     <section class="part-time-search-condition-item">
       <div class="condition-name">区域</div>
       <div class="condition-list">
-        <el-radio-group v-model="selectAreaList">
+        <el-radio-group v-model="areaId">
           <div class="item"
-               v-for="(area, index) in areaList"
+               v-for="(areaItem, index) in areaList"
                :key="index"
+               @click="setAreaId(areaItem.id)"
           >
-            <el-radio-button
-              :label="area.id">{{ area.name }}
-            </el-radio-button>
-            <sup v-if="area.isHot">hot</sup>
+            <el-radio-button :label="areaItem.id">{{ areaItem.name }}</el-radio-button>
+            <sup v-if="areaItem.isHot">hot</sup>
           </div>
         </el-radio-group>
       </div>
@@ -19,14 +18,13 @@
     <section class="part-time-search-condition-item">
       <div class="condition-name">类型</div>
       <div class="condition-list">
-        <el-radio-group v-model="selectTypeList">
+        <el-radio-group v-model="typeId">
           <div class="item"
                v-for="(typeItem, index) in typeList"
                :key="index"
+               @click="setTypeId(typeItem.id)"
           >
-            <el-radio-button
-              :label="typeItem.id">{{ typeItem.name }}
-            </el-radio-button>
+            <el-radio-button :label="typeItem.id">{{ typeItem.name }}</el-radio-button>
             <sup v-if="typeItem.isHot">hot</sup>
           </div>
         </el-radio-group>
@@ -35,15 +33,14 @@
     <section class="part-time-search-condition-item">
       <div class="condition-name">种类</div>
       <div class="condition-list">
-        <el-radio-group v-model="selectSpeciesList">
+        <el-radio-group v-model="speciesId">
           <div class="item"
-               v-for="(species, index) in speciesList"
+               v-for="(speciesItem, index) in speciesList"
                :key="index"
+               @click="setSpeciesId(speciesItem.id)"
           >
-            <el-radio-button
-              :label="species.id">{{ species.name }}
-            </el-radio-button>
-            <sup v-if="species.isHot">hot</sup>
+            <el-radio-button :label="speciesItem.id">{{ speciesItem.name }}</el-radio-button>
+            <sup v-if="speciesItem.isHot">hot</sup>
           </div>
         </el-radio-group>
       </div>
@@ -52,6 +49,9 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+import routerUtils from '@/utils/router';
+
 export default {
   name: 'PartTimeSearchCondition',
   data () {
@@ -88,10 +88,66 @@ export default {
         { id: 14, name: '临时工' },
         { id: 15, name: '临时工', isHot: true }
       ],
-      selectAreaList: 0,
-      selectTypeList: 0,
-      selectSpeciesList: 0
+      areaId: 0,
+      typeId: 0,
+      speciesId: 0
     };
+  },
+  computed: {
+    ...mapState('partTime', [
+      'partTimeSearchCondition'
+    ])
+  },
+  watch: {
+    partTimeSearchCondition: {
+      deep: true,
+      handler (partTimeSearchCondition) {
+        // init 搜索地区
+        if (this.areaId !== partTimeSearchCondition.areId) {
+          this.areaId = partTimeSearchCondition.areaId;
+        }
+        // init 搜索类型
+        if (this.typeId !== partTimeSearchCondition.typeId) {
+          this.typeId = partTimeSearchCondition.typeId;
+        }
+        // init 搜索种类
+        if (this.speciesId !== partTimeSearchCondition.speciesId) {
+          this.speciesId = partTimeSearchCondition.speciesId;
+        }
+      }
+    }
+  },
+  methods: {
+    async setAreaId (areaId) {
+      if (this.areaId === areaId) return;
+      // url 更新兼职搜索地区
+      this.$router.push({
+        path: this.$router.pah,
+        query: routerUtils.getNewPartTimeSearchConditionUrlParams(this.$route.query, {
+          areaId
+        })
+      });
+    },
+    async setTypeId (typeId) {
+      if (this.typeId === typeId) return;
+      // url 更新兼职搜索类型
+      this.$router.push({
+        path: this.$router.pah,
+        query: routerUtils.getNewPartTimeSearchConditionUrlParams(this.$route.query, {
+          typeId
+        })
+      });
+    },
+    async setSpeciesId (speciesId) {
+      if (this.speciesId === speciesId) return;
+      // url 更新兼职搜索类型
+      this.$router.push({
+        path: this.$router.pah,
+        query: routerUtils.getNewPartTimeSearchConditionUrlParams(this.$route.query, {
+          speciesId
+        })
+      });
+    }
   }
 };
 </script>

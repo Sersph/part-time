@@ -1,5 +1,7 @@
 <template>
-  <section class="sign-in-container">SignIn</section>
+  <section class="sign-in-container">
+    <p>SignIn</p>
+  </section>
 </template>
 
 <script>

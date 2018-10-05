@@ -13,6 +13,7 @@
     "element-ui": "^2.4.8",
     "material-icons": "^0.2.3",
     "normalize.css": "^8.0.0",
+    "nprogress": "^0.2.0",
     "vue": "^2.5.17",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1"

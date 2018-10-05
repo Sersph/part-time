@@ -1,40 +1,32 @@
 <template>
   <section id="app">
+    <!-- 顶部菜单组件 -->
     <header-nav/>
-    <main class="wrapper-container" :span="20">
-      <transition :name="transitionName">
+    <main class="wrapper-container">
+      <transition name="opacity" mode="out-in">
         <router-view/>
       </transition>
     </main>
+    <!-- 底部菜单组件 -->
+    <footer-nav/>
   </section>
 </template>
 
 <script>
 import HeaderNav from '@/components/header/HeaderNav';
+import FooterNav from '@/components/footer/FooterNav';
 
 export default {
   name: 'App',
   components: {
-    HeaderNav
+    HeaderNav,
+    FooterNav
   },
   data () {
     return {
       transitionName: '',
       transitionFirstFlag: true
     };
-  },
-  watch: {
-    $route (to, from) {
-      if (this.transitionFirstFlag) {
-        this.transitionFirstFlag = false;
-        return;
-      }
-      if (to.meta.index > from.meta.index) {
-        this.transitionName = 'slide-left';
-      } else {
-        this.transitionName = 'slide-right';
-      }
-    }
   }
 };
 </script>
@@ -42,42 +34,31 @@ export default {
 <style lang="scss">
   #app {
     .wrapper-container {
-      position: absolute;
-      top: 60px;
-      right: 0;
-      left: 0;
-      width: 83.33333%;
-      margin-left: auto;
-      margin-right: auto;
+      width: 100%;
+      min-height: 100vh;
+      & > :first-child {
+        width: 83.33333%;
+        margin-left: auto;
+        margin-right: auto;
+      }
     }
+  }
+
+  body {
+    overflow-y: scroll;
   }
 
   a {
     text-decoration: none;
   }
 
-  .slide-left-enter-active,
-  .slide-left-leave-active,
-  .slide-right-enter-active,
-  .slide-right-leave-active {
-    position: absolute;
-    will-change: transform;
-    transition: transform .5s;
+  .opacity-enter-active,
+  .opacity-leave-active {
+    transition: opacity 150ms ease-in-out;
   }
 
-  .slide-left-enter {
-    transform: translate3d(150%, 0, 0);
-  }
-
-  .slide-left-leave-active {
-    transform: translate3d(-150%, 0, 0);
-  }
-
-  .slide-right-enter {
-    transform: translate3d(-150%, 0, 0);
-  }
-
-  .slide-right-leave-active {
-    transform: translate3d(150%, 0, 0);
+  .opacity-enter,
+  .opacity-leave-active {
+    opacity: 0;
   }
 </style>

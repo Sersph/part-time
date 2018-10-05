@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 
 // 引入 module
 import location from '@/store/location';
+import partTime from '@/store/part-time/index';
 
 // 注入 Vuex 插件
 Vue.use(Vuex);
@@ -10,6 +11,7 @@ Vue.use(Vuex);
 // 导出 Vuex Store 对象
 export default new Vuex.Store({
   modules: {
-    location
+    location,
+    partTime
   }
 });
