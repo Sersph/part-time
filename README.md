@@ -8,5 +8,5 @@
     + 前台：vue全家桶 + element
     + 后台：vue全家桶 + vue-element-admin
 - 后端
-    + spring-boot + mybatis
+    + spring-boot + jpa
 

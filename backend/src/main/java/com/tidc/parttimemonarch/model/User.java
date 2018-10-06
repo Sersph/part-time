@@ -1,5 +1,7 @@
 package com.tidc.parttimemonarch.model;
 
+import com.tidc.parttimemonarch.util.DateUtli;
+
 import javax.persistence.*;
 import java.sql.Date;
 
@@ -9,33 +11,32 @@ public class User {
     @Id
     private int id;
 
-    @Column(nullable=false, unique=true)
-    private String username;
-    @Column(nullable=false)
-    private String password;
+        @Column(nullable=false, unique=true)
+        private String username;
+        @Column(nullable=false)
+        private String password;
 
-    private String email;
-    private String phone;
+        private String email;
+        private String phone;
 
-    //状态
-    @Column(nullable=false)
-    private int status = 0;
+        //状态
+        @Column(nullable=false)
+        private int status = 0;
 
-    //最后一次登陆的时间
-    @Column(nullable=false)
-    private Date lastSignInAt;
-    //创建时间
-    @Column(nullable=false)
-    private Date createdAt;
-    //最后一次修改日期
-    @Column(nullable=false)
-    private Date updatedAt;
+        //最后一次登陆的时间
+        @Column(nullable=false)
+        private Date lastSignInAt;
+        //创建时间
+        @Column(nullable=false)
+        private Date createdAt;
+        //最后一次修改日期
+        @Column(nullable=false)
+        private Date updatedAt;
 
     public User() {
-        Date date = new Date(new java.util.Date().getTime());
-        this.setUpdatedAt(date);
-        this.setLastSignInAt(date);
-        this.setCreatedAt(date);
+        this.setUpdatedAt(DateUtli.getDate());
+        this.setLastSignInAt(DateUtli.getDate());
+        this.setCreatedAt(DateUtli.getDate());
     }
 
     public int getId() {

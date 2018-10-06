@@ -20,16 +20,13 @@ public class RequestState {
         return code;
     }
 
-    public void setCode(int code) {
-        this.code = code;
+    public void setCode(Code code) {
+        this.code = code.getCode();
+        this.message = code.getMessage();
     }
 
     public String getMessage() {
         return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
     }
 
     @Override
