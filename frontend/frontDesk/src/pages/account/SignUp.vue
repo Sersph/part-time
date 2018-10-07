@@ -52,7 +52,7 @@
 
 <script>
 export default {
-  name: 'SignIn',
+  name: 'SignUp',
   data () {
     return {
       signUpType: this.$route.query.type !== undefined ? this.$route.query.type : 'profile',

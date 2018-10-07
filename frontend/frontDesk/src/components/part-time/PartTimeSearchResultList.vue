@@ -1,9 +1,10 @@
 <template>
   <section class="part-time-search-result-list-container">
     <div class="part-time-result-list">
-      <a href="javascript:void(0)" class="part-time-item"
-         v-for="(partTimeItem, index) in partTimeSearchResultList"
-         :key="index"
+      <router-link href="javascript:void(0)" class="part-time-item"
+                   v-for="(partTimeItem, index) in partTimeSearchResultList"
+                   :key="index"
+                   :to="`/partTime/detail/${index}`"
       >
         <el-badge class="part-time-species">
           <el-button size="small" :title="partTimeItem.type">{{ partTimeItem.type }}</el-button>
@@ -21,7 +22,7 @@
           <i class="material-icons">alarm</i>
           <span :title="partTimeItem.createdAt">{{ partTimeItem.createdAt }}</span>
         </span>
-      </a>
+      </router-link>
     </div>
     <section class="part-time-search-result-p">
       <el-pagination
@@ -47,7 +48,7 @@ export default {
     return {
       pageSize: 10,
       pageCount: 11,
-      currentPage: 5,
+      currentPage: 0,
       total: 1000
     };
   },
@@ -99,6 +100,7 @@ export default {
         padding: 15px 20px;
         border-bottom: 1px solid #dadada;
         color: #606266;
+        transition: background-color .15s, border-color .15s;
         .el-badge {
           button {
             width: 80px;
@@ -168,6 +170,10 @@ export default {
       }
       .part-time-item:last-child {
         border-bottom: 0;
+      }
+      .part-time-item:hover {
+        background-color: #ecf5ff;
+        border-color: #409EFF;
       }
     }
     .part-time-search-result-p {

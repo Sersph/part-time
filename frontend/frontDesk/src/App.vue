@@ -2,32 +2,25 @@
   <section id="app">
     <!-- 顶部菜单组件 -->
     <header-nav/>
-    <main class="wrapper-container">
+    <main class="wrapper-container" ref="wrapper-container">
       <transition name="opacity" mode="out-in">
         <router-view/>
       </transition>
     </main>
-    <!-- 底部菜单组件 -->
-    <footer-nav
-      v-show="this.$route.meta.showFooterNav"
-    />
   </section>
 </template>
 
 <script>
 import HeaderNav from '@/components/header/HeaderNav';
-import FooterNav from '@/components/footer/FooterNav';
 
 export default {
   name: 'App',
   components: {
-    HeaderNav,
-    FooterNav
+    HeaderNav
   },
   data () {
     return {
-      transitionName: '',
-      transitionFirstFlag: true
+      transitionName: ''
     };
   }
 };
@@ -45,7 +38,6 @@ export default {
   #app {
     .wrapper-container {
       width: 100%;
-      min-height: 100vh;
       & > :first-child {
         width: 83.33333%;
         margin-left: auto;
@@ -56,12 +48,13 @@ export default {
 
   .opacity-enter-active,
   .opacity-leave-active {
-    transition: opacity 150ms ease-in-out;
+    transition: opacity .3s cubic-bezier(0.0, 0.0, 0.2, 1), transform .3s cubic-bezier(0.0, 0.0, 0.2, 1);
   }
 
   .opacity-enter,
   .opacity-leave-active {
     opacity: 0;
+    transform: translateY(15%);
   }
 
   .el-form-item.is-success .el-input__inner, .el-form-item.is-success .el-input__inner:focus, .el-form-item.is-success .el-textarea__inner, .el-form-item.is-success .el-textarea__inner:focus {
@@ -75,5 +68,12 @@ export default {
   .el-select,
   .el-cascader {
     width: 100%;
+  }
+
+  // nprogress
+  #nprogress .bar {
+    height: 5px !important;
+    background: #0425c0 !important;;
+    box-shadow: 0 0 10px rgba(17, 255, 242, 0.7) !important;;
   }
 </style>

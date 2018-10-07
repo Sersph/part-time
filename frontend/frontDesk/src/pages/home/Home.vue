@@ -1,8 +1,11 @@
 <template>
   <section class="home-container">
-    <part-time-top/>
-    <part-time-search-condition/>
-    <part-time-search-result-list/>
+    <section class="part-time-container" :span="20">
+      <part-time-top/>
+      <part-time-search-condition/>
+      <part-time-search-result-list/>
+    </section>
+    <footer-nav/>
   </section>
 </template>
 
@@ -13,36 +16,42 @@ import routerUtils from '@/utils/router';
 import PartTimeTop from '@/components/part-time/PartTimeTop';
 import PartTimeSearchCondition from '@/components/part-time/PartTimeSearchCondition';
 import PartTimeSearchResultList from '@/components/part-time/PartTimeSearchResultList';
+import FooterNav from '@/components/footer/FooterNav';
 
 export default {
   name: 'Home',
   components: {
     PartTimeTop,
     PartTimeSearchCondition,
-    PartTimeSearchResultList
+    PartTimeSearchResultList,
+    FooterNav,
+    flag: false
   },
   computed: {
     ...mapState('location', [
       'currentCity'
-    ]),
-    ...mapState('partTime', [
-      'asyncEditPartTimeSearchResultListFlag'
     ])
   },
   async mounted () {
-    this.asyncEditPartTimeSearchResultListByUrlParams();
+    // 初始化地区
+    await this.initRegionList();
+    // 初始化搜索结果
+    await this.asyncEditPartTimeSearchResultListByUrlParams();
   },
   watch: {
     // 监听 url 搜索兼职
     $route: {
-      handler () {
-        this.asyncEditPartTimeSearchResultListByUrlParams();
+      async handler () {
+        if (this.$route.path === '/home') {
+          await this.asyncEditPartTimeSearchResultListByUrlParams();
+        }
       }
     }
   },
   methods: {
     ...mapActions('location', [
-      'editCurrentCityByCityId'
+      'editCurrentCityByCityId',
+      'initRegionList'
     ]),
     ...mapActions('partTime', [
       'editPartTimeSearchCondition',
@@ -50,10 +59,9 @@ export default {
     ]),
     async asyncEditPartTimeSearchResultListByUrlParams () {
       // 初始化所在城市
-      this.editCurrentCityByCityId(this.$route.query.cityId !== undefined
-        ? { cityId: this.$route.query.cityId }
-        : { cityId: '0' }
-      );
+      this.editCurrentCityByCityId({
+        cityId: this.$route.query.cityId !== undefined ? this.$route.query.cityId : '0'
+      });
 
       // 初始化搜索条件
       const partTimeSearchConditionURLParams = this.$route.query;
@@ -70,27 +78,26 @@ export default {
       });
 
       // 开始搜索兼职
-      if (this.asyncEditPartTimeSearchResultListFlag === true) {
-        NProgress.start();
-        await this.asyncEditPartTimeSearchResultList();
-        NProgress.done();
-      }
+      NProgress.start();
+      await this.asyncEditPartTimeSearchResultList();
+      NProgress.done();
     }
   }
 };
 </script>
 
 <style lang="scss">
+  .home-container {
+    width: 100% !important;
+    .part-time-container {
+      width: 83.33333%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+
   // 模态框定位问题
   .el-loading-mask {
     top: 60px;
   }
-
-  // nprogress
-  #nprogress .bar {
-    height: 5px;
-    background: #0425c0;
-    box-shadow: 0 0 10px rgba(17, 255, 242, 0.7);
-  }
-
 </style>

@@ -1,6 +1,6 @@
 <template>
-  <section class="profile-container">
-    <profile-nav/>
+  <section class="enterprise-container">
+    <enterprise-nav/>
     <transition name="opacity" mode="out-in">
       <router-view/>
     </transition>
@@ -8,18 +8,18 @@
 </template>
 
 <script>
-import ProfileNav from '@/components/account/ProfileNav';
+import EnterpriseNav from '@/components/account/EnterpriseNav';
 
 export default {
-  name: 'Profile',
+  name: 'Enterprise',
   components: {
-    ProfileNav
+    EnterpriseNav
   }
 };
 </script>
 
 <style lang="scss">
-  .profile-container {
+  .enterprise-container {
     display: flex;
     & > section:last-child {
       flex: 1;

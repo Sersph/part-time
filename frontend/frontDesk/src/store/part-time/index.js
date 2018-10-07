@@ -3,8 +3,6 @@ import types from '@/store/mutation-types';
 export default {
   namespaced: true,
   state: {
-    // 异步搜索多次调用 flag
-    asyncEditPartTimeSearchResultListFlag: true,
     // 搜索兼职条件
     partTimeSearchCondition: {
       cityId: 0,
@@ -39,14 +37,11 @@ export default {
       commit(types.EDIT_PART_TIME_SEARCH_CONDITION, { partTimeSearchCondition });
     },
     async asyncEditPartTimeSearchResultList ({ commit, state }) {
-      if (!state.asyncEditPartTimeSearchResultListFlag) return;
-      if (state.asyncEditPartTimeSearchResultListFlag) state.asyncEditPartTimeSearchResultListFlag = false;
       console.log(JSON.stringify(state.partTimeSearchCondition));
       return new Promise((resolve, reject) => {
         setTimeout(() => {
-          state.asyncEditPartTimeSearchResultListFlag = true;
           resolve();
-        }, 200);
+        }, 150);
       });
     }
   },

@@ -1,10 +1,10 @@
 <template>
-  <section>ProfileApply</section>
+  <router-view/>
 </template>
 
 <script>
 export default {
-  name: 'ProfileApply'
+  name: 'PartTime'
 };
 </script>
 
