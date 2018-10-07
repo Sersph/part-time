@@ -13,10 +13,12 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 @Api(value = "普通用户注册登陆接口")
+@ResponseBody
 @RestController
-@RequestMapping(value = "/personal/account")
+@RequestMapping(value = "/account/personal")
 public class PersonalAccountController {
 
     @Autowired
@@ -27,18 +29,17 @@ public class PersonalAccountController {
 
     @ApiOperation(value="用户注册")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "type", value = "注册类型", required = true, dataType = "int", paramType = "path"),
+            @ApiImplicitParam(name = "type", value = "注册类型", required = true, dataType = "int", paramType = "query"),
             @ApiImplicitParam(name = "username", value = "用户名", required = true, dataType = "String", paramType = "query"),
             @ApiImplicitParam(name = "password", value = "密码", required = true, dataType = "String", paramType = "query")
     })
-    @PostMapping(value = "/signUp/{type}")
-    public RequestState signUp(@PathVariable(value = "type") int type , User user, HttpServletRequest httpServletRequest){
+    @PostMapping(value = "/signUp")
+    public RequestState signUp(@Valid User user, HttpServletRequest httpServletRequest){
+        System.out.println(user);
         HttpSession session = httpServletRequest.getSession();
         //判断注册类型 调用不同的注册方法
-        return personalSignUpService.signUp(type, user, session);
+        return personalSignUpService.signUp(user, session);
     }
-
-
 
 
 
@@ -49,19 +50,11 @@ public class PersonalAccountController {
             @ApiImplicitParam(name = "username", value = "用户名", required = true, dataType = "String", paramType = "query"),
             @ApiImplicitParam(name = "password", value = "密码", required = true, dataType = "String", paramType = "query")
     })
-    @PostMapping(value = "/signIn/1")
-    public RequestState signIn(@RequestParam(value = "username") String username,
-                               @RequestParam(value = "password") String password,
-                               HttpServletRequest httpServletRequest){
+    @PostMapping(value = "/signIn")
+    public RequestState signIn(User user, HttpServletRequest httpServletRequest){
 
         HttpSession session = httpServletRequest.getSession();
-        return personalSignInService.signIn(username, password, session);
-    }
-
-    @ApiOperation(value="验证手机登陆")
-    @PostMapping(value = "/signIn/2")
-    public RequestState MobileAuthenticationLogin(){
-        return null;
+        return personalSignInService.signIn(user, session);
     }
 
 }

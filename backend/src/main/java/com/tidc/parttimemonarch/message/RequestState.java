@@ -11,6 +11,11 @@ public class RequestState {
         super();
     }
 
+    public RequestState(int code, String message) {
+        this.code = code;
+        this.message = message;
+    }
+
     public RequestState(Code code) {
         this.code = code.getCode();
         this.message = code.getMessage();

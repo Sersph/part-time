@@ -5,7 +5,8 @@ import com.tidc.parttimemonarch.enumerate.Code;
 import com.tidc.parttimemonarch.message.AccountRequestState;
 import com.tidc.parttimemonarch.message.RequestState;
 import com.tidc.parttimemonarch.model.User;
-import com.tidc.parttimemonarch.util.*;
+import com.tidc.parttimemonarch.util.DateUtli;
+import com.tidc.parttimemonarch.util.SessionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,35 +20,21 @@ public class PersonalSignInService {
 
     /**
      * 用户名密码登陆
-     * @param username
-     * @param password
      * @param session
      * @return 返回状态
      */
-    public RequestState signIn(String username, String password, HttpSession session){
+    public RequestState signIn(User user, HttpSession session){
 
-        Code code = UserUtil.validateUsernameAndPassword(username, password);
-
-
-        if (CodeUtli.isSuccceed(code)){
-            return new RequestState(code);
-        }
-
-        User user = this.accountDAO.findByUsername(username);
+        user = this.accountDAO.signIn(user);
 
         if (user == null){
-            return new RequestState(Code.THE_USER_DOES_NOT_EXIST);
+            return new RequestState(Code.INCORRECT_USERNAME_AND_PASSWORD);
         }
 
-        if (password.equals(user.getPassword())){
-            if (SessionUtil.addSession(user, session)){
-                user.setLastSignInAt(DateUtli.getDate());
-                accountDAO.updateLastSignInAt(user.getUsername(), user.getLastSignInAt());
-                user = accountDAO.findByUsername(user.getUsername());
-                return new AccountRequestState(Code.SUCCEED, user);
-            }
-        }
+        this.accountDAO.updateLastSignInAt(user.getUsername(),DateUtli.getDate());
 
-        return new RequestState(Code.INCORRECT_USERNAME_AND_PASSWORD);
+        SessionUtil.addSession("user", user, session);
+
+        return new RequestState(Code.SUCCEED);
     }
 }

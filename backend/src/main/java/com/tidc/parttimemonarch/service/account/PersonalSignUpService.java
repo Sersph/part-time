@@ -4,9 +4,7 @@ import com.tidc.parttimemonarch.dao.AccountDAO;
 import com.tidc.parttimemonarch.enumerate.Code;
 import com.tidc.parttimemonarch.message.RequestState;
 import com.tidc.parttimemonarch.model.User;
-import com.tidc.parttimemonarch.util.CodeUtli;
 import com.tidc.parttimemonarch.util.SessionUtil;
-import com.tidc.parttimemonarch.util.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
@@ -22,11 +20,11 @@ public class PersonalSignUpService {
 
 
     //划分注册业务类型
-    public RequestState signUp(int type, User user, HttpSession session) {
+    public RequestState signUp(User user, HttpSession session) {
 
-        if (type == 1){
+        if (user.getType() == 1){
             return this.useUsernameAndPasswordToSignUp(user, session);
-        }else if(type == 2){
+        }else if(user.getType() == 2){
             return this.verifyPhoneNumberSignUp(user, session);
         }else{
             //找不到注册类型返回错误信息
@@ -42,21 +40,15 @@ public class PersonalSignUpService {
      */
     private RequestState useUsernameAndPasswordToSignUp(User user, HttpSession session){
         RequestState requestState;
-        Code code = UserUtil.validateUsernameAndPassword(user.getUsername(), user.getPassword());
         Date date = new Date(new java.util.Date().getTime());
         user.setLastSignInAt(date);
         user.setCreatedAt(date);
         user.setUpdatedAt(date);
 
-
-        if (CodeUtli.isSuccceed(code)){
-            return new RequestState(code);
-        }
-
         try{
             int matched = accountDAO.save(user);
             requestState = new RequestState(matched != 0 ? Code.SUCCEED : Code.ERROR);
-            SessionUtil.addSession(user, session);
+            SessionUtil.addSession("user", user, session);
         }catch (DataAccessException e){
             requestState = new RequestState(Code.USER_NAME_ALREADY_EXIST);
         }

@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 public class SiteController {
 
 
-    @GetMapping(value = "/getUserInfo")
-    public RequestState getUserInfo(HttpServletRequest httpServletRequest){
-        return null;
-    }
+//    @GetMapping(value = "/getUserInfo")
+//    public RequestState getUserInfo(HttpServletRequest httpServletRequest){
+//        return null;
+//    }
 }

@@ -23,17 +23,17 @@ public class AccountStateController {
     private AccountStateService accountStateService;
 
 
-    @ApiOperation(value="获取用户是否登陆")
-    @GetMapping(value = "/isSingIn")
-    public RequestState isTheUserLoggedIn(HttpServletRequest httpServletRequest){
-        return this.accountStateService.isTheUserLoggedIn(httpServletRequest.getSession());
+    @ApiOperation(value="获取用户信息")
+    @GetMapping(value = "/userInfo")
+    public RequestState getUserInfo(HttpServletRequest httpServletRequest){
+        return this.accountStateService.getUserInfo(httpServletRequest.getSession());
     }
 
 
     @ApiOperation(value = "退出登陆")
-    @GetMapping(value = "/exit")
+    @GetMapping(value = "/signOut")
     public RequestState exit(HttpServletRequest httpServletRequest){
-        if (SessionUtil.removeSession(httpServletRequest.getSession())){
+        if (SessionUtil.removeSession("user", httpServletRequest.getSession())){
             return new RequestState(Code.SUCCEED);
         }
 

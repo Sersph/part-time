@@ -4,18 +4,19 @@ import com.tidc.parttimemonarch.enumerate.Code;
 import com.tidc.parttimemonarch.model.User;
 
 public class AccountRequestState extends RequestState {
-    private User user;
-    public AccountRequestState(Code code, User user) {
+    private User userInfo;
+
+    public AccountRequestState(Code code, User userInfo) {
         super(code);
-        this.user = user;
+        this.userInfo = userInfo;
     }
 
-    public User getUser() {
-        return user;
+    public User getUserInfo() {
+        return userInfo;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserInfo(User userInfo) {
+        this.userInfo = userInfo;
     }
 
     @Override
@@ -23,7 +24,7 @@ public class AccountRequestState extends RequestState {
         return "{" +
                 "code=" + this.getCode() +
                 "message=" + this.getMessage() +
-                "user=" + user +
+                "userInfo=" + userInfo +
                 '}';
     }
 }

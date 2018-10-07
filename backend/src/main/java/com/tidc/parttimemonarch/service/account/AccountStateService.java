@@ -12,9 +12,9 @@ import javax.servlet.http.HttpSession;
 @Component
 public class AccountStateService {
 
-    public RequestState isTheUserLoggedIn(HttpSession session){
-        if (SessionUtil.islogIn(session)){
-            return new AccountRequestState(Code.USER_LOGGER_IN, (User)session.getAttribute(SessionUtil.SESSION_KEY));
+    public RequestState getUserInfo(HttpSession session){
+        if (SessionUtil.isSession("user", session)){
+            return new AccountRequestState(Code.SUCCEED, (User)session.getAttribute("user"));
         }
 
         return new RequestState(Code.USER_NOT_LOG_IN);
