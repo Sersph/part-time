@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 
-@Api(value = "用户状态登陆接口")
+@Api(value = "用户状态接口")
 @RestController
 @RequestMapping(value = "/account")
 public class AccountStateController {

@@ -1,43 +1,30 @@
 package com.tidc.parttimemonarch.model;
 
-import com.tidc.parttimemonarch.util.DateUtli;
+import org.springframework.stereotype.Component;
 
-import javax.persistence.*;
 import java.sql.Date;
 
-@Entity
+@Component
 public class User {
 
-    @Id
     private int id;
 
-        @Column(nullable=false, unique=true)
-        private String username;
-        @Column(nullable=false)
-        private String password;
+    private String username;
+    private String password;
 
-        private String email;
-        private String phone;
+    private String email;
+    private String phone;
 
-        //状态
-        @Column(nullable=false)
-        private int status = 0;
+    private int status = 0;
 
-        //最后一次登陆的时间
-        @Column(nullable=false)
-        private Date lastSignInAt;
-        //创建时间
-        @Column(nullable=false)
-        private Date createdAt;
-        //最后一次修改日期
-        @Column(nullable=false)
-        private Date updatedAt;
+    //最后一次登陆的时间
+    private Date lastSignInAt;
+    //创建时间 created_at
+    private Date createdAt;
+    //最后一次修改日期 updated_at
+    private Date updatedAt;
 
-    public User() {
-        this.setUpdatedAt(DateUtli.getDate());
-        this.setLastSignInAt(DateUtli.getDate());
-        this.setCreatedAt(DateUtli.getDate());
-    }
+    public User() {}
 
     public int getId() {
         return id;

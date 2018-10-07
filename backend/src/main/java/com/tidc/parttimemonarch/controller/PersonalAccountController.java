@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-@Api(value = "兼职君 Personal Account 接口")
+@Api(value = "普通用户注册登陆接口")
 @RestController
 @RequestMapping(value = "/personal/account")
 public class PersonalAccountController {

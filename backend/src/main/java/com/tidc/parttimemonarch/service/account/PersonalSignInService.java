@@ -42,7 +42,8 @@ public class PersonalSignInService {
         if (password.equals(user.getPassword())){
             if (SessionUtil.addSession(user, session)){
                 user.setLastSignInAt(DateUtli.getDate());
-                this.accountDAO.save(user);
+                accountDAO.updateLastSignInAt(user.getUsername(), user.getLastSignInAt());
+                user = accountDAO.findByUsername(user.getUsername());
                 return new AccountRequestState(Code.SUCCEED, user);
             }
         }

@@ -2,21 +2,19 @@ package com.tidc.parttimemonarch.service.account;
 
 import com.tidc.parttimemonarch.dao.AccountDAO;
 import com.tidc.parttimemonarch.enumerate.Code;
-import com.tidc.parttimemonarch.message.AccountRequestState;
 import com.tidc.parttimemonarch.message.RequestState;
 import com.tidc.parttimemonarch.model.User;
 import com.tidc.parttimemonarch.util.CodeUtli;
-import com.tidc.parttimemonarch.util.RegexUtli;
 import com.tidc.parttimemonarch.util.SessionUtil;
 import com.tidc.parttimemonarch.util.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.dao.DataAccessException;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
+import java.sql.Date;
 
-@Component
+@Service
 public class PersonalSignUpService {
 
     @Autowired
@@ -45,13 +43,19 @@ public class PersonalSignUpService {
     private RequestState useUsernameAndPasswordToSignUp(User user, HttpSession session){
         RequestState requestState;
         Code code = UserUtil.validateUsernameAndPassword(user.getUsername(), user.getPassword());
+        Date date = new Date(new java.util.Date().getTime());
+        user.setLastSignInAt(date);
+        user.setCreatedAt(date);
+        user.setUpdatedAt(date);
+
 
         if (CodeUtli.isSuccceed(code)){
             return new RequestState(code);
         }
 
         try{
-            requestState = new AccountRequestState(Code.SUCCEED, accountDAO.save(user));
+            int matched = accountDAO.save(user);
+            requestState = new RequestState(matched != 0 ? Code.SUCCEED : Code.ERROR);
             SessionUtil.addSession(user, session);
         }catch (DataAccessException e){
             requestState = new RequestState(Code.USER_NAME_ALREADY_EXIST);
