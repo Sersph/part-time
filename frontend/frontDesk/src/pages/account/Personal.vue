@@ -1,6 +1,6 @@
 <template>
-  <section class="profile-container">
-    <profile-nav/>
+  <section class="personal-container">
+    <personal-nav/>
     <transition name="opacity" mode="out-in">
       <router-view/>
     </transition>
@@ -8,18 +8,18 @@
 </template>
 
 <script>
-import ProfileNav from '@/components/account/ProfileNav';
+import PersonalNav from '@/components/account/PersonalNav';
 
 export default {
-  name: 'Profile',
+  name: 'Persona',
   components: {
-    ProfileNav
+    PersonalNav
   }
 };
 </script>
 
 <style lang="scss">
-  .profile-container {
+  .personal-container {
     display: flex;
     & > section:last-child {
       flex: 1;

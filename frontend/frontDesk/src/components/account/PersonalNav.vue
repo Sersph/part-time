@@ -1,23 +1,23 @@
 <template>
-  <section class="profile-nav-container">
+  <section class="personal-nav-container">
     <el-menu
       :default-openeds="['1', '2']"
       :router="true">
       <el-submenu
-        v-for="(profileMenuItem, index) in profileMenuList"
+        v-for="(personalMenuItem, index) in personalMenuList"
         :key="index"
-        :index="profileMenuItem.index">
+        :index="personalMenuItem.index">
         <template slot="title">
-          <i class="material-icons">{{ profileMenuItem.icon }}</i>
-          <span>{{ profileMenuItem.title }}</span>
+          <i class="material-icons">{{ personalMenuItem.icon }}</i>
+          <span>{{ personalMenuItem.title }}</span>
         </template>
         <el-menu-item
-          v-for="(profileMenuChildrenItem, index) in profileMenuItem.children"
+          v-for="(personalMenuChildrenItem, index) in personalMenuItem.children"
           :key="index"
-          :route="profileMenuChildrenItem.route"
-          :index="profileMenuChildrenItem.index">
-          <span :class="{active: $route.path === profileMenuChildrenItem.route ? 'active': ''}"
-          >{{ profileMenuChildrenItem.title }}</span>
+          :route="personalMenuChildrenItem.route"
+          :index="personalMenuChildrenItem.index">
+          <span :class="{active: $route.path === personalMenuChildrenItem.route ? 'active': ''}"
+          >{{ personalMenuChildrenItem.title }}</span>
         </el-menu-item>
       </el-submenu>
     </el-menu>
@@ -26,16 +26,16 @@
 
 <script>
 export default {
-  name: 'ProfileNav',
+  name: 'personalNav',
   data () {
     return {
-      profileMenuList: [
+      personalMenuList: [
         {
           index: '1',
           title: '我的兼职',
           icon: 'personal',
           children: [
-            { index: '1-1', title: '我的申请', route: '/account/profile/partTimeApply' }
+            { index: '1-1', title: '我的申请', route: '/account/personal/partTimeApply' }
           ]
         },
         {
@@ -43,7 +43,7 @@ export default {
           title: '账户设置',
           icon: 'view_list',
           children: [
-            { index: '2-1', title: '修改简历', route: '/account/profile/resume' }
+            { index: '2-1', title: '修改简历', route: '/account/personal/resume' }
           ]
         }
       ]
@@ -53,7 +53,7 @@ export default {
 </script>
 
 <style lang="scss">
-  .profile-nav-container {
+  .personal-nav-container {
     min-width: 250px;
     height: 50vh;
     .el-menu {

@@ -4,8 +4,8 @@ import VueRouter from 'vue-router';
 // 非懒加载路由组件
 import SignIn from '@/pages/account/SignIn';
 import SignUp from '@/pages/account/SignUp';
-import ProfilePartTimeApply from '@/pages/account/ProfilePartTimeApply';
-import ProfileResume from '@/pages/account/ProfileResume';
+import PersonalPartTimeApply from '@/pages/account/PersonalPartTimeApply';
+import PersonalResume from '@/pages/account/PersonalResume';
 import EnterprisePartTimePost from '@/pages/account/EnterprisePartTimePost';
 import EnterprisePartTimeRecruitment from '@/pages/account/EnterprisePartTimeRecruitment';
 import EnterpriseCertification from '@/pages/account/EnterpriseCertification';
@@ -43,20 +43,20 @@ export default new VueRouter({
           component: SignIn
         },
         {
-          path: '/account/profile',
-          component: () => import('@/pages/account/Profile'),
+          path: '/account/personal',
+          component: () => import('@/pages/account/Personal'),
           children: [
             {
-              path: '/account/profile',
-              redirect: '/account/profile/partTimeApply'
+              path: '/account/personal',
+              redirect: '/account/personal/partTimeApply'
             },
             {
-              path: '/account/profile/partTimeApply',
-              component: ProfilePartTimeApply
+              path: '/account/personal/partTimeApply',
+              component: PersonalPartTimeApply
             },
             {
-              path: '/account/profile/resume',
-              component: ProfileResume
+              path: '/account/personal/resume',
+              component: PersonalResume
             }
           ]
         },

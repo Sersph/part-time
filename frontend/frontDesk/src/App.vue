@@ -70,6 +70,26 @@ export default {
     width: 100%;
   }
 
+  .el-notification {
+    border: 0 !important;
+    border-radius: 2px !important;
+    background-color: #323232 !important;
+    box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.2) !important;
+  }
+
+  .el-icon-loading {
+    display: none !important;
+  }
+
+  .el-button [class*=el-icon-] + span {
+    margin-left: 0 !important;
+  }
+
+  .el-notification__content {
+    margin: 0 !important;
+    color: #fff !important;
+  }
+
   // nprogress
   #nprogress .bar {
     height: 5px !important;

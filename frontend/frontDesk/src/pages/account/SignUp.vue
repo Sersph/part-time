@@ -1,16 +1,16 @@
 <template>
   <section class="sign-up-container">
     <el-tabs class="tab" v-model="signUpType" :stretch="true">
-      <el-tab-pane label="个人用户注册" name="profile">
-        <el-form :model="profileForm" :rules="profileFormRules" ref="profileForm" label-width="128px">
+      <el-tab-pane label="个人用户注册" name="personal">
+        <el-form :model="personalForm" :rules="personalFormRules" ref="personalForm" label-width="128px">
           <el-form-item label="用户名" prop="username">
-            <el-input v-model="profileForm.username"></el-input>
+            <el-input v-model="personalForm.username"></el-input>
           </el-form-item>
           <el-form-item label="密码" prop="password">
-            <el-input v-model="profileForm.password"></el-input>
+            <el-input type="password" v-model="personalForm.password"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="submitProfileForm('profileForm')">立即注册</el-button>
+            <el-button type="primary" :loading="submitPersonalFormLoading" @click="submitPersonalForm('personalForm')">立即注册</el-button>
           </el-form-item>
         </el-form>
       </el-tab-pane>
@@ -39,7 +39,7 @@
             <el-input v-model="enterpriseForm.username"></el-input>
           </el-form-item>
           <el-form-item label="管理员密码" prop="password">
-            <el-input v-model="enterpriseForm.password"></el-input>
+            <el-input type="password" v-model="enterpriseForm.password"></el-input>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="submitEnterpriseForm('enterpriseForm')">立即注册</el-button>
@@ -51,25 +51,31 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+import NProgress from 'nprogress';
+import api from '@/api';
+
 export default {
   name: 'SignUp',
   data () {
     return {
-      signUpType: this.$route.query.type !== undefined ? this.$route.query.type : 'profile',
-      profileForm: {
+      signUpType: this.$route.query.type !== undefined ? this.$route.query.type : 'personal',
+      submitPersonalFormLoading: false,
+      personalForm: {
         username: '',
         password: ''
       },
-      profileFormRules: {
+      personalFormRules: {
         username: [
-          { required: true, message: '用户名由3-20个字符组成', trigger: 'change' },
-          { min: 3, max: 20, message: '用户名由3-20个字符组成', trigger: 'change' }
+          { required: true, message: '用户名由6-20个字符组成', trigger: 'change' },
+          { min: 6, max: 20, message: '用户名由6-20个字符组成', trigger: 'change' }
         ],
         password: [
-          { required: true, message: '密码由3-20个字符组成', trigger: 'change' },
-          { min: 3, max: 20, message: '密码由3-20个字符组成', trigger: 'change' }
+          { required: true, message: '密码由6-20个字符组成', trigger: 'change' },
+          { min: 6, max: 20, message: '密码由6-20个字符组成', trigger: 'change' }
         ]
       },
+      submitEnterpriseFormLoading: false,
       enterpriseForm: {},
       enterpriseFormRules: {
         enterpriseName: [
@@ -180,12 +186,45 @@ export default {
     };
   },
   methods: {
-    submitProfileForm (formName) {
-      this.$refs[formName].validate((valid) => {
+    ...mapActions('account', [
+      'asyncInitUserInfo'
+    ]),
+    submitPersonalForm (formName) {
+      this.$refs[formName].validate(async (valid) => {
         if (valid) {
-          alert('submit p!');
+          this.submitPersonalFormLoading = true;
+          NProgress.start();
+          const result = await api.account.signUp({
+            type: 1,
+            username: this.personalForm.username,
+            password: this.personalForm.password
+          });
+          NProgress.done();
+          if (result.code === 0) {
+            // 注册成功逻辑
+            this.$notify({
+              message: '注册成功',
+              position: 'bottom-left',
+              duration: 1500,
+              showClose: false
+            });
+            // 更新 vuex 用户信息
+            await this.asyncInitUserInfo();
+            // 跳转首页
+            setTimeout(() => {
+              this.$router.replace('/');
+            }, 1500);
+          } else {
+            this.submitPersonalFormLoading = false;
+            // 注册失败逻辑
+            this.$notify({
+              message: result.message,
+              position: 'bottom-left',
+              duration: 2000,
+              showClose: false
+            });
+          }
         } else {
-          console.log('error submit!!');
           return false;
         }
       });

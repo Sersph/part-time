@@ -1,7 +1,7 @@
 <template>
-  <section class="profile-part-time-apply-container">
+  <section class="personal-part-time-apply-container">
     <el-table
-      :data="profilePartTimeApplyList"
+      :data="personalPartTimeApplyList"
       style="width: 100%"
       :row-class-name="tableRowClassName">
       <el-table-column
@@ -24,10 +24,10 @@
 
 <script>
 export default {
-  name: 'ProfilePartTimeApply',
+  name: 'PersonalPartTimeApply',
   data () {
     return {
-      profilePartTimeApplyList: [{
+      personalPartTimeApplyList: [{
         date: '2016-05-02',
         name: '王小虎',
         address: '上海市普陀区金沙江路 1518 弄'
@@ -60,7 +60,7 @@ export default {
 </script>
 
 <style lang="scss">
-  .profile-part-time-apply-container {
+  .personal-part-time-apply-container {
     padding: 56px 0 0 65px;
   }
 

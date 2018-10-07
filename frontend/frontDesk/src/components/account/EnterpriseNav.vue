@@ -1,5 +1,5 @@
 <template>
-  <section class="profile-nav-container">
+  <section class="personal-nav-container">
     <el-menu
       :default-openeds="['1', '2']"
       :router="true">
@@ -54,7 +54,7 @@ export default {
 </script>
 
 <style lang="scss">
-  .profile-nav-container {
+  .personal-nav-container {
     min-width: 250px;
     height: 50vh;
     .el-menu {

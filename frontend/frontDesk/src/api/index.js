@@ -1,1 +1,5 @@
-export default {};
+import account from '@/api/account';
+
+export default {
+  account
+};
