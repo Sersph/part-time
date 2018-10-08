@@ -31,7 +31,7 @@ public enum Code {
     public String toString() {
         return "{" +
                 "code:\"" + code + "\"" +
-                ", message:\"" + message + "\"" +
+                ", result:\"" + message + "\"" +
                 '}';
     }
 }
