@@ -1,8 +1,8 @@
 package com.tidc.parttimemonarch.controller;
 
 import com.tidc.parttimemonarch.enumerate.Code;
-import com.tidc.parttimemonarch.message.RequestState;
-import com.tidc.parttimemonarch.service.account.AccountStateService;
+import com.tidc.parttimemonarch.result.RequestResult;
+import com.tidc.parttimemonarch.service.account.IAccountService;
 import com.tidc.parttimemonarch.util.SessionUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -20,23 +20,23 @@ public class AccountStateController {
 
 
     @Autowired
-    private AccountStateService accountStateService;
+    private IAccountService accountService;
 
 
     @ApiOperation(value="获取用户信息")
     @GetMapping(value = "/userInfo")
-    public RequestState getUserInfo(HttpServletRequest httpServletRequest){
-        return this.accountStateService.getUserInfo(httpServletRequest.getSession());
+    public RequestResult getUserInfo(HttpServletRequest httpServletRequest){
+        return this.accountService.getUserInfo(httpServletRequest.getSession());
     }
 
 
     @ApiOperation(value = "退出登陆")
     @GetMapping(value = "/signOut")
-    public RequestState exit(HttpServletRequest httpServletRequest){
+    public RequestResult exit(HttpServletRequest httpServletRequest){
         if (SessionUtil.removeSession("user", httpServletRequest.getSession())){
-            return new RequestState(Code.SUCCEED);
+            return new RequestResult(Code.SUCCEED);
         }
 
-        return new RequestState(Code.ERROR);
+        return new RequestResult(Code.ERROR);
     }
 }

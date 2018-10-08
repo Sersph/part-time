@@ -11,4 +11,5 @@ public class ParttimemonarchApplication {
     public static void main(String[] args) {
         SpringApplication.run(ParttimemonarchApplication.class, args);
     }
+
 }

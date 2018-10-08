@@ -1,12 +1,12 @@
-package com.tidc.parttimemonarch.message;
+package com.tidc.parttimemonarch.result;
 
 import com.tidc.parttimemonarch.enumerate.Code;
 import com.tidc.parttimemonarch.model.User;
 
-public class AccountRequestState extends RequestState {
+public class AccountRequestResult extends RequestResult {
     private User userInfo;
 
-    public AccountRequestState(Code code, User userInfo) {
+    public AccountRequestResult(Code code, User userInfo) {
         super(code);
         this.userInfo = userInfo;
     }
@@ -23,7 +23,7 @@ public class AccountRequestState extends RequestState {
     public String toString() {
         return "{" +
                 "code=" + this.getCode() +
-                "message=" + this.getMessage() +
+                "result=" + this.getMessage() +
                 "userInfo=" + userInfo +
                 '}';
     }

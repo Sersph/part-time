@@ -1,22 +1,22 @@
-package com.tidc.parttimemonarch.message;
+package com.tidc.parttimemonarch.result;
 
 import com.tidc.parttimemonarch.enumerate.Code;
 
-public class RequestState {
+public class RequestResult {
     private int code;
     private String message;
 
 
-    public RequestState() {
+    public RequestResult() {
         super();
     }
 
-    public RequestState(int code, String message) {
+    public RequestResult(int code, String message) {
         this.code = code;
         this.message = message;
     }
 
-    public RequestState(Code code) {
+    public RequestResult(Code code) {
         this.code = code.getCode();
         this.message = code.getMessage();
     }
@@ -36,9 +36,9 @@ public class RequestState {
 
     @Override
     public String toString() {
-        return "RequestState{" +
+        return "RequestResult{" +
                 "code=" + code +
-                ", message='" + message + '\'' +
+                ", result='" + message + '\'' +
                 '}';
     }
 }
