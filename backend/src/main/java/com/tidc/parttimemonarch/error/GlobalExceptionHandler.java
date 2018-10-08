@@ -17,8 +17,6 @@ import java.util.List;
  * 全局异常处理器
  * <code>ControllerAdvice的类注解</code>用于捕捉全局异常，进行统一异常处理
  *
- * @author 张朝锋
- * @date 2018-09-20
  */
 @ControllerAdvice
 public class GlobalExceptionHandler {

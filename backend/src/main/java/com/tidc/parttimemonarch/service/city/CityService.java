@@ -24,7 +24,13 @@ public class CityService implements ICityService {
         List<City> cityList = this.cityDAO.selectCityAll();
 
         CityListRequestResult cityListRequestResult = new CityListRequestResult(Code.SUCCEED, this.neaten(cityList));
-        cityListRequestResult.setCurrentCity(this.cityDAO.selectCityByName("东莞市"));
+
+        City dongguan = this.cityDAO.selectCityByName("东莞市");
+        List<City> cities = new ArrayList<>();
+        Region region = new Region(dongguan, this.getRegionList(dongguan.getId(), cities, cityList));
+
+        cityListRequestResult.setCurrentCity(region);
+
         return cityListRequestResult;
     }
 
