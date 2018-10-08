@@ -20,7 +20,7 @@
       <el-submenu index="5" :show-timeout="50" :hide-timeout="50" v-if="userInfo.id">
         <template slot="title">我的</template>
         <el-menu-item index="5-1" @click="$router.push(userInfo.type === 1 ? '/account/personal' : '/account/enterprise')">
-          <a>工作台</a>
+          <a>个人中心</a>
         </el-menu-item>
         <el-menu-item index="5-2" @click="signOut">
           <a>退出</a>
