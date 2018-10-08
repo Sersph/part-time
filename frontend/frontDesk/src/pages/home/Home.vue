@@ -67,13 +67,14 @@ export default {
       const partTimeSearchConditionURLParams = this.$route.query;
       this.editPartTimeSearchCondition({
         partTimeSearchCondition: routerUtils.getNewPartTimeSearchConditionUrlParams({
-          cityId: '0',
+          cityId: this.currentCity.id,
           areaId: '0',
           typeId: '0',
           speciesId: '0',
           keyword: '',
           limitStart: '0',
-          endStart: '0'
+          endStart: '0',
+          limitSize: '10'
         }, partTimeSearchConditionURLParams)
       });
 

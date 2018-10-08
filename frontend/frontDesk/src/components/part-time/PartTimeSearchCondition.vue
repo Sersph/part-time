@@ -4,8 +4,11 @@
       <div class="condition-name">区域</div>
       <div class="condition-list">
         <el-radio-group v-model="areaId">
+          <div class="item">
+            <el-radio-button :label="0">不限</el-radio-button>
+          </div>
           <div class="item"
-               v-for="(areaItem, index) in areaList"
+               v-for="(areaItem, index) in currentCity.children"
                :key="index"
                @click="setAreaId(areaItem.id)"
           >
@@ -56,12 +59,6 @@ export default {
   name: 'PartTimeSearchCondition',
   data () {
     return {
-      areaList: [
-        { id: 0, name: '不限' },
-        { id: 1, name: '罗湖区' },
-        { id: 2, name: '罗湖区' },
-        { id: 3, name: '罗湖区' }
-      ],
       typeList: [
         { id: 0, name: '不限' },
         { id: 1, name: '日结兼职' },
@@ -96,6 +93,9 @@ export default {
   computed: {
     ...mapState('partTime', [
       'partTimeSearchCondition'
+    ]),
+    ...mapState('location', [
+      'currentCity'
     ])
   },
   watch: {
@@ -159,8 +159,10 @@ export default {
     border-radius: 3px;
     .part-time-search-condition-item {
       display: flex;
+      min-height: 48px;
       margin-top: 20px;
       border-bottom: 1px solid #dadada;
+      transition: height 1s;
       &:last-child {
         border-bottom: 0;
       }
@@ -177,7 +179,7 @@ export default {
           position: relative;
           display: inline-block;
           margin-right: 30px;
-          margin-bottom: 15px;
+          margin-bottom: 20px;
           span {
             overflow: hidden;
             width: 80px;

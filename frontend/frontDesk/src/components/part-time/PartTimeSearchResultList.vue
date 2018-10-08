@@ -173,7 +173,6 @@ export default {
       }
       .part-time-item:hover {
         background-color: #ecf5ff;
-        border-color: #409EFF;
       }
     }
     .part-time-search-result-p {

@@ -10,7 +10,9 @@ server.use(middlewares);
 server.use(jsonServerHttp.rewriter({
   '/account/personal/signUp': '/accountPersonalSignUp',
   '/account/personal/signIn': '/accountPersonalSignIn',
-  '/account/userInfo': '/accountUserInfo/1'
+  '/account/signOut': '/accountSignOut/1',
+  '/account/userInfo': '/accountUserInfo/1',
+  '/common/location/regionList': '/commonLocationRegionList/1'
 }));
 
 // Add custom routes before JSON Server router

@@ -15,11 +15,13 @@ export default {
   actions: {
     async asyncInitUserInfo ({ commit }) {
       const result = await api.account.getUserInfo();
+      let userInfo = {};
       if (result.code === 0) {
-        commit(types.EDIT_USER_INFO, {
-          userInfo: result.userInfo
-        });
+        userInfo = result.userInfo;
       }
+      commit(types.EDIT_USER_INFO, {
+        userInfo
+      });
     }
   },
   getters: {}
