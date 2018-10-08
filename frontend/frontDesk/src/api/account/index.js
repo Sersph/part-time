@@ -2,31 +2,32 @@ import ajax from '@/api/ajax';
 import config from '@/config';
 
 export default {
-  signUp ({ type, username, password }) {
+  signUp (params) {
     return ajax(
       'POST',
       `${config.API_ROOT}/account/personal/signUp`,
-      {
-        type,
-        username,
-        password
-      }
+      params
     );
   },
-  signIn ({ username, password }) {
+  signIn (params) {
     return ajax(
       'POST',
       `${config.API_ROOT}/account/personal/signIn`,
-      {
-        username,
-        password
-      }
+      params
+    );
+  },
+  signOut () {
+    return ajax(
+      'GET',
+      `${config.API_ROOT}/account/signOut`,
+      {}
     );
   },
   getUserInfo () {
     return ajax(
       'GET',
-      `${config.API_ROOT}/account/userInfo`
+      `${config.API_ROOT}/account/userInfo`,
+      {}
     );
   }
 };

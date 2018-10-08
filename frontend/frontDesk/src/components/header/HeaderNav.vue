@@ -1,32 +1,39 @@
 <template>
   <header class="header-nav-container">
-    <div class="header-menu-list">
-      <div>
-        <transition name="opacity" mode="out-in">
-          <a class="current-location-name" @click="showSelectCityContainer"
-             v-show="this.$route.meta.showSelectCity">
-            <span>{{ currentCity.name }}</span><i class="el-icon-arrow-down"></i>
-          </a>
-        </transition>
-      </div>
-      <div>
-        <router-link to="/home">
-          <span>首页</span>
-        </router-link>
-        <router-link to="/account/signIn" v-if="!userInfo.id">
-          <span>登陆 / 注册</span>
-        </router-link>
-        <router-link class="control" :to="userInfo.type === 1 ? '/account/personal' : '/account/enterprise'" v-if="userInfo.id">
-          <span>我的控制台</span>
-        </router-link>
-      </div>
-    </div>
+    <el-menu
+      mode="horizontal"
+      background-color="#409EFF"
+      active-text-color="#fff">
+      <transition name="opacity" mode="out-in">
+        <el-menu-item index="1" class="current-location-name"
+                      @click="showSelectCityContainer"
+                      v-show="this.$route.meta.showSelectCity">
+          <a>{{ currentCity.name }}<i class="el-icon-arrow-down"></i></a>
+        </el-menu-item>
+      </transition>
+      <el-menu-item index="2">
+        <router-link to="/home">首页</router-link>
+      </el-menu-item>
+      <el-menu-item index="3" v-if="!userInfo.id">
+        <router-link to="/account/signIn">登陆/注册</router-link>
+      </el-menu-item>
+      <el-submenu index="5" :show-timeout="50" :hide-timeout="50" v-if="userInfo.id">
+        <template slot="title">我的</template>
+        <el-menu-item index="5-1" @click="$router.push(userInfo.type === 1 ? '/account/personal' : '/account/enterprise')">
+          <a>工作台</a>
+        </el-menu-item>
+        <el-menu-item index="5-2" @click="signOut">
+          <a>退出</a>
+        </el-menu-item>
+      </el-submenu>
+    </el-menu>
     <select-city ref="selectCity"/>
   </header>
 </template>
 
 <script>
 import { mapState, mapActions } from 'vuex';
+import api from '@/api';
 import SelectCity from '@/components/location/SelectCity';
 
 export default {
@@ -46,14 +53,6 @@ export default {
     // 初始化用户信息
     await this.asyncInitUserInfo();
   },
-  watch: {
-    userInfo: {
-      deep: true,
-      handler (val) {
-        console.log(val);
-      }
-    }
-  },
   methods: {
     ...mapActions('account', [
       'asyncInitUserInfo'
@@ -61,6 +60,22 @@ export default {
     showSelectCityContainer () {
       // 触发子组件显示
       this.$refs.selectCity.selectCityContainerVisibleFlag = true;
+    },
+    async signOut () {
+      const result = await api.account.signOut();
+      if (result.code === 0) {
+        await this.asyncInitUserInfo();
+        this.$notify({
+          message: '退出成功',
+          position: 'bottom-left',
+          duration: 1500,
+          showClose: false
+        });
+        // 跳转首页
+        if (this.$route.path !== '/home') {
+          this.$router.replace('/');
+        }
+      }
     }
   }
 };
@@ -71,51 +86,50 @@ export default {
     display: flex;
     justify-content: center;
     background-color: #409EFF;
-    .header-menu-list {
+    .el-menu.el-menu--horizontal {
+      border: none;
+    }
+    .el-menu {
       width: 83.33333%;
-      display: flex;
-      justify-content: space-between;
-      div {
-        display: flex;
-        height: 60px;
-        line-height: 60px;
-        font-size: 16px;
+      text-align: right;
+      & > li {
+        float: none !important;
+        display: inline-block;
+        padding: 0;
+        border: none !important;
+        i {
+          width: 12px;
+          height: 12px;
+          font-size: 13px;
+          margin-left: 8px;
+          color: #fff !important;
+        }
+        .el-icon-arrow-down {
+          margin-top: -3px;
+        }
+        .el-submenu__title {
+          border: none !important;
+          color: #fff !important;
+        }
         a {
+          display: block;
           padding: 0 20px;
-          color: #fff;
-          cursor: pointer;
-          border-bottom: 5px solid transparent;
-          transition: border-bottom-color .3s, background-color .3s, opacity .7s;
-        }
-        a.current-location-name {
-          span {
-            margin-right: 10px;
-          }
-          i {
-            width: 18px;
-            height: 18px;
-            margin-right: 0;
-          }
-        }
-        a:hover {
-          background: #66b1ff;
-          border-color: #66b1ff;
-        }
-        a.active {
-          border-bottom: 5px solid #1f6fc0;
-        }
-        a.control {
-          background-color: #f56c6c;
-        }
-        a.control:hover {
-          background: #f78989;
-          border-color: #f73035;
-          color: #fff;
-        }
-        a.control.active {
-          border-bottom: 5px solid #f73035;
+          color: #fff !important;
         }
       }
+      & > li:first-child {
+        float: left !important;
+      }
+    }
+    .el-submenu.is-opened > .el-submenu__title .el-submenu__icon-arrow {
+      transform: none;
+    }
+  }
+
+  .el-menu--popup {
+    min-width: 89px !important;
+    a {
+      color: #fff;
     }
   }
 </style>

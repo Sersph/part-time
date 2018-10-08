@@ -3,7 +3,7 @@
     <!-- 顶部菜单组件 -->
     <header-nav/>
     <main class="wrapper-container" ref="wrapper-container">
-      <transition name="opacity" mode="out-in">
+      <transition name="slide" mode="out-in">
         <router-view/>
       </transition>
     </main>
@@ -46,15 +46,25 @@ export default {
     }
   }
 
+  .slide-enter-active,
+  .slide-leave-active {
+    transition: opacity .3s cubic-bezier(0.0, 0.0, 0.2, 1), transform .3s cubic-bezier(0.0, 0.0, 0.2, 1);
+  }
+
+  .slide-enter,
+  .slide-leave-active {
+    opacity: 0;
+    transform: translateY(15vh);
+  }
+
   .opacity-enter-active,
   .opacity-leave-active {
-    transition: opacity .3s cubic-bezier(0.0, 0.0, 0.2, 1), transform .3s cubic-bezier(0.0, 0.0, 0.2, 1);
+    transition: opacity .5s;
   }
 
   .opacity-enter,
   .opacity-leave-active {
     opacity: 0;
-    transform: translateY(15%);
   }
 
   .el-form-item.is-success .el-input__inner, .el-form-item.is-success .el-input__inner:focus, .el-form-item.is-success .el-textarea__inner, .el-form-item.is-success .el-textarea__inner:focus {
