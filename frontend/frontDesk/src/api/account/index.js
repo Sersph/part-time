@@ -2,14 +2,14 @@ import ajax from '@/api/ajax';
 import config from '@/config';
 
 export default {
-  signUp (params) {
+  personalSignUp (params) {
     return ajax(
       'POST',
       `${config.API_ROOT}/account/personal/signUp`,
       params
     );
   },
-  signIn (params) {
+  personalSignIn (params) {
     return ajax(
       'POST',
       `${config.API_ROOT}/account/personal/signIn`,
@@ -28,6 +28,13 @@ export default {
       'GET',
       `${config.API_ROOT}/account/userInfo`,
       {}
+    );
+  },
+  sendMailCaptcha (params) {
+    return ajax(
+      'POST',
+      `${config.API_ROOT}/account/sendMailCaptcha`,
+      params
     );
   }
 };

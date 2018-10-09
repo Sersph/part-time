@@ -6,7 +6,7 @@
       active-text-color="#fff">
       <transition name="opacity" mode="out-in">
         <el-menu-item index="1" class="current-location-name"
-                      @click="showSelectCityContainer"
+                      @click="$refs.selectCity.selectCityContainerVisibleFlag = true"
                       v-show="this.$route.meta.showSelectCity">
           <a>{{ currentCity.name }}<i class="el-icon-arrow-down"></i></a>
         </el-menu-item>
@@ -50,17 +50,18 @@ export default {
     ])
   },
   async mounted () {
+    // 初始化地区
+    await this.initRegionList();
     // 初始化用户信息
     await this.asyncInitUserInfo();
   },
   methods: {
+    ...mapActions('location', [
+      'initRegionList'
+    ]),
     ...mapActions('account', [
       'asyncInitUserInfo'
     ]),
-    showSelectCityContainer () {
-      // 触发子组件显示
-      this.$refs.selectCity.selectCityContainerVisibleFlag = true;
-    },
     async signOut () {
       const result = await api.account.signOut();
       if (result.code === 0) {

@@ -29,20 +29,28 @@ export default {
   },
   computed: {
     ...mapState('location', [
+      'regionList',
       'currentCity'
     ])
   },
   async mounted () {
-    // 初始化地区
-    await this.initRegionList();
+    NProgress.start();
     // 初始化搜索结果
     await this.asyncEditPartTimeSearchResultListByUrlParams();
   },
   watch: {
+    // 监听 regionList 城市是否加载完毕
+    regionList: {
+      async handler () {
+        // 初始化搜索结果
+        await this.asyncEditPartTimeSearchResultListByUrlParams();
+      }
+    },
     // 监听 url 搜索兼职
     $route: {
       async handler () {
         if (this.$route.path === '/home') {
+          // 根据 url 参数初始化搜索结果
           await this.asyncEditPartTimeSearchResultListByUrlParams();
         }
       }
@@ -50,19 +58,20 @@ export default {
   },
   methods: {
     ...mapActions('location', [
-      'editCurrentCityByCityId',
-      'initRegionList'
+      'editCurrentCityByCityId'
     ]),
     ...mapActions('partTime', [
       'editPartTimeSearchCondition',
       'asyncEditPartTimeSearchResultList'
     ]),
     async asyncEditPartTimeSearchResultListByUrlParams () {
+      if (this.regionList.length <= 0) {
+        return;
+      }
       // 初始化所在城市
       this.editCurrentCityByCityId({
         cityId: this.$route.query.cityId !== undefined ? this.$route.query.cityId : '0'
       });
-
       // 初始化搜索条件
       const partTimeSearchConditionURLParams = this.$route.query;
       this.editPartTimeSearchCondition({

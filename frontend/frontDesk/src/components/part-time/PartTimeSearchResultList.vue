@@ -14,13 +14,12 @@
           <i class="material-icons">location_on</i>
           <span :title="partTimeItem.location">{{ partTimeItem.location }}</span>
         </span>
-        <span class="part-time-view-count">
-          <i class="material-icons">person</i>
-          <span :title="partTimeItem.viewCount">{{ partTimeItem.viewCount }}</span>
+        <span class="part-time-price-settle-type">
+          <i class="material-icons">attach_money</i>
+          <span :title="partTimeItem.viewCount">{{ partTimeItem.price }}元 / {{ partTimeItem.priceType }}</span>
         </span>
-        <span class="part-time-created-at">
-          <i class="material-icons">alarm</i>
-          <span :title="partTimeItem.createdAt">{{ partTimeItem.createdAt }}</span>
+        <span class="part-time-settle-type">
+          <span :title="partTimeItem.createdAt">{{ partTimeItem.priceType }}结</span>
         </span>
       </router-link>
     </div>
@@ -139,8 +138,8 @@ export default {
         }
         .part-time-title,
         .part-time-area,
-        .part-time-view-count,
-        .part-time-created-at {
+        .part-time-price-settle-type,
+        .part-time-settle-type {
           overflow: hidden;
           font-size: 15px;
           white-space: nowrap;
@@ -153,19 +152,18 @@ export default {
           }
         }
         .part-time-title {
-          width: 45%;
+          width: 50%;
           font-weight: bold;
           font-size: 16px;
         }
         .part-time-area {
-          width: 20%;
+          width: 15%;
         }
-        .part-time-view-count {
-          width: 20%;
+        .part-time-price-settle-type {
+          width: 15%;
         }
-        .part-time-created-at {
-          width: 30%;
-          text-align: right;
+        .part-time-settle-type {
+          width: 15%;
         }
       }
       .part-time-item:last-child {

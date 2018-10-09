@@ -4,7 +4,7 @@
       <div class="condition-name">区域</div>
       <div class="condition-list">
         <el-radio-group v-model="areaId">
-          <div class="item">
+          <div class="item" @click="setAreaId(0)">
             <el-radio-button :label="0">不限</el-radio-button>
           </div>
           <div class="item"
@@ -22,6 +22,9 @@
       <div class="condition-name">类型</div>
       <div class="condition-list">
         <el-radio-group v-model="typeId">
+          <div class="item" @click="setTypeId(0)">
+            <el-radio-button :label="0">不限</el-radio-button>
+          </div>
           <div class="item"
                v-for="(typeItem, index) in typeList"
                :key="index"
@@ -37,6 +40,9 @@
       <div class="condition-name">种类</div>
       <div class="condition-list">
         <el-radio-group v-model="speciesId">
+          <div class="item" @click="setSpeciesId(0)">
+            <el-radio-button :label="0">不限</el-radio-button>
+          </div>
           <div class="item"
                v-for="(speciesItem, index) in speciesList"
                :key="index"
@@ -60,16 +66,12 @@ export default {
   data () {
     return {
       typeList: [
-        { id: 0, name: '不限' },
-        { id: 1, name: '日结兼职' },
         { id: 2, name: '短期兼职' },
         { id: 3, name: '长期兼职' },
         { id: 4, name: '寒假工' },
-        { id: 5, name: '暑假工' },
-        { id: 6, name: '手机兼职', isHot: true }
+        { id: 5, name: '暑假工' }
       ],
       speciesList: [
-        { id: 0, name: '不限' },
         { id: 2, name: '其他' },
         { id: 3, name: '派单' },
         { id: 4, name: '销售' },

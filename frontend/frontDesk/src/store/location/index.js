@@ -23,14 +23,9 @@ export default {
     }
   },
   actions: {
-    async initRegionList ({ commit, state, dispatch }) {
-      // 只初始化一次
-      if (state.initRegionListFlag !== undefined) return;
-      state.initRegionListFlag = false;
-
+    async initRegionList ({ commit }) {
       // 当前城市和区域列表
       const result = await api.location.getRegionList();
-
       if (result.code === 0) {
         // 修改地区列表
         commit(types.EDIT_REGION_LIST, {
@@ -44,9 +39,9 @@ export default {
     },
     editCurrentCityByCityId ({ commit, state }, { cityId }) {
       let currentCity = null;
-      if (cityId !== 0) {
+      if (cityId !== '0') {
         state.regionList.find(provinceItem => {
-          const cityItem = provinceItem.children.find(cityItem => cityItem.id === parseInt(cityId));
+          const cityItem = provinceItem.children.find(cityItem => parseInt(cityItem.id) === parseInt(cityId));
           if (cityItem) {
             currentCity = cityItem;
             return true;
@@ -62,5 +57,20 @@ export default {
       });
     }
   },
-  getters: {}
+  getters: {
+    cityList (state) {
+      // 深度拷贝地区数据
+      const newRegionList = JSON.parse(JSON.stringify(state.regionList));
+      // 返回不带区域的地区数据
+      return newRegionList.map(provinceItem => {
+        if (provinceItem.children !== undefined) {
+          provinceItem.children = provinceItem.children.map(cityItem => {
+            delete cityItem.children;
+            return cityItem;
+          });
+        }
+        return provinceItem;
+      });
+    }
+  }
 };

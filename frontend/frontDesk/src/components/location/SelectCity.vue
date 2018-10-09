@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'SelectCity',
@@ -35,22 +35,17 @@ export default {
     };
   },
   computed: {
-    ...mapState('location', [
-      'regionList'
-    ]),
-    cityList () {
-      // 深度拷贝地区数据
-      const newRegionList = JSON.parse(JSON.stringify(this.regionList));
-      // 返回不带区域的地区数据
-      return newRegionList.map(provinceItem => {
-        if (provinceItem.children !== undefined) {
-          provinceItem.children = provinceItem.children.map(cityItem => {
-            delete cityItem.children;
-            return cityItem;
-          });
-        }
-        return provinceItem;
-      });
+    ...mapGetters('location', [
+      'cityList'
+    ])
+  },
+  watch: {
+    // 监听 url
+    $route: {
+      handler () {
+        // url 只要变动关闭搜索框
+        this.selectCityContainerVisibleFlag = false;
+      }
     }
   },
   methods: {

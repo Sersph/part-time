@@ -10,7 +10,9 @@
             <el-input type="password" v-model="personalForm.password"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" :loading="submitPersonalFormLoading" @click="submitPersonalForm('personalForm')">立即注册</el-button>
+            <el-button type="primary" :loading="submitPersonalFormLoading" @click="submitPersonalForm('personalForm')">
+              立即注册
+            </el-button>
           </el-form-item>
         </el-form>
       </el-tab-pane>
@@ -19,26 +21,24 @@
           <el-form-item label="企业名称" prop="enterpriseName">
             <el-input v-model="enterpriseForm.enterpriseName"></el-input>
           </el-form-item>
-          <el-form-item label="行业类型" prop="industryType">
+          <el-form-item label="所在城市" prop="cityId">
             <el-cascader
-              :options="industryTypeList"
-              v-model="enterpriseForm.industryType">
+              :options="cityList"
+              :props="{value: 'id', label: 'name'}"
+              v-model="enterpriseForm.cityId">
             </el-cascader>
           </el-form-item>
-          <el-form-item label="人员规模" prop="staffSize">
-            <el-select v-model="enterpriseForm.staffSize">
-              <el-option label="1 - 50人" value="1"></el-option>
-              <el-option label="51 - 100人" value="2"></el-option>
-              <el-option label="101 - 200人" value="3"></el-option>
-              <el-option label="201 - 500人" value="4"></el-option>
-              <el-option label="501 - 1000人" value="5"></el-option>
-              <el-option label="1001及以上" value="6"></el-option>
-            </el-select>
+          <el-form-item label="邮箱" prop="email">
+            <el-input type="text" v-model="enterpriseForm.email"></el-input>
           </el-form-item>
-          <el-form-item label="管理员用户名" prop="username">
-            <el-input v-model="enterpriseForm.username"></el-input>
+          <el-form-item label="邮箱验证码" prop="emailCaptcha">
+            <el-input placeholder="验证码" v-model="enterpriseForm.emailCaptcha">
+              <el-button :class="sendMailCaptchaCountdown > 0 ? 'disabled' : ''" slot="append" @click="sendMailCaptcha('enterpriseForm')">
+                {{ sendMailCaptchaCountdown > 0 ? `已发送 (${sendMailCaptchaCountdown}s)` : '发送' }}
+              </el-button>
+            </el-input>
           </el-form-item>
-          <el-form-item label="管理员密码" prop="password">
+          <el-form-item label="密码" prop="password">
             <el-input type="password" v-model="enterpriseForm.password"></el-input>
           </el-form-item>
           <el-form-item>
@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 import NProgress from 'nprogress';
 import api from '@/api';
 
@@ -61,10 +61,7 @@ export default {
     return {
       signUpType: this.$route.query.type !== undefined ? this.$route.query.type : 'personal',
       submitPersonalFormLoading: false,
-      personalForm: {
-        username: '',
-        password: ''
-      },
+      personalForm: {},
       personalFormRules: {
         username: [
           { required: true, message: '用户名由6-20个字符组成', trigger: 'change' },
@@ -75,115 +72,37 @@ export default {
           { min: 6, max: 20, message: '密码由6-20个字符组成', trigger: 'change' }
         ]
       },
+      sendMailCaptchaCountdown: 0,
       submitEnterpriseFormLoading: false,
-      enterpriseForm: {},
+      enterpriseForm: {
+        email: '1092879991@qq.com'
+      },
       enterpriseFormRules: {
         enterpriseName: [
           { required: true, message: '企业名称由1-30个中文、英文、数字及合法字符组成', trigger: 'change' },
           { min: 1, max: 30, message: '企业名称由1-30个中文、英文、数字及合法字符组成', trigger: 'change' }
         ],
-        industryType: [
-          { required: true, message: '请选择所属行业', trigger: 'change' }
+        cityId: [
+          { required: true, message: '请选择所在城市', trigger: 'change' }
         ],
-        staffSize: [
-          { required: true, message: '请选择人员规模', trigger: 'change' }
+        email: [
+          { required: true, message: '请输入正确的邮箱', trigger: 'change' },
+          { type: 'email', message: '请输入正确的邮箱', trigger: 'change' }
         ],
-        username: [
-          { required: true, message: '用户名由3-20个字符组成', trigger: 'change' },
-          { min: 3, max: 20, message: '用户名由3-20个字符组成', trigger: 'change' }
+        emailCaptcha: [
+          { required: true, message: '请输入邮箱验证码', trigger: 'change' }
         ],
         password: [
           { required: true, message: '密码由3-20个字符组成', trigger: 'change' },
           { min: 3, max: 20, message: '密码由3-20个字符组成', trigger: 'change' }
         ]
-      },
-      industryTypeList: [
-        {
-          value: '100',
-          label: 'IT服务',
-          children: [
-            { value: '101', label: '计算机软件/硬件/信息服务' },
-            { value: '102', label: '互联网和相关服务' },
-            { value: '103', label: '其他' }
-          ]
-        },
-        {
-          value: '200',
-          label: '批发/零售',
-          children: [
-            { value: '201', label: '服装/纺织' },
-            { value: '202', label: '超市/便利店/百货商场' },
-            { value: '203', label: '食品/饮料' },
-            { value: '204', label: '家具/家纺' },
-            { value: '205', label: '日用品/化妆品' },
-            { value: '206', label: '家电/数码' },
-            { value: '207', label: '烟酒' },
-            { value: '208', label: '文教/工美/体育/娱乐用品' },
-            { value: '209', label: '批发' },
-            { value: '210', label: '其他' }
-          ]
-        },
-        {
-          value: '300',
-          label: '制造业',
-          children: []
-        },
-        {
-          value: '400',
-          label: '生活服务',
-          children: []
-        },
-        {
-          value: '500',
-          label: '文化/体育/娱乐业',
-          children: []
-        },
-        {
-          value: '600',
-          label: '建筑/房地产',
-          children: []
-        },
-        {
-          value: '700',
-          label: '教育',
-          children: []
-        },
-        {
-          value: '800',
-          label: '运输/物流/仓储',
-          children: []
-        },
-        {
-          value: '900',
-          label: '医疗',
-          children: []
-        },
-        {
-          value: '1000',
-          label: '政府',
-          children: []
-        },
-        {
-          value: '1100',
-          label: '金融',
-          children: []
-        },
-        {
-          value: '1200',
-          label: '能源/采矿',
-          children: []
-        },
-        {
-          value: '1300',
-          label: '农林渔牧',
-          children: []
-        },
-        {
-          value: '1500',
-          label: '其他'
-        }
-      ]
+      }
     };
+  },
+  computed: {
+    ...mapGetters('location', [
+      'cityList'
+    ])
   },
   methods: {
     ...mapActions('account', [
@@ -194,7 +113,7 @@ export default {
         if (valid) {
           this.submitPersonalFormLoading = true;
           NProgress.start();
-          const result = await api.account.signUp({
+          const result = await api.account.personalSignUp({
             type: 1,
             username: this.personalForm.username,
             password: this.personalForm.password
@@ -238,11 +157,93 @@ export default {
           return false;
         }
       });
+    },
+    async sendMailCaptcha (formName) {
+      // 验证邮箱表单
+      this.$refs[formName].validateField('email', async errorMessage => {
+        if (!errorMessage) {
+          if (this.sendMailCaptchaCountdown > 0) return;
+
+          NProgress.start();
+          // 发送邮件验证码
+          const result = await api.account.sendMailCaptcha({
+            email: this.enterpriseForm.email
+          });
+          NProgress.done();
+
+          // 倒计时
+          this.sendMailCaptchaCountdown = 30;
+          this.sendMailCaptchaInterval = setInterval(() => {
+            this.sendMailCaptchaCountdown--;
+            if (this.sendMailCaptchaCountdown === 0) {
+              clearInterval(this.sendMailCaptchaInterval);
+            }
+          }, 1000);
+
+          // 发送失败提示
+          if (result.code !== 0) {
+            clearInterval(this.sendMailCaptchaInterval);
+            this.$notify({
+              message: result.message,
+              position: 'bottom-left',
+              duration: 2000,
+              showClose: false
+            });
+          }
+        }
+      });
     }
   }
 };
 </script>
 
 <style lang="scss">
+  .sign-up-container {
+    .el-input-group__append {
+      padding: 0;
+      button.disabled {
+        background-color: #dcdfe6;
+        border-color: #dcdfe6;
+        cursor: default;
+      }
+      button.disabled:hover {
+        background-color: #dcdfe6;
+        border-color: #dcdfe6;
+      }
+    }
 
+    .el-notification__content {
+      margin: 0 !important;
+      color: #fff !important;
+    }
+
+    .el-input-group__append {
+      background: transparent;
+      border-color: transparent;
+      color: #fff;
+    }
+    .el-input-group__append {
+      button {
+        width: 79px;
+        height: 40px;
+        margin: -1px 0 0 -1px;
+        padding: 0 5px;
+        border-radius: 0;
+        border-top-right-radius: 4px;
+        border-bottom-right-radius: 4px;
+        font-size: 11px;
+        background-color: #409EFF;
+        border-color: #409EFF;
+      }
+      button:hover {
+         background: #66b1ff;
+         border-color: #66b1ff;
+       }
+      button:active {
+        background: #3a8ee6;
+        border-color: #3a8ee6;
+        color: #fff;
+      }
+    }
+  }
 </style>

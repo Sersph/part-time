@@ -172,7 +172,7 @@ export default {
         if (valid) {
           this.submitPersonalFormLoading = true;
           NProgress.start();
-          const result = await api.account.signIn({
+          const result = await api.account.personalSignIn({
             username: this.personalForm.username,
             password: this.personalForm.password
           });
