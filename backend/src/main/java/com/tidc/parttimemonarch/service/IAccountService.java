@@ -1,4 +1,4 @@
-package com.tidc.parttimemonarch.service.account;
+package com.tidc.parttimemonarch.service;
 
 import com.tidc.parttimemonarch.result.RequestResult;
 import com.tidc.parttimemonarch.model.User;

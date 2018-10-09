@@ -1,4 +1,4 @@
-package com.tidc.parttimemonarch.service.city;
+package com.tidc.parttimemonarch.service;
 
 import com.tidc.parttimemonarch.dao.CityDAO;
 import com.tidc.parttimemonarch.enumerate.Code;

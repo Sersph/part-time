@@ -2,7 +2,7 @@ package com.tidc.parttimemonarch.controller;
 
 import com.tidc.parttimemonarch.enumerate.Code;
 import com.tidc.parttimemonarch.result.RequestResult;
-import com.tidc.parttimemonarch.service.account.IAccountService;
+import com.tidc.parttimemonarch.service.IAccountService;
 import com.tidc.parttimemonarch.util.SessionUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

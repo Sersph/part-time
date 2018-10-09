@@ -1,4 +1,4 @@
-package com.tidc.parttimemonarch.service.account;
+package com.tidc.parttimemonarch.service;
 
 import com.tidc.parttimemonarch.dao.AccountDAO;
 import com.tidc.parttimemonarch.enumerate.Code;

@@ -1,7 +1,7 @@
 package com.tidc.parttimemonarch.controller;
 
 import com.tidc.parttimemonarch.result.RequestResult;
-import com.tidc.parttimemonarch.service.city.ICityService;
+import com.tidc.parttimemonarch.service.ICityService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
