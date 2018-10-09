@@ -1,22 +1,22 @@
 package com.tidc.parttimemonarch.result;
 
 import com.tidc.parttimemonarch.enumerate.Code;
-import com.tidc.parttimemonarch.model.User;
+import com.tidc.parttimemonarch.model.PersonalUser;
 
 public class AccountRequestResult extends RequestResult {
-    private User userInfo;
+    private PersonalUser personalUserInfo;
 
-    public AccountRequestResult(Code code, User userInfo) {
+    public AccountRequestResult(Code code, PersonalUser personalUserInfo) {
         super(code);
-        this.userInfo = userInfo;
+        this.personalUserInfo = personalUserInfo;
     }
 
-    public User getUserInfo() {
-        return userInfo;
+    public PersonalUser getPersonalUserInfo() {
+        return personalUserInfo;
     }
 
-    public void setUserInfo(User userInfo) {
-        this.userInfo = userInfo;
+    public void setPersonalUserInfo(PersonalUser personalUserInfo) {
+        this.personalUserInfo = personalUserInfo;
     }
 
     @Override
@@ -24,7 +24,7 @@ public class AccountRequestResult extends RequestResult {
         return "{" +
                 "code=" + this.getCode() +
                 "result=" + this.getMessage() +
-                "userInfo=" + userInfo +
+                "userInfo=" + personalUserInfo +
                 '}';
     }
 }

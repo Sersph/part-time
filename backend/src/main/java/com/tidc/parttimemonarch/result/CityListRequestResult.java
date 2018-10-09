@@ -1,8 +1,8 @@
 package com.tidc.parttimemonarch.result;
 
 import com.tidc.parttimemonarch.enumerate.Code;
-import com.tidc.parttimemonarch.model.city.City;
-import com.tidc.parttimemonarch.model.city.Region;
+import com.tidc.parttimemonarch.model.City;
+import com.tidc.parttimemonarch.model.Region;
 
 import java.util.List;
 

@@ -1,15 +1,19 @@
 package com.tidc.parttimemonarch.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Pattern;
 import java.sql.Date;
 
+@ApiModel
 @Component
-public class User {
+public class PersonalUser {
 
+    @ApiModelProperty(hidden = true)
     private int id;
 
     @Pattern(regexp = "^.{6,20}$", message = "1007 用户名不符合规则，用户名长度必须大于6小于20")
@@ -18,27 +22,34 @@ public class User {
     @Pattern(regexp = "^.{6,20}$", message = "1008 密码不符合规则，密码必须是6-20位字母数字组合")
     private String password;
 
+    @ApiModelProperty(hidden = true)
     @Email
     private String email;
+    @ApiModelProperty(hidden = true)
     private String phone;
 
+    @ApiModelProperty(hidden = true)
     private int status = 0;
 
     //最后一次登陆的时间
+    @ApiModelProperty(hidden = true)
     private Date lastSignInAt;
     //创建时间 created_at
+    @ApiModelProperty(hidden = true)
     private Date createdAt;
     //最后一次修改日期 updated_at
+    @ApiModelProperty(hidden = true)
     private Date updatedAt;
 
     //1普通用户 2企业用户
     private int type;
 
     //头像
+    @ApiModelProperty(hidden = true)
     private String avatar;
 
 
-    public User() {}
+    public PersonalUser() {}
 
 
     public int getId() {

@@ -1,8 +1,8 @@
 package com.tidc.parttimemonarch.controller;
 
 import com.tidc.parttimemonarch.result.RequestResult;
-import com.tidc.parttimemonarch.model.User;
-import com.tidc.parttimemonarch.service.IAccountService;
+import com.tidc.parttimemonarch.model.PersonalUser;
+import com.tidc.parttimemonarch.service.AccountService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -21,7 +21,7 @@ import javax.validation.Valid;
 public class AccountPersonalController {
 
     @Autowired
-    private IAccountService accountService;
+    private AccountService accountService;
 
 
     @ApiOperation(value="注册")
@@ -30,17 +30,11 @@ public class AccountPersonalController {
             @ApiImplicitParam(name = "username", value = "用户名", required = true, dataType = "String", paramType = "query"),
             @ApiImplicitParam(name = "password", value = "密码", required = true, dataType = "String", paramType = "query")
     })
-    @PostMapping(value = "/signUp")
-    public RequestResult signUp(@Valid User user, HttpServletRequest httpServletRequest){
-        System.out.println(user);
-        HttpSession session = httpServletRequest.getSession();
+    @PostMapping(value = "/signIp")
+    public RequestResult signIp(@Valid PersonalUser personalUser, HttpServletRequest httpServletRequest){
 
         //判断注册类型 调用不同的注册方法
-        if (user.getType() == 1){
-            return accountService.useUsernameAndPasswordToSignUp(user, session);
-        }
-
-        return accountService.verifyPhoneNumberSignUp(user, session);
+        return accountService.personalSignIn(personalUser, httpServletRequest.getSession());
 
     }
 
@@ -54,11 +48,11 @@ public class AccountPersonalController {
             @ApiImplicitParam(name = "password", value = "密码", required = true, dataType = "String", paramType = "query"),
             @ApiImplicitParam(name = "type", value = "注册类型", required = true, dataType = "int", paramType = "query")
     })
-    @PostMapping(value = "/signIn")
-    public RequestResult signIn(User user, HttpServletRequest httpServletRequest){
+    @PostMapping(value = "/signUp")
+    public RequestResult signUp(PersonalUser personalUser, HttpServletRequest httpServletRequest){
 
         HttpSession session = httpServletRequest.getSession();
-        return accountService.signIn(user, session);
+        return accountService.personalSignUp(personalUser, session);
     }
 
 }

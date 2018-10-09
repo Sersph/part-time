@@ -1,4 +1,4 @@
-package com.tidc.parttimemonarch.model.city;
+package com.tidc.parttimemonarch.model;
 
 import java.util.List;
 

@@ -1,7 +1,7 @@
 package com.tidc.parttimemonarch.dao;
 
 
-import com.tidc.parttimemonarch.model.city.City;
+import com.tidc.parttimemonarch.model.City;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.mapstruct.Mapper;
