@@ -5,7 +5,6 @@ public class SessionUtil {
 
 
     public static boolean addSession(String key, Object object, HttpSession session){
-        System.out.println("addSession");
         session.setAttribute(key, object);
         System.out.println(session.getAttribute(key));
         return isSession(key, session);

@@ -13,6 +13,17 @@ spring:
     port: 25
     protocol: smtp
     username: 18934086807@163.com
+  redis:
+    database: 0
+    host: 39.105.96.239
+    password: 662662
+    jedis:
+      pool:
+        max-active: 8
+        max-idle: 8
+        min-idle: 0
+  jackson:
+    default-property-inclusion: non_null
 
 
 mybatis:

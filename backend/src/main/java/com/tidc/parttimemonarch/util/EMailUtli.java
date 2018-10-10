@@ -11,7 +11,7 @@ public class EMailUtli {
     private static final String FROM = "18934086807@163.com";
 
 
-    public static boolean enterpriseSignInVerificationCode(String eMail, String code, JavaMailSender javaMailSender){
+    public static boolean enterpriseSignInVerificationCode(String email, String code, JavaMailSender javaMailSender){
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
 
         String message = "<html>\n" +
@@ -47,16 +47,22 @@ public class EMailUtli {
                 "\t</body>\n" +
                 "</html>";
 
+        return sendMail(javaMailSender, mimeMessage, message, email, true);
 
+    }
+
+
+
+    public static boolean sendMail(JavaMailSender javaMailSender, MimeMessage mimeMessage,String email,  String message, boolean html){
         try{
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
 
             mimeMessageHelper.setFrom(FROM);
-            mimeMessageHelper.setTo(eMail);
+            mimeMessageHelper.setTo(email);
 
             mimeMessageHelper.setSubject("兼职君 注册验证码");
 
-            mimeMessageHelper.setText(message, true);
+            mimeMessageHelper.setText(message, html);
 
 
             javaMailSender.send(mimeMessage);
