@@ -1,12 +1,10 @@
 package com.tidc.parttimemonarch.service.impl;
 
 import com.tidc.parttimemonarch.dao.AccountDAO;
-import com.tidc.parttimemonarch.enumerate.Code;
-import com.tidc.parttimemonarch.result.AccountRequestResult;
-import com.tidc.parttimemonarch.result.RequestResult;
+import com.tidc.parttimemonarch.exceptions.ResultExceptions;
 import com.tidc.parttimemonarch.model.PersonalUser;
 import com.tidc.parttimemonarch.service.AccountService;
-import com.tidc.parttimemonarch.util.DateUtli;
+import com.tidc.parttimemonarch.util.DateUtil;
 import com.tidc.parttimemonarch.util.SessionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -21,30 +19,34 @@ public class AccountServiceImpl implements AccountService {
     @Autowired
     private AccountDAO accountDAO;
 
-    public RequestResult getUserInfo(HttpSession session){
-        if (SessionUtil.isSession("user", session)){
-            return new AccountRequestResult(Code.SUCCEED, (PersonalUser)session.getAttribute("user"));
+    public Object getUserInfo(HttpSession session){
+
+        if (!SessionUtil.isSession("user", session)){
+            throw new ResultExceptions(1003, "用户未登陆" );
         }
 
-        return new RequestResult(Code.USER_NOT_LOG_IN);
+        return session.getAttribute("user");
     }
 
 
-
-
-    public RequestResult personalSignUp(PersonalUser personalUser, HttpSession session){
+    /**
+     * 普通用户登陆
+     * @param personalUser
+     * @param session
+     */
+    public void personalSignUp(PersonalUser personalUser, HttpSession session){
+        //对密码进行md5加密
+        this.accountDAO.updateLastSignInAt(personalUser.getUsername(),DateUtil.getDate());
 
         personalUser = this.accountDAO.signIn(personalUser);
 
         if (personalUser == null){
-            return new RequestResult(Code.INCORRECT_USERNAME_AND_PASSWORD);
+            throw new ResultExceptions(1003, "用户名密码不正确");
         }
 
-        this.accountDAO.updateLastSignInAt(personalUser.getUsername(),DateUtli.getDate());
+        this.accountDAO.updateLastSignInAt(personalUser.getUsername(),DateUtil.getDate());
 
         SessionUtil.addSession("user", personalUser, session);
-
-        return new RequestResult(Code.SUCCEED);
     }
 
 
@@ -56,21 +58,26 @@ public class AccountServiceImpl implements AccountService {
      * @param personalUser
      * @return RequestResult 返回请求状态
      */
-    public RequestResult personalSignIn(PersonalUser personalUser, HttpSession session){
-        RequestResult requestResult;
+    public void personalSignIn(PersonalUser personalUser, HttpSession session){
+
         Date date = new Date(new java.util.Date().getTime());
         personalUser.setLastSignInAt(date);
         personalUser.setCreatedAt(date);
         personalUser.setUpdatedAt(date);
+        this.accountDAO.updateLastSignInAt(personalUser.getUsername(),DateUtil.getDate());
 
         try{
             int matched = accountDAO.save(personalUser);
-            requestResult = new RequestResult(matched != 0 ? Code.SUCCEED : Code.ERROR);
+
+            if (matched == 0){
+                throw new ResultExceptions(0, "未知错误");
+            }
+
             SessionUtil.addSession("user", personalUser, session);
+
         }catch (DataAccessException e){
-            requestResult = new RequestResult(Code.USER_NAME_ALREADY_EXIST);
+            throw new ResultExceptions(1001 , "用户名已存在");
         }
 
-        return requestResult;
     }
 }

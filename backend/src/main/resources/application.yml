@@ -34,3 +34,6 @@ mybatis:
 logging:
   level:
     com.onepro.custom.mapper: DEBUG
+
+swagger:
+  show: true

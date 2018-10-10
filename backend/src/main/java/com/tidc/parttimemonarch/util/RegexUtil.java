@@ -3,7 +3,7 @@ package com.tidc.parttimemonarch.util;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class RegexUtli {
+public class RegexUtil {
 
     /**
      * 使用正则表达式对字符串进行验证

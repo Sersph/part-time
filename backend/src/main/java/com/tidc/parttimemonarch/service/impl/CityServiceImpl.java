@@ -1,10 +1,8 @@
 package com.tidc.parttimemonarch.service.impl;
 
 import com.tidc.parttimemonarch.dao.CityDAO;
-import com.tidc.parttimemonarch.enumerate.Code;
 import com.tidc.parttimemonarch.model.City;
 import com.tidc.parttimemonarch.model.Region;
-import com.tidc.parttimemonarch.result.CityListRequestResult;
 import com.tidc.parttimemonarch.result.RequestResult;
 import com.tidc.parttimemonarch.service.CityService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,27 +17,25 @@ public class CityServiceImpl implements CityService {
     @Autowired
     private CityDAO cityDAO;
 
+    @Autowired
+    private RequestResult result;
+
     @Override
     public RequestResult obtainCity() {
 
         List<City> cityList = this.cityDAO.selectCityAll();
 
-        CityListRequestResult cityListRequestResult = new CityListRequestResult(Code.SUCCEED, this.neaten(cityList));
-
-        City dongguan = this.cityDAO.selectCityByName("东莞市");
+        City dongGuan = this.cityDAO.selectCityByName("东莞市");
         List<City> cities = new ArrayList<>();
-        Region region = new Region(dongguan, this.getRegionList(dongguan.getId(), cities, cityList));
+        Region region = new Region(dongGuan, this.getRegionList(dongGuan.getId(), cities, cityList));
 
-        cityListRequestResult.setCurrentCity(region);
-
-        return cityListRequestResult;
+        this.result.succeed(this.neaten(cityList), region);
+        return this.result;
     }
 
     private List neaten(List cityList) {
         List<Region> regions = new ArrayList<>();
         regions = getRegionList(0, regions, cityList);
-
-
         return regions;
     }
 

@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
-@Api(value = "普通用户注册登陆接口")
+@Api(tags = "普通用户注册登陆接口")
 @ResponseBody
 @RestController
 @RequestMapping(value = "/account/personal")
@@ -23,6 +23,8 @@ public class AccountPersonalController {
     @Autowired
     private AccountService accountService;
 
+    @Autowired
+    private RequestResult result;
 
     @ApiOperation(value="注册")
     @ApiImplicitParams({
@@ -30,12 +32,12 @@ public class AccountPersonalController {
             @ApiImplicitParam(name = "username", value = "用户名", required = true, dataType = "String", paramType = "query"),
             @ApiImplicitParam(name = "password", value = "密码", required = true, dataType = "String", paramType = "query")
     })
-    @PostMapping(value = "/signIp")
-    public RequestResult signIp(@Valid PersonalUser personalUser, HttpServletRequest httpServletRequest){
+    @PostMapping(value = "/signIn")
+    public RequestResult signIn(@Valid PersonalUser personalUser, HttpServletRequest httpServletRequest){
+        accountService.personalSignIn(personalUser, httpServletRequest.getSession());
 
-        //判断注册类型 调用不同的注册方法
-        return accountService.personalSignIn(personalUser, httpServletRequest.getSession());
-
+        this.result.succeed();
+        return this.result;
     }
 
 
@@ -50,9 +52,10 @@ public class AccountPersonalController {
     })
     @PostMapping(value = "/signUp")
     public RequestResult signUp(PersonalUser personalUser, HttpServletRequest httpServletRequest){
-
         HttpSession session = httpServletRequest.getSession();
-        return accountService.personalSignUp(personalUser, session);
+        accountService.personalSignUp(personalUser, session);
+        this.result.succeed();
+        return this.result;
     }
 
 }

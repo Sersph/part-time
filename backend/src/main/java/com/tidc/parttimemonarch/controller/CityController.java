@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@Api(value = "获取城市数据")
+@Api(tags = "获取城市数据")
 @RestController
 @RequestMapping(value = "/common/location")
 public class CityController {

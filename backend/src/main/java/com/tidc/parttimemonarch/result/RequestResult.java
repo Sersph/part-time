@@ -1,44 +1,17 @@
 package com.tidc.parttimemonarch.result;
 
-import com.tidc.parttimemonarch.enumerate.Code;
+import com.tidc.parttimemonarch.model.City;
+import com.tidc.parttimemonarch.model.Region;
 
-public class RequestResult {
-    private int code;
-    private String message;
+import java.util.List;
 
+public interface RequestResult {
 
-    public RequestResult() {
-        super();
-    }
+    void succeed();
 
-    public RequestResult(int code, String message) {
-        this.code = code;
-        this.message = message;
-    }
+    void succeed(List<City> regionList, Region currentCity);
 
-    public RequestResult(Code code) {
-        this.code = code.getCode();
-        this.message = code.getMessage();
-    }
+    void succeed(Object accountInfo);
 
-    public int getCode() {
-        return code;
-    }
-
-    public void setCode(Code code) {
-        this.code = code.getCode();
-        this.message = code.getMessage();
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    @Override
-    public String toString() {
-        return "RequestResult{" +
-                "code=" + code +
-                ", result='" + message + '\'' +
-                '}';
-    }
+    void error(int code, String message);
 }

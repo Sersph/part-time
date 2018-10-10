@@ -6,17 +6,17 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 
 import javax.mail.internet.MimeMessage;
 
-public class EMailUtli {
+public class EMailUtil {
 
     private static final String FROM = "18934086807@163.com";
 
 
-    public static boolean enterpriseSignInVerificationCode(String email, String code, JavaMailSender javaMailSender){
+    public static boolean sendMailCaptcha(String email, String code, JavaMailSender javaMailSender){
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
 
         String message = "<html>\n" +
                 "\t<body style=\"background: #555;\">\n" +
-                "\t\t<div style=\"margin: 0 auto; width: 700px; background: url(http://img3.duitang.com/uploads/item/201511/19/20151119163813_cAZYS.thumb.700_0.jpeg); padding:10px 50px; box-sizing: border-box;\">\n" +
+                "\t\t<div style=\"margin: 0 auto; width: 700px; background: #bbd8e6; padding:10px 50px; box-sizing: border-box;\">\n" +
                 "\t\t\t\n" +
                 "\t\t\t<div style=\"width: 200px;height: 100px;\">\n" +
                 "\t\t\t\t<h1 style=\"color: #0AF; font-family: Algerian; font-size: 50px;\">TIDC</h1>\n" +
@@ -47,13 +47,6 @@ public class EMailUtli {
                 "\t</body>\n" +
                 "</html>";
 
-        return sendMail(javaMailSender, mimeMessage, message, email, true);
-
-    }
-
-
-
-    public static boolean sendMail(JavaMailSender javaMailSender, MimeMessage mimeMessage,String email,  String message, boolean html){
         try{
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
 
@@ -62,7 +55,7 @@ public class EMailUtli {
 
             mimeMessageHelper.setSubject("兼职君 注册验证码");
 
-            mimeMessageHelper.setText(message, html);
+            mimeMessageHelper.setText(message, true);
 
 
             javaMailSender.send(mimeMessage);
@@ -72,5 +65,6 @@ public class EMailUtli {
         }
 
         return true;
+
     }
 }

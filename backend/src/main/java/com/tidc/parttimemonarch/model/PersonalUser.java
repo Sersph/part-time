@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.springframework.stereotype.Component;
+import org.springframework.util.DigestUtils;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Pattern;
@@ -16,14 +17,14 @@ public class PersonalUser {
     @ApiModelProperty(hidden = true)
     private int id;
 
-    @Pattern(regexp = "^.{6,20}$", message = "1007 用户名不符合规则，用户名长度必须大于6小于20")
+    @Pattern(regexp = "^.{6,20}$", message = "用户名不符合规则，用户名长度必须大于6小于20")
     private String username;
 
-    @Pattern(regexp = "^.{6,20}$", message = "1008 密码不符合规则，密码必须是6-20位字母数字组合")
+    @Pattern(regexp = "^.{6,20}$", message = "密码不符合规则，用户名长度必须大于6小于20")
     private String password;
 
     @ApiModelProperty(hidden = true)
-    @Email
+    @Email(message = "邮箱格式错误")
     private String email;
     @ApiModelProperty(hidden = true)
     private String phone;
@@ -70,7 +71,7 @@ public class PersonalUser {
 
     @JsonIgnore
     public String getPassword() {
-        return password;
+        return DigestUtils.md5DigestAsHex(this.password.getBytes());
     }
 
     public void setPassword(String password) {
