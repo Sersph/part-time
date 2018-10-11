@@ -1,12 +1,17 @@
 <template>
   <div id="app">
-    frontend
+    <master/>
   </div>
 </template>
 
 <script>
+import Master from '@/components/_layout/Master';
+
 export default {
-  name: 'App'
+  name: 'Sidebar',
+  components: {
+    Master
+  }
 };
 </script>
 

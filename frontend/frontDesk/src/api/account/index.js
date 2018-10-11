@@ -18,15 +18,15 @@ export default {
   },
   signOut () {
     return ajax(
-      'GET',
+      'DELETE',
       `${config.API_ROOT}/account/signOut`,
       {}
     );
   },
-  getUserInfo () {
+  getAccountInfo () {
     return ajax(
       'GET',
-      `${config.API_ROOT}/account/userInfo`,
+      `${config.API_ROOT}/account/accountInfo`,
       {}
     );
   },

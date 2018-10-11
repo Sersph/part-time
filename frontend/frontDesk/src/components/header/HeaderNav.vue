@@ -14,12 +14,13 @@
       <el-menu-item index="2">
         <router-link to="/home">首页</router-link>
       </el-menu-item>
-      <el-menu-item index="3" v-if="!userInfo.id">
+      <el-menu-item index="3" v-if="!accountInfo.id">
         <router-link to="/account/signIn">登陆/注册</router-link>
       </el-menu-item>
-      <el-submenu index="5" :show-timeout="50" :hide-timeout="50" v-if="userInfo.id">
+      <el-submenu index="5" :show-timeout="50" :hide-timeout="50" v-if="accountInfo.id">
         <template slot="title">我的</template>
-        <el-menu-item index="5-1" @click="$router.push(userInfo.type === 1 ? '/account/personal' : '/account/enterprise')">
+        <el-menu-item index="5-1"
+                      @click="$router.push(accountInfo.type === 1 ? '/account/personal' : '/account/enterprise')">
           <a>个人中心</a>
         </el-menu-item>
         <el-menu-item index="5-2" @click="signOut">
@@ -46,26 +47,26 @@ export default {
       'currentCity'
     ]),
     ...mapState('account', [
-      'userInfo'
+      'accountInfo'
     ])
   },
   async mounted () {
     // 初始化地区
     await this.initRegionList();
     // 初始化用户信息
-    await this.asyncInitUserInfo();
+    await this.asyncInitAccountInfo();
   },
   methods: {
     ...mapActions('location', [
       'initRegionList'
     ]),
     ...mapActions('account', [
-      'asyncInitUserInfo'
+      'asyncInitAccountInfo'
     ]),
     async signOut () {
       const result = await api.account.signOut();
       if (result.code === 0) {
-        await this.asyncInitUserInfo();
+        await this.asyncInitAccountInfo();
         this.$notify({
           message: '退出成功',
           position: 'bottom-left',

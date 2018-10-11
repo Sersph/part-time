@@ -7,7 +7,7 @@ export default {
   EDIT_CURRENT_CITY: 'editCurrentCity',
 
   // 修改用户信息
-  EDIT_USER_INFO: 'editUserInfo',
+  EDIT_ACCOUNT_INFO: 'editAccountInfo',
 
   // 修改搜索兼职条件
   EDIT_PART_TIME_SEARCH_CONDITION: 'editPartTimeSearchCondition'
