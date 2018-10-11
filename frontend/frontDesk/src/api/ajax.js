@@ -41,6 +41,14 @@ export default function ajax (method = 'GET', url, data = {}) {
               return dataStr;
             }]
           });
+          break;
+        case 'DELETE':
+          // 发送 delete
+          response = await axios({
+            method,
+            url,
+            data
+          });
       }
       resolve(response.data);
     } catch (e) {

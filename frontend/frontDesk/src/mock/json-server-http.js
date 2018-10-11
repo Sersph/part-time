@@ -12,7 +12,7 @@ server.use(jsonServerHttp.rewriter({
   '/account/personal/signUp': '/accountPersonalSignUp',
   '/account/personal/signIn': '/accountPersonalSignIn',
   '/account/signOut': '/accountSignOut/1',
-  '/account/userInfo': '/accountUserInfo/1',
+  '/account/accountInfo': '/accountAccountInfo/1',
   '/account/sendMailCaptcha': '/sendMailCaptcha'
 }));
 

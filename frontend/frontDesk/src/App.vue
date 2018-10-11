@@ -27,6 +27,11 @@ export default {
 </script>
 
 <style lang="scss">
+  html,
+  body {
+    height: 100%;
+  }
+
   body {
     overflow-y: scroll;
   }
@@ -36,6 +41,7 @@ export default {
   }
 
   #app {
+    height: 100%;
     .wrapper-container {
       width: 100%;
       & > :first-child {

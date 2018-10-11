@@ -56,7 +56,7 @@ export default {
 <style lang="scss">
   .personal-nav-container {
     min-width: 250px;
-    height: 50vh;
+    min-height: 50vh;
     .el-menu {
       height: 100%;
     }

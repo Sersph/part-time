@@ -106,7 +106,7 @@ export default {
   },
   methods: {
     ...mapActions('account', [
-      'asyncInitUserInfo'
+      'asyncInitAccountInfo'
     ]),
     submitPersonalForm (formName) {
       this.$refs[formName].validate(async (valid) => {
@@ -114,7 +114,6 @@ export default {
           this.submitPersonalFormLoading = true;
           NProgress.start();
           const result = await api.account.personalSignUp({
-            type: 1,
             username: this.personalForm.username,
             password: this.personalForm.password
           });
@@ -128,7 +127,7 @@ export default {
               showClose: false
             });
             // 更新 vuex 用户信息
-            await this.asyncInitUserInfo();
+            await this.asyncInitAccountInfo();
             // 跳转首页
             setTimeout(() => {
               this.$router.replace('/');
@@ -167,7 +166,7 @@ export default {
               showClose: false
             });
             // 更新 vuex 用户信息
-            await this.asyncInitUserInfo();
+            await this.asyncInitAccountInfo();
             // 跳转首页
             setTimeout(() => {
               this.$router.replace('/');
