@@ -32,6 +32,8 @@ public class EnterpriseUser {
     @Pattern(regexp = "^.{6,20}$", message = "密码长度必须大于6小于20")
     //密码
     private String password;
+
+
     @Email(message = "邮箱格式不正确")
     //邮箱
     private String email;

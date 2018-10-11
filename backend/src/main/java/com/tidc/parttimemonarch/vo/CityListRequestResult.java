@@ -2,7 +2,6 @@ package com.tidc.parttimemonarch.vo;
 
 
 import com.tidc.parttimemonarch.pojo.City;
-import com.tidc.parttimemonarch.pojo.Region;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

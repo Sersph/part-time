@@ -1,4 +1,6 @@
-package com.tidc.parttimemonarch.pojo;
+package com.tidc.parttimemonarch.vo;
+
+import com.tidc.parttimemonarch.pojo.City;
 
 import java.util.List;
 

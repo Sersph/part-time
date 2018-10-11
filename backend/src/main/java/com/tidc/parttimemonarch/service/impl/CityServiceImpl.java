@@ -2,7 +2,7 @@ package com.tidc.parttimemonarch.service.impl;
 
 import com.tidc.parttimemonarch.dao.CityDAO;
 import com.tidc.parttimemonarch.pojo.City;
-import com.tidc.parttimemonarch.pojo.Region;
+import com.tidc.parttimemonarch.vo.Region;
 import com.tidc.parttimemonarch.service.CityService;
 import com.tidc.parttimemonarch.vo.CityListRequestResult;
 import com.tidc.parttimemonarch.vo.RequestResult;
