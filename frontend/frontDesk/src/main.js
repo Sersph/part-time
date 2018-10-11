@@ -13,8 +13,6 @@ import 'material-icons/iconfont/material-icons.scss';
 import 'element-ui/lib/theme-chalk/index.css';
 // import { Menu, MenuItem, Submenu } from 'element-ui';
 import ElementUI from 'element-ui';
-// 注入公共过滤器
-import '@/filters';
 
 // Vue.use(Menu);
 // Vue.use(MenuItem);

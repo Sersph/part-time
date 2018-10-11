@@ -42,7 +42,7 @@
             <el-input type="password" v-model="enterpriseForm.password"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="submitEnterpriseForm('enterpriseForm')">立即注册</el-button>
+            <el-button type="primary" :loading="submitEnterpriseFormLoading" @click="submitEnterpriseForm('enterpriseForm')">立即注册</el-button>
           </el-form-item>
         </el-form>
       </el-tab-pane>
@@ -149,9 +149,39 @@ export default {
       });
     },
     submitEnterpriseForm (formName) {
-      this.$refs[formName].validate((valid) => {
+      this.$refs[formName].validate(async (valid) => {
         if (valid) {
-          alert('submit e!');
+          this.submitEnterpriseFormLoading = true;
+          NProgress.start();
+          const result = await api.account.personalSignUp({
+            username: this.personalForm.username,
+            password: this.personalForm.password
+          });
+          NProgress.done();
+          if (result.code === 0) {
+            // 注册成功逻辑
+            this.$notify({
+              message: '注册成功',
+              position: 'bottom-left',
+              duration: 1500,
+              showClose: false
+            });
+            // 更新 vuex 用户信息
+            await this.asyncInitUserInfo();
+            // 跳转首页
+            setTimeout(() => {
+              this.$router.replace('/');
+            }, 1500);
+          } else {
+            this.submitEnterpriseFormLoading = false;
+            // 注册失败逻辑
+            this.$notify({
+              message: result.message,
+              position: 'bottom-left',
+              duration: 2000,
+              showClose: false
+            });
+          }
         } else {
           console.log('error submit!!');
           return false;
