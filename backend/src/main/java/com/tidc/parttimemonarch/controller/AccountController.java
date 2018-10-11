@@ -58,7 +58,7 @@ public class AccountController {
 
     @ApiOperation(value = "退出登陆")
     @DeleteMapping(value = "/signOut")
-    public RequestResult exit(HttpServletRequest httpServletRequest){
+    public RequestResult signOut(HttpServletRequest httpServletRequest){
         if (!SessionUtil.removeSession("user", httpServletRequest.getSession())){
             this.result.error(1, "失败");
         }else{

@@ -40,10 +40,10 @@
   | 字段名          | 类型    | 长度 | 默认值   | 备注                 |
   | --------------- | ------- | ---- | -------- | -------------------- |
   | id              | int     | 11   | Not Null | 主键, 自增           |
-  | enterprise_name | varchar | 20   | Not Null | 企业名称             |
-  | password        | varchar | 100  | Not Null | 密码                 |
-  | email           | varchar | 50   | Not Null | 邮箱                 |
-  | city_id         | int     | 11   | Not Null | 企业所在城市         |
+  | enterprise_name | varchar | 20   | Not Null | 企业名称 *           |
+  | password        | varchar | 100  | Not Null | 密码 *               |
+  | email           | varchar | 50   | Not Null | 邮箱 *               |
+  | city_id         | int     | 11   | Not Null | 企业所在城市 *       |
   | address         | varchar | 50   | Null     | 企业所在地址         |
   | status          | int     | 1    | 0        | 状态`预留字段`       |
   | certification   | int     | 1    | 0        | 企业认证状态         |
