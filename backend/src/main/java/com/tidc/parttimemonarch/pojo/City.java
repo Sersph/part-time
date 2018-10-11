@@ -1,4 +1,4 @@
-package com.tidc.parttimemonarch.model;
+package com.tidc.parttimemonarch.pojo;
 
 public class City {
 

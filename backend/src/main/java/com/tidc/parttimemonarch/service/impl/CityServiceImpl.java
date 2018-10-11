@@ -1,10 +1,11 @@
 package com.tidc.parttimemonarch.service.impl;
 
 import com.tidc.parttimemonarch.dao.CityDAO;
-import com.tidc.parttimemonarch.model.City;
-import com.tidc.parttimemonarch.model.Region;
-import com.tidc.parttimemonarch.result.RequestResult;
+import com.tidc.parttimemonarch.pojo.City;
+import com.tidc.parttimemonarch.pojo.Region;
 import com.tidc.parttimemonarch.service.CityService;
+import com.tidc.parttimemonarch.vo.CityListRequestResult;
+import com.tidc.parttimemonarch.vo.RequestResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -18,7 +19,7 @@ public class CityServiceImpl implements CityService {
     private CityDAO cityDAO;
 
     @Autowired
-    private RequestResult result;
+    private CityListRequestResult result;
 
     @Override
     public RequestResult obtainCity() {

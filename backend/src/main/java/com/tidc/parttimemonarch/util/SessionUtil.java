@@ -4,10 +4,13 @@ import javax.servlet.http.HttpSession;
 public class SessionUtil {
 
 
-    public static boolean addSession(String key, Object object, HttpSession session){
+    public static void signUpSession(Object object, HttpSession session){
+        addSession("user", object, session);
+    }
+
+
+    public static void addSession(String key, Object object, HttpSession session){
         session.setAttribute(key, object);
-        System.out.println(session.getAttribute(key));
-        return isSession(key, session);
     }
 
 

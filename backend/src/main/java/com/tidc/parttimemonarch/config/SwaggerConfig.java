@@ -12,6 +12,8 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+import static com.sun.org.apache.xalan.internal.xsltc.compiler.sym.error;
+
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
@@ -25,7 +27,8 @@ public class SwaggerConfig {
                 .enable(swaggerShow)
                 .select()
                 .apis(RequestHandlerSelectors.any())
-                .paths(Predicates.not(PathSelectors.regex("/handle.*")))
+//                .paths(Predicates.not(PathSelectors.regex("/handle.*")))
+                .paths(Predicates.not(PathSelectors.regex("/error.*")))
                 .build()
                 .apiInfo(apiInfo());
     }

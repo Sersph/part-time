@@ -1,18 +1,24 @@
 package com.tidc.parttimemonarch.service;
 
-import com.tidc.parttimemonarch.model.PersonalUser;
+import com.tidc.parttimemonarch.pojo.EnterpriseUser;
+import com.tidc.parttimemonarch.pojo.PersonalUser;
 
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+
 
 public interface AccountService {
 
-    //获取用户信息
-    Object getUserInfo(HttpSession session);
+    //普通用户登陆
+    PersonalUser personalSignIn(PersonalUser personalUser);
 
-    //用户登陆
-    void personalSignUp(PersonalUser personalUser, HttpSession session);
+    //普通用户注册
+    PersonalUser personalSignUp(PersonalUser personalUser);
 
-    //用户注册
-    void personalSignIn(PersonalUser personalUser, HttpSession session);
+    //企业用户注册
+    EnterpriseUser enterpriseSignUp(@Valid EnterpriseUser enterpriseUser, String captcha);
 
+
+    //企业用户登陆
+    EnterpriseUser enterpriseSignIn(@Valid EnterpriseUser enterpriseUser);
 }

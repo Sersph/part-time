@@ -1,5 +1,6 @@
 package com.tidc.parttimemonarch.service.impl;
 
+import com.tidc.parttimemonarch.dao.AccountDAO;
 import com.tidc.parttimemonarch.exceptions.ResultExceptions;
 import com.tidc.parttimemonarch.util.EMailUtil;
 import com.tidc.parttimemonarch.util.RedisUtil;
@@ -20,7 +21,8 @@ public class EMailService {
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
 
-
+    @Autowired
+    private AccountDAO accountDAO;
     /**
      * 发送邮箱验证码
      * @param email
@@ -33,27 +35,21 @@ public class EMailService {
             throw new ResultExceptions(1007, "邮箱格式错误");
         }
 
+        if(this.accountDAO.findEnterpriseByeEmail(email) != null){
+            throw new ResultExceptions(1001, "该邮箱已被注册");
+        }
+
+
         //随机生成六位验证码
         String code = String.valueOf( new Random().nextInt(999999));
 
         if(!EMailUtil.sendMailCaptcha(email, code, javaMailSender)){
+            System.out.println(email);
 
             throw new ResultExceptions(1002, "邮箱不存在");
         }
 
-        RedisUtil.set(email + "verificationCode", code, 300, stringRedisTemplate);
-    }
-
-
-
-
-
-
-
-
-
-    public Object getVerificationCode(String email){
-        String key = email + "verificationCode";
-        return RedisUtil.getValueByKey(key, this.stringRedisTemplate);
+        RedisUtil.set(email + "code", code, 300 ,this.stringRedisTemplate);
+        System.out.println(email + "code");
     }
 }

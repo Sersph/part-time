@@ -18,12 +18,6 @@ public class RedisUtil {
 
 
     public static Object getValueByKey(String key, StringRedisTemplate stringRedisTemplate){
-        System.out.println(test(key, stringRedisTemplate));
         return stringRedisTemplate.opsForValue().get(key);
-    }
-
-
-    public static long test(String key, StringRedisTemplate stringRedisTemplate){
-        return stringRedisTemplate.getExpire(key);
     }
 }

@@ -15,17 +15,17 @@ public class AccountPersonalControllerLogger {
 
     private Logger logger = LoggerFactory.getLogger(AccountPersonalControllerLogger.class);
 
-    @Pointcut(value = "execution(public * com.tidc.parttimemonarch.controller.AccountPersonalController.signUp(..))")
-    public void signUp(){}
-
-    @Before(value = "signUp()")
-    public void sigUpBefore(){
-        this.logger.info("用户注册开始执行");
-    }
-
-    @After(value = "signUp()")
-    public void sigUpAfter(){
-        this.logger.info("用户注册执行完毕");
-    }
+//    @Pointcut(value = "execution(public * com.tidc.parttimemonarch.controller.PersonalAccountController.personalSignIn(..))")
+//    public void personalSignIn(){}
+//
+//    @Before(value = "personalSignIn()")
+//    public void sigUpBefore(){
+//        this.logger.info("用户注册开始执行");
+//    }
+//
+//    @After(value = "personalSignIn()")
+//    public void sigUpAfter(){
+//        this.logger.info("用户注册执行完毕");
+//    }
 
 }

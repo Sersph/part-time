@@ -2,7 +2,7 @@ package com.tidc.parttimemonarch.handle;
 
 
 import com.tidc.parttimemonarch.exceptions.ResultExceptions;
-import com.tidc.parttimemonarch.result.RequestResult;
+import com.tidc.parttimemonarch.vo.RequestResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.validation.BindException;
@@ -19,6 +19,7 @@ public class PartTimeMonarchHandle {
 
 
     @Autowired
+    @Qualifier("requestResult")
     private RequestResult result;
 
 
@@ -45,8 +46,8 @@ public class PartTimeMonarchHandle {
         if (errorList.size() != 1) {
             List<String> errorsMessage = new ArrayList<>();
             errorList.forEach(error -> errorsMessage.add(error.getDefaultMessage()));
-            String defaultDelimiter = " AND ";
-            message = "Multiple errors: " + String.join(defaultDelimiter, errorsMessage);
+            String defaultDelimiter = "，";
+            message = String.join(defaultDelimiter, errorsMessage);
         } else {
             message = errorList.get(0).getDefaultMessage();
         }

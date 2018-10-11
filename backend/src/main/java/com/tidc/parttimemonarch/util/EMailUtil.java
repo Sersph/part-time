@@ -1,6 +1,7 @@
 package com.tidc.parttimemonarch.util;
 
 
+import com.tidc.parttimemonarch.exceptions.ResultExceptions;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 
@@ -61,7 +62,7 @@ public class EMailUtil {
             javaMailSender.send(mimeMessage);
 
         }catch (Exception e){
-            return false;
+            throw new ResultExceptions(0, "未知错误");
         }
 
         return true;

@@ -1,6 +1,6 @@
 package com.tidc.parttimemonarch.service;
 
-import com.tidc.parttimemonarch.result.RequestResult;
+import com.tidc.parttimemonarch.vo.RequestResult;
 
 public interface CityService {
 

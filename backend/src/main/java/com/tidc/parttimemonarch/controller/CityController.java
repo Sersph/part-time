@@ -1,7 +1,8 @@
 package com.tidc.parttimemonarch.controller;
 
-import com.tidc.parttimemonarch.result.RequestResult;
 import com.tidc.parttimemonarch.service.CityService;
+import com.tidc.parttimemonarch.vo.CityListRequestResult;
+import com.tidc.parttimemonarch.vo.RequestResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +18,13 @@ public class CityController {
     @Autowired
     private CityService cityService;
 
-
-
+    @Autowired
+    private CityListRequestResult requestResult;
 
     @ApiOperation(value = "获取城市数据")
     @GetMapping(value = "/regionList")
     public RequestResult obtainCity(){
+
         return this.cityService.obtainCity();
     }
 }
