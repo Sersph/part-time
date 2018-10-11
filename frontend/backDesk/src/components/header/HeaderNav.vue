@@ -3,7 +3,7 @@
     <transition name="slide-left" mode="out-in">
       <el-breadcrumb separator="/" v-show="opacityFlag">
         <el-breadcrumb-item
-          v-for="(router, index) in currentRouter.matched"
+          v-for="(router, index) in currentRoute.matched"
           :key="index"
         >{{ router.meta.name }}
         </el-breadcrumb-item>
@@ -24,21 +24,56 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex';
+
 export default {
   name: 'HeaderNav',
   data () {
     return {
       opacityFlag: true,
-      currentRouter: {}
+      currentRoute: {}
     };
   },
+  computed: {
+    ...mapState('account', [
+      'accountInfo'
+    ])
+  },
   watch: {
-    $route (to, from) {
+    $route: {
+      handler (route) {
+        // 刷新面包屑导航
+        this.editCurrentRoute(route);
+      }
+    }
+  },
+  async mounted () {
+    // 刷新面包屑导航
+    this.editCurrentRoute(this.$route);
+    // 初始化用户信息
+    await this.asyncInitAccountInfo();
+    // 判断登陆权限
+    this.checkSignIn(this.$route);
+  },
+  methods: {
+    ...mapActions('account', [
+      'asyncInitAccountInfo'
+    ]),
+    editCurrentRoute (route) {
       this.opacityFlag = false;
-      this.currentRouter = to;
       setTimeout(() => {
+        this.currentRoute = route;
         this.opacityFlag = true;
       }, 300);
+    },
+    checkSignIn (route) {
+      // 验证路由是否需要登陆才能访问
+      if (route.meta.needSignIn) {
+        if (!this.accountInfo.id) {
+          // 未登录跳转登陆页面
+          this.$router.push('/account/signIn');
+        }
+      }
     }
   }
 };
@@ -48,7 +83,7 @@ export default {
   .header-container {
     display: flex;
     justify-content: space-between;
-    align-items:center;
+    align-items: center;
     height: 100%;
     .el-breadcrumb {
       padding: 23px 0;

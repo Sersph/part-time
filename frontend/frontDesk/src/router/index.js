@@ -45,40 +45,49 @@ export default new VueRouter({
         {
           path: '/account/personal',
           component: () => import('@/pages/account/Personal'),
+          redirect: '/account/personal/partTimeApply',
           children: [
             {
-              path: '/account/personal',
-              redirect: '/account/personal/partTimeApply'
-            },
-            {
               path: '/account/personal/partTimeApply',
-              component: PersonalPartTimeApply
+              component: PersonalPartTimeApply,
+              meta: {
+                needSignIn: true
+              }
             },
             {
               path: '/account/personal/resume',
-              component: PersonalResume
+              component: PersonalResume,
+              meta: {
+                needSignIn: true
+              }
             }
           ]
         },
         {
           path: '/account/enterprise',
           component: () => import('@/pages/account/Enterprise'),
+          redirect: '/account/enterprise/partTimePost',
           children: [
             {
-              path: '/account/enterprise',
-              redirect: '/account/enterprise/partTimePost'
-            },
-            {
               path: '/account/enterprise/partTimePost',
-              component: EnterprisePartTimePost
+              component: EnterprisePartTimePost,
+              meta: {
+                needSignIn: true
+              }
             },
             {
               path: '/account/enterprise/partTimeRecruitment',
-              component: EnterprisePartTimeRecruitment
+              component: EnterprisePartTimeRecruitment,
+              meta: {
+                needSignIn: true
+              }
             },
             {
               path: '/account/enterprise/certification',
-              component: EnterpriseCertification
+              component: EnterpriseCertification,
+              meta: {
+                needSignIn: true
+              }
             }
           ]
         }

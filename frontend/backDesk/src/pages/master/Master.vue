@@ -8,7 +8,7 @@
         <header-nav/>
       </el-header>
       <el-main>
-        <transition name="slide" mode="out-in">
+        <transition name="slide-bottom" mode="out-in">
           <router-view/>
         </transition>
       </el-main>
@@ -17,22 +17,19 @@
 </template>
 
 <script>
-import SidebarNav from '@/components/_layout/SidebarNav';
-import HeaderNav from '@/components/_layout/HeaderNav';
+import HeaderNav from '@/components/header/HeaderNav';
+import SidebarNav from '@/components/sidebar/SidebarNav';
 
 export default {
   name: 'Master',
   components: {
-    SidebarNav,
-    HeaderNav
+    HeaderNav,
+    SidebarNav
   }
 };
 </script>
 
 <style lang="scss">
-  html,
-  #app,
-  body,
   .el-container,
   .el-aside,
   .el-aside ul {
@@ -46,7 +43,6 @@ export default {
       left: 0;
       height: 100%;
     }
-
     .el-container {
       margin-left: 201px;
       min-height: 100%;
@@ -56,13 +52,13 @@ export default {
     }
   }
 
-  .slide-enter-active,
-  .slide-leave-active {
+  .slide-bottom-enter-active,
+  .slide-bottom-leave-active {
     transition: opacity .3s cubic-bezier(0.0, 0.0, 0.2, 1), transform .3s cubic-bezier(0.0, 0.0, 0.2, 1);
   }
 
-  .slide-enter,
-  .slide-leave-active {
+  .slide-bottom-enter,
+  .slide-bottom-leave-active {
     opacity: 0;
     transform: translateY(5vh);
   }

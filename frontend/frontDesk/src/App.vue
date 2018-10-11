@@ -3,7 +3,7 @@
     <!-- 顶部菜单组件 -->
     <header-nav/>
     <main class="wrapper-container" ref="wrapper-container">
-      <transition name="slide" mode="out-in">
+      <transition name="slide-bottom" mode="out-in">
         <router-view/>
       </transition>
     </main>
@@ -52,13 +52,13 @@ export default {
     }
   }
 
-  .slide-enter-active,
-  .slide-leave-active {
+  .slide-bottom-enter-active,
+  .slide-bottom-leave-active {
     transition: opacity .3s cubic-bezier(0.0, 0.0, 0.2, 1), transform .3s cubic-bezier(0.0, 0.0, 0.2, 1);
   }
 
-  .slide-enter,
-  .slide-leave-active {
+  .slide-bottom-enter,
+  .slide-bottom-leave-active {
     opacity: 0;
     transform: translateY(15vh);
   }

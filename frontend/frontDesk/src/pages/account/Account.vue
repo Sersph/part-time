@@ -1,6 +1,6 @@
 <template>
   <section class="account-container">
-    <transition name="slide" mode="out-in">
+    <transition name="slide-bottom" mode="out-in">
       <router-view/>
     </transition>
   </section>

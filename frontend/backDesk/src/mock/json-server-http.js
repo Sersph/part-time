@@ -8,14 +8,9 @@ server.use(middlewares);
 
 // Add this before server.use(router)
 server.use(jsonServerHttp.rewriter({
-  '/common/location/regionList': '/commonLocationRegionList/1',
-  '/account/personal/signUp': '/accountPersonalSignUp',
-  '/account/personal/signIn': '/accountPersonalSignIn',
-  '/account/enterprise/signUp': '/accountEnterpriseSignUp',
-  '/account/enterprise/signIn': '/accountEnterpriseSignIn',
-  '/account/signOut': '/accountSignOut/1',
-  '/account/accountInfo': '/accountAccountInfo/1',
-  '/account/sendMailCaptcha': '/sendMailCaptcha'
+  '/admin/account/signIn': '/adminAccountSignIn',
+  '/admin/account/accountInfo': '/adminAccountInfo/1',
+  '/admin/account/signOut': '/adminAccountSignOut'
 }));
 
 // Add custom routes before JSON Server router
@@ -30,16 +25,14 @@ server.use((req, res, next) => {
   setTimeout(function () {
     if (req.method === 'POST') {
       switch (req.originalUrl) {
-        case '/account/personal/signUp':
-        case '/account/personal/signIn':
-        case '/account/sendMailCaptcha':
+        case '/admin/account/signIn':
           req.body.code = 0;
           break;
       }
     }
     if (req.method === 'DELETE') {
       switch (req.originalUrl) {
-        case '/account/signOut':
+        case '/admin/account/signOut':
           res.send(JSON.stringify({
             "code": 0
           }));
@@ -52,6 +45,6 @@ server.use((req, res, next) => {
 
 // Use default router
 server.use(router);
-server.listen(3000, () => {
+server.listen(3001, () => {
   console.log('JSON Server is running');
 });

@@ -4,18 +4,18 @@ export default {
   namespaced: true,
   state: {
     // 路由列表
-    routerList: {}
+    routeList: {}
   },
   mutations: {
-    [types.EDIT_ROUTER_LIST] (state, { routerList }) {
-      state.routerList = routerList;
+    [types.EDIT_ROUTE_LIST] (state, { routeList }) {
+      state.routeList = routeList;
     }
   },
   actions: {
-    editRouterList ({ commit }, { routerList }) {
+    editRouteList ({ commit }, { routeList }) {
       // 修改可访问路由表
-      commit(types.EDIT_ROUTER_LIST, {
-        routerList
+      commit(types.EDIT_ROUTE_LIST, {
+        routeList
       });
     }
   },

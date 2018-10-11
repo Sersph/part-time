@@ -21,7 +21,7 @@
           <el-form-item label="企业名称" prop="enterpriseName">
             <el-input v-model="enterpriseForm.enterpriseName"></el-input>
           </el-form-item>
-          <el-form-item label="所在城市" prop="cityId">
+          <el-form-item label="企业所在城市" prop="cityId">
             <el-cascader
               :options="cityList"
               :props="{value: 'id', label: 'name'}"
@@ -79,22 +79,23 @@ export default {
       },
       enterpriseFormRules: {
         enterpriseName: [
-          { required: true, message: '企业名称由1-30个中文、英文、数字及合法字符组成', trigger: 'change' },
-          { min: 1, max: 30, message: '企业名称由1-30个中文、英文、数字及合法字符组成', trigger: 'change' }
+          { required: true, message: '企业名称由2-20个中文、英文、数字及合法字符组成', trigger: 'change' },
+          { min: 2, max: 20, message: '企业名称由2-20个中文、英文、数字及合法字符组成', trigger: 'change' }
         ],
         cityId: [
-          { required: true, message: '请选择所在城市', trigger: 'change' }
+          { required: true, message: '请选择企业所在城市', trigger: 'change' }
         ],
         email: [
           { required: true, message: '请输入正确的邮箱', trigger: 'change' },
           { type: 'email', message: '请输入正确的邮箱', trigger: 'change' }
         ],
         emailCaptcha: [
-          { required: true, message: '请输入邮箱验证码', trigger: 'change' }
+          { required: true, message: '请输入邮箱验证码', trigger: 'change' },
+          { min: 6, max: 6, message: '验证码格式不对', trigger: 'change' }
         ],
         password: [
-          { required: true, message: '密码由3-20个字符组成', trigger: 'change' },
-          { min: 3, max: 20, message: '密码由3-20个字符组成', trigger: 'change' }
+          { required: true, message: '密码由6-20个字符组成', trigger: 'change' },
+          { min: 6, max: 20, message: '密码由6-20个字符组成', trigger: 'change' }
         ]
       }
     };
@@ -117,7 +118,6 @@ export default {
             username: this.personalForm.username,
             password: this.personalForm.password
           });
-          NProgress.done();
           if (result.code === 0) {
             // 注册成功逻辑
             this.$notify({
@@ -128,11 +128,13 @@ export default {
             });
             // 更新 vuex 用户信息
             await this.asyncInitAccountInfo();
+            NProgress.done();
             // 跳转首页
             setTimeout(() => {
               this.$router.replace('/');
             }, 1500);
           } else {
+            NProgress.done();
             this.submitPersonalFormLoading = false;
             // 注册失败逻辑
             this.$notify({
@@ -152,11 +154,14 @@ export default {
         if (valid) {
           this.submitEnterpriseFormLoading = true;
           NProgress.start();
-          const result = await api.account.personalSignUp({
-            username: this.personalForm.username,
-            password: this.personalForm.password
+          console.log(this.enterpriseForm.cityId);
+          const result = await api.account.enterpriseSignUp({
+            enterpriseName: this.enterpriseForm.enterpriseName,
+            cityId: this.enterpriseForm.cityId[1],
+            email: this.enterpriseForm.email,
+            captcha: this.enterpriseForm.emailCaptcha,
+            password: this.enterpriseForm.password
           });
-          NProgress.done();
           if (result.code === 0) {
             // 注册成功逻辑
             this.$notify({
@@ -167,11 +172,13 @@ export default {
             });
             // 更新 vuex 用户信息
             await this.asyncInitAccountInfo();
+            NProgress.done();
             // 跳转首页
             setTimeout(() => {
               this.$router.replace('/');
             }, 1500);
           } else {
+            NProgress.done();
             this.submitEnterpriseFormLoading = false;
             // 注册失败逻辑
             this.$notify({
@@ -212,6 +219,7 @@ export default {
           // 发送失败提示
           if (result.code !== 0) {
             clearInterval(this.sendMailCaptchaInterval);
+            this.sendMailCaptchaCountdown = 0;
             this.$notify({
               message: result.message,
               position: 'bottom-left',

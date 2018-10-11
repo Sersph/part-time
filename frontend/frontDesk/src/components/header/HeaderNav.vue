@@ -21,7 +21,7 @@
         <template slot="title">我的</template>
         <el-menu-item index="5-1"
                       @click="$router.push(accountInfo.type === 1 ? '/account/personal' : '/account/enterprise')">
-          <a>个人中心</a>
+          <a>{{ accountInfo.type === 1 ? '个人中心' : '控制台' }}</a>
         </el-menu-item>
         <el-menu-item index="5-2" @click="signOut">
           <a>退出</a>
@@ -50,11 +50,25 @@ export default {
       'accountInfo'
     ])
   },
+  watch: {
+    $route: {
+      handler (route) {
+        // 判断登陆权限
+        this.checkSignIn(route);
+      }
+    }
+  },
   async mounted () {
     // 初始化地区
     await this.initRegionList();
     // 初始化用户信息
     await this.asyncInitAccountInfo();
+
+    // 监听路由判断登陆权限
+    this.$router.beforeEach((to, from, next) => {
+      this.checkSignIn(to);
+      next();
+    });
   },
   methods: {
     ...mapActions('location', [
@@ -73,9 +87,19 @@ export default {
           duration: 1500,
           showClose: false
         });
-        // 跳转首页
+        // 跳转到首页
         if (this.$route.path !== '/home') {
           this.$router.replace('/');
+        }
+      }
+    },
+    checkSignIn (route) {
+      // 验证路由是否需要登陆才能访问
+      if (route.meta.needSignIn) {
+        const type = route.path.indexOf('/account/enterprise') !== -1 ? 'enterprise' : 'personal';
+        if (!this.accountInfo.id) {
+          // 未登录跳转登陆页面
+          this.$router.push(`/account/signIn?type=${type}`);
         }
       }
     }
