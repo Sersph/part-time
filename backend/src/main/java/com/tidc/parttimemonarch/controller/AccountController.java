@@ -70,9 +70,9 @@ public class AccountController {
 
 
     @ApiOperation(value = "发送邮件验证码")
-    @ApiImplicitParam(name = "email", value = "邮箱", required = true, dataType = "String", paramType = "header")
+    @ApiImplicitParam(name = "email", value = "邮箱", required = true, dataType = "String", paramType = "query")
     @PostMapping(value = "/sendMailCaptcha")
-    public RequestResult sendMailCaptcha(@RequestHeader(value = "email") String email){
+    public RequestResult sendMailCaptcha(@RequestParam(value = "email") String email){
         this.eMailService.sendMailCaptcha(email);
         this.result.succeed();
         return this.result;
@@ -94,10 +94,10 @@ public class AccountController {
             @ApiImplicitParam(name = "password", value = "密码", required = true, dataType = "String", paramType = "query"),
             @ApiImplicitParam(name = "email", value = "email", required = true, dataType = "String", paramType = "query"),
             @ApiImplicitParam(name = "cityId", value = "企业所在城市", required = true, dataType = "int", paramType = "query"),
-            @ApiImplicitParam(name = "captcha", value = "验证码", required = true, dataType = "String", paramType = "header"),
+            @ApiImplicitParam(name = "captcha", value = "验证码", required = true, dataType = "String", paramType = "query"),
     })
     @PostMapping(value = "enterprise/signUp")
-    public RequestResult enterpriseSignUp(@Valid EnterpriseUser enterpriseUser, @RequestHeader(value = "captcha") String captcha, HttpServletRequest httpServletRequest){
+    public RequestResult enterpriseSignUp(@Valid EnterpriseUser enterpriseUser, @RequestParam(value = "captcha") String captcha, HttpServletRequest httpServletRequest){
         enterpriseUser = this.accountService.enterpriseSignUp(enterpriseUser, captcha);
         SessionUtil.signUpSession(enterpriseUser, httpServletRequest.getSession());
         this.result.succeed();
