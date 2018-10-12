@@ -1,6 +1,6 @@
 <template>
-  <section class="enterprise-container">
-    <enterprise-nav/>
+  <section class="personal-container">
+    <personal-nav/>
     <transition name="slide-bottom" mode="out-in">
       <router-view/>
     </transition>
@@ -8,18 +8,18 @@
 </template>
 
 <script>
-import EnterpriseNav from '@/components/account/EnterpriseNav';
+import PersonalNav from '@/components/account/personal/PersonalNav';
 
 export default {
-  name: 'Enterprise',
+  name: 'Persona',
   components: {
-    EnterpriseNav
+    PersonalNav
   }
 };
 </script>
 
 <style lang="scss">
-  .enterprise-container {
+  .personal-container {
     display: flex;
     & > section:last-child {
       flex: 1;

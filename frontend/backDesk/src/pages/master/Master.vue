@@ -51,27 +51,4 @@ export default {
       }
     }
   }
-
-  .slide-bottom-enter-active,
-  .slide-bottom-leave-active {
-    transition: opacity .3s cubic-bezier(0.0, 0.0, 0.2, 1), transform .3s cubic-bezier(0.0, 0.0, 0.2, 1);
-  }
-
-  .slide-bottom-enter,
-  .slide-bottom-leave-active {
-    opacity: 0;
-    transform: translateY(5vh);
-  }
-
-  .slide-left-enter-active,
-  .slide-left-leave-active {
-    transition: opacity .3s cubic-bezier(0.0, 0.0, 0.2, 1), transform .3s cubic-bezier(0.0, 0.0, 0.2, 1);
-  }
-
-  .slide-left-enter,
-  .slide-left-leave-active {
-    opacity: 0;
-    transform: translateX(5vh);
-  }
-
 </style>

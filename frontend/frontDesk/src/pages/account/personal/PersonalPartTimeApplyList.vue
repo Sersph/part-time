@@ -24,7 +24,7 @@
 
 <script>
 export default {
-  name: 'PersonalPartTimeApply',
+  name: 'PersonalPartTimeApplyLiST',
   data () {
     return {
       personalPartTimeApplyList: [{

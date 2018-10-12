@@ -50,19 +50,18 @@ export default {
       'accountInfo'
     ])
   },
-  watch: {
-    $route: {
-      handler (route) {
-        // 判断登陆权限
-        this.checkSignIn(route);
-      }
-    }
-  },
-  async mounted () {
+  async created () {
     // 初始化地区
-    await this.initRegionList();
+    const initRegionListPromise = this.initRegionList();
+
     // 初始化用户信息
-    await this.asyncInitAccountInfo();
+    const asyncInitAccountInfoPromise = this.asyncInitAccountInfo();
+
+    await initRegionListPromise;
+    await asyncInitAccountInfoPromise;
+
+    // 判断登陆权限
+    this.checkSignIn(this.$route);
 
     // 监听路由判断登陆权限
     this.$router.beforeEach((to, from, next) => {
@@ -94,12 +93,13 @@ export default {
       }
     },
     checkSignIn (route) {
-      // 验证路由是否需要登陆才能访问
       if (route.meta.needSignIn) {
-        const type = route.path.indexOf('/account/enterprise') !== -1 ? 'enterprise' : 'personal';
-        if (!this.accountInfo.id) {
+        const type = route.path.indexOf('/account/enterprise') !== -1 ? 2 : 1;
+        // 验证路由是否需要登陆才能访问
+        // 验证路由是否需要企业登陆还是个人用户登陆
+        if (!this.accountInfo.id || this.accountInfo.type !== type) {
           // 未登录跳转登陆页面
-          this.$router.push(`/account/signIn?type=${type}`);
+          this.$router.push(`/account/signIn?type=${type === 1 ? 'personal' : 'enterprise'}`);
         }
       }
     }

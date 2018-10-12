@@ -16,7 +16,7 @@
         :route="sidebarMenuChildItem.path"
         :index="sidebarMenuChildItem.meta.index"
         :class="{'active': sidebarMenuChildItem.meta.index === activeIndex}">
-        <span :class="{active: $route.path === sidebarMenuChildItem.path ? 'active': ''}">{{ sidebarMenuChildItem.meta.name }}</span>
+        <span>{{ sidebarMenuChildItem.meta.name }}</span>
       </el-menu-item>
     </el-submenu>
   </el-menu>
@@ -38,14 +38,6 @@ export default {
       'routeList'
     ])
   },
-  watch: {
-    $route: {
-      handler (route) {
-        // 刷新菜单样式
-        this.editActiveClass(route);
-      }
-    }
-  },
   mounted () {
     // 刷新菜单列表
     this.editRouteList({
@@ -55,6 +47,11 @@ export default {
     });
     // 刷新菜单样式
     this.editActiveClass(this.$route);
+    // 监听路由刷新菜单样式
+    this.$router.beforeEach((to, from, next) => {
+      this.editActiveClass(to);
+      next();
+    });
   },
   methods: {
     ...mapActions('permission', [
@@ -67,7 +64,9 @@ export default {
       this.routeList.find(routeItem => {
         if (routeItem.children) {
           return routeItem.children.find(routeChildrenItem => {
-            if (route.path.indexOf(routeChildrenItem.path) > -1) {
+            const routerPathArr = route.path.split('/');
+            const routeChildrenItemPathArr = routeChildrenItem.path.split('/');
+            if (routerPathArr[1] + routerPathArr[2] === routeChildrenItemPathArr[1] + routeChildrenItemPathArr[2]) {
               this.activeIndex = routeChildrenItem.meta.index;
               return true;
             }

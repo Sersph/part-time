@@ -2,47 +2,47 @@
   <section class="sign-up-container">
     <el-tabs class="tab" v-model="signUpType" :stretch="true">
       <el-tab-pane label="个人用户注册" name="personal">
-        <el-form :model="personalForm" :rules="personalFormRules" ref="personalForm" label-width="128px">
+        <el-form :model="personalSignUpForm" :rules="personalSignUpFormRules" ref="personalSignUpForm" label-width="128px">
           <el-form-item label="用户名" prop="username">
-            <el-input v-model="personalForm.username"></el-input>
+            <el-input v-model="personalSignUpForm.username"></el-input>
           </el-form-item>
           <el-form-item label="密码" prop="password">
-            <el-input type="password" v-model="personalForm.password"></el-input>
+            <el-input type="password" v-model="personalSignUpForm.password"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" :loading="submitPersonalFormLoading" @click="submitPersonalForm('personalForm')">
+            <el-button type="primary" :loading="doPersonalSignUpLoading" @click="doPersonalSignUp('personalSignUpForm')">
               立即注册
             </el-button>
           </el-form-item>
         </el-form>
       </el-tab-pane>
       <el-tab-pane label="企业用户注册" name="enterprise">
-        <el-form :model="enterpriseForm" :rules="enterpriseFormRules" ref="enterpriseForm" label-width="128px">
+        <el-form :model="enterpriseSignUpForm" :rules="enterpriseSignUpFormRules" ref="enterpriseSignUpForm" label-width="128px">
           <el-form-item label="企业名称" prop="enterpriseName">
-            <el-input v-model="enterpriseForm.enterpriseName"></el-input>
+            <el-input v-model="enterpriseSignUpForm.enterpriseName"></el-input>
           </el-form-item>
           <el-form-item label="企业所在城市" prop="cityId">
             <el-cascader
               :options="cityList"
               :props="{value: 'id', label: 'name'}"
-              v-model="enterpriseForm.cityId">
+              v-model="enterpriseSignUpForm.cityId">
             </el-cascader>
           </el-form-item>
           <el-form-item label="邮箱" prop="email">
-            <el-input type="text" v-model="enterpriseForm.email"></el-input>
+            <el-input type="text" v-model="enterpriseSignUpForm.email"></el-input>
           </el-form-item>
           <el-form-item label="邮箱验证码" prop="emailCaptcha">
-            <el-input placeholder="验证码" v-model="enterpriseForm.emailCaptcha">
-              <el-button :class="sendMailCaptchaCountdown > 0 ? 'disabled' : ''" slot="append" @click="sendMailCaptcha('enterpriseForm')">
+            <el-input placeholder="验证码" v-model="enterpriseSignUpForm.emailCaptcha">
+              <el-button :class="sendMailCaptchaCountdown > 0 ? 'disabled' : ''" slot="append" @click="sendMailCaptcha('enterpriseSignUpForm')">
                 {{ sendMailCaptchaCountdown > 0 ? `已发送 (${sendMailCaptchaCountdown}s)` : '发送' }}
               </el-button>
             </el-input>
           </el-form-item>
           <el-form-item label="密码" prop="password">
-            <el-input type="password" v-model="enterpriseForm.password"></el-input>
+            <el-input type="password" v-model="enterpriseSignUpForm.password"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" :loading="submitEnterpriseFormLoading" @click="submitEnterpriseForm('enterpriseForm')">立即注册</el-button>
+            <el-button type="primary" :loading="doEnterpriseSignUpLoading" @click="doEnterpriseSignUp('enterpriseSignUpForm')">立即注册</el-button>
           </el-form-item>
         </el-form>
       </el-tab-pane>
@@ -60,9 +60,9 @@ export default {
   data () {
     return {
       signUpType: this.$route.query.type !== undefined ? this.$route.query.type : 'personal',
-      submitPersonalFormLoading: false,
-      personalForm: {},
-      personalFormRules: {
+      doPersonalSignUpLoading: false,
+      personalSignUpForm: {},
+      personalSignUpFormRules: {
         username: [
           { required: true, message: '用户名由6-20个字符组成', trigger: 'change' },
           { min: 6, max: 20, message: '用户名由6-20个字符组成', trigger: 'change' }
@@ -73,11 +73,9 @@ export default {
         ]
       },
       sendMailCaptchaCountdown: 0,
-      submitEnterpriseFormLoading: false,
-      enterpriseForm: {
-        email: '1092879991@qq.com'
-      },
-      enterpriseFormRules: {
+      doEnterpriseSignUpLoading: false,
+      enterpriseSignUpForm: {},
+      enterpriseSignUpFormRules: {
         enterpriseName: [
           { required: true, message: '企业名称由2-20个中文、英文、数字及合法字符组成', trigger: 'change' },
           { min: 2, max: 20, message: '企业名称由2-20个中文、英文、数字及合法字符组成', trigger: 'change' }
@@ -109,14 +107,14 @@ export default {
     ...mapActions('account', [
       'asyncInitAccountInfo'
     ]),
-    submitPersonalForm (formName) {
+    doPersonalSignUp (formName) {
       this.$refs[formName].validate(async (valid) => {
         if (valid) {
-          this.submitPersonalFormLoading = true;
+          this.doPersonalSignUpLoading = true;
           NProgress.start();
           const result = await api.account.personalSignUp({
-            username: this.personalForm.username,
-            password: this.personalForm.password
+            username: this.personalSignUpForm.username,
+            password: this.personalSignUpForm.password
           });
           if (result.code === 0) {
             // 注册成功逻辑
@@ -135,7 +133,7 @@ export default {
             }, 1500);
           } else {
             NProgress.done();
-            this.submitPersonalFormLoading = false;
+            this.doPersonalSignUpLoading = false;
             // 注册失败逻辑
             this.$notify({
               message: result.message,
@@ -149,18 +147,17 @@ export default {
         }
       });
     },
-    submitEnterpriseForm (formName) {
+    doEnterpriseSignUp (formName) {
       this.$refs[formName].validate(async (valid) => {
         if (valid) {
-          this.submitEnterpriseFormLoading = true;
+          this.doEnterpriseSignUpLoading = true;
           NProgress.start();
-          console.log(this.enterpriseForm.cityId);
           const result = await api.account.enterpriseSignUp({
-            enterpriseName: this.enterpriseForm.enterpriseName,
-            cityId: this.enterpriseForm.cityId[1],
-            email: this.enterpriseForm.email,
-            captcha: this.enterpriseForm.emailCaptcha,
-            password: this.enterpriseForm.password
+            enterpriseName: this.enterpriseSignUpForm.enterpriseName,
+            cityId: this.enterpriseSignUpForm.cityId[1],
+            email: this.enterpriseSignUpForm.email,
+            captcha: this.enterpriseSignUpForm.emailCaptcha,
+            password: this.enterpriseSignUpForm.password
           });
           if (result.code === 0) {
             // 注册成功逻辑
@@ -179,7 +176,7 @@ export default {
             }, 1500);
           } else {
             NProgress.done();
-            this.submitEnterpriseFormLoading = false;
+            this.doEnterpriseSignUpLoading = false;
             // 注册失败逻辑
             this.$notify({
               message: result.message,
@@ -203,7 +200,7 @@ export default {
           NProgress.start();
           // 发送邮件验证码
           const result = await api.account.sendMailCaptcha({
-            email: this.enterpriseForm.email
+            email: this.enterpriseSignUpForm.email
           });
           NProgress.done();
 

@@ -47,7 +47,7 @@ export default {
       }
     }
   },
-  async mounted () {
+  async created () {
     // 刷新面包屑导航
     this.editCurrentRoute(this.$route);
     // 初始化用户信息

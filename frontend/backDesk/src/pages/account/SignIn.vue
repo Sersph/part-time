@@ -10,7 +10,7 @@
           <el-input type="password" placeholder="Password" v-model="signInForm.password" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" :loading="submitSignInFormLoading" @click="submitSignInForm('signInForm')">Sign In
+          <el-button type="primary" :loading="doSignInFormLoading" @click="doSignInForm('signInForm')">Sign In
           </el-button>
         </el-form-item>
       </el-form>
@@ -28,7 +28,7 @@ export default {
   name: 'SignIn',
   data () {
     return {
-      submitSignInFormLoading: false,
+      doSignInFormLoading: false,
       signInForm: {},
       signInFormRules: {
         username: [
@@ -44,10 +44,10 @@ export default {
     ...mapActions('account', [
       'asyncInitAccountInfo'
     ]),
-    submitSignInForm (formName) {
+    doSignInForm (formName) {
       this.$refs[formName].validate(async (valid) => {
         if (valid) {
-          this.submitSignInFormLoading = true;
+          this.doSignInFormLoading = true;
           NProgress.start();
           const result = await api.account.signIn({
             username: this.signInForm.username,
@@ -70,7 +70,7 @@ export default {
             }, 1500);
           } else {
             NProgress.done();
-            this.submitSignInFormLoading = false;
+            this.doSignInFormLoading = false;
             // 登陆失败逻辑
             this.$notify({
               message: result.message,

@@ -11,7 +11,7 @@
         </el-input>
       </el-col>
       <el-col :span="6" class="part-time-tooltip">
-        <router-link to="/account/enterprise/partTimePost">
+        <router-link to="/account/enterprise">
           <el-button type="danger">发布兼职</el-button>
         </router-link>
       </el-col>

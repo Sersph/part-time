@@ -32,6 +32,8 @@ server.use((req, res, next) => {
       switch (req.originalUrl) {
         case '/account/personal/signUp':
         case '/account/personal/signIn':
+        case '/account/enterprise/signUp':
+        case '/account/enterprise/signIn':
         case '/account/sendMailCaptcha':
           req.body.code = 0;
           break;

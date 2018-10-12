@@ -14,10 +14,36 @@ export default {
 </script>
 
 <style lang="scss">
+  html {
+    overflow-x: hidden;
+  }
+
   html,
   #app,
   body {
     height: 100%;
+  }
+
+  .slide-bottom-enter-active,
+  .slide-bottom-leave-active {
+    transition: opacity .3s cubic-bezier(0.0, 0.0, 0.2, 1), transform .3s cubic-bezier(0.0, 0.0, 0.2, 1);
+  }
+
+  .slide-bottom-enter,
+  .slide-bottom-leave-active {
+    opacity: 0;
+    transform: translateY(15vh);
+  }
+
+  .slide-left-enter-active,
+  .slide-left-leave-active {
+    transition: opacity .3s cubic-bezier(0.0, 0.0, 0.2, 1), transform .3s cubic-bezier(0.0, 0.0, 0.2, 1);
+  }
+
+  .slide-left-enter,
+  .slide-left-leave-active {
+    opacity: 0;
+    transform: translateX(5vh);
   }
 
   .el-form-item.is-success .el-input__inner, .el-form-item.is-success .el-input__inner:focus, .el-form-item.is-success .el-textarea__inner, .el-form-item.is-success .el-textarea__inner:focus {

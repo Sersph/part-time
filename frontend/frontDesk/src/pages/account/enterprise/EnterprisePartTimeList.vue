@@ -1,7 +1,9 @@
 <template>
-  <section class="enterprise-part-time-post-container">
+  <section class="enterprise-part-time-post-list-container">
     <el-col class="part-time-post-tooltip">
-      <el-button type="danger">发布兼职</el-button>
+      <router-link to="/account/enterprise/partTime/add">
+        <el-button type="danger">发布兼职</el-button>
+      </router-link>
     </el-col>
     <el-table
       :data="enterprisePartTimePostList"
@@ -27,7 +29,7 @@
 
 <script>
 export default {
-  name: 'EnterprisePartTimePost',
+  name: 'EnterprisePartTimeList',
   data () {
     return {
       enterprisePartTimePostList: [{
@@ -57,13 +59,16 @@ export default {
         return 'success-row';
       }
       return '';
+    },
+    toPartTimeAdd () {
+
     }
   }
 };
 </script>
 
 <style lang="scss">
-  .enterprise-part-time-post-container {
+  .enterprise-part-time-post-list-container {
     padding: 56px 0 0 65px;
     .part-time-post-tooltip {
       margin-bottom: 20px;

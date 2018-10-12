@@ -33,7 +33,7 @@ export default {
       'currentCity'
     ])
   },
-  async mounted () {
+  async created () {
     NProgress.start();
     // 初始化搜索结果
     await this.asyncEditPartTimeSearchResultListByUrlParams();

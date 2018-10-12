@@ -1,16 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
-// 非懒加载路由组件
-import SignIn from '@/pages/account/SignIn';
-import SignUp from '@/pages/account/SignUp';
-import PersonalPartTimeApply from '@/pages/account/PersonalPartTimeApply';
-import PersonalResume from '@/pages/account/PersonalResume';
-import EnterprisePartTimePost from '@/pages/account/EnterprisePartTimePost';
-import EnterprisePartTimeRecruitment from '@/pages/account/EnterprisePartTimeRecruitment';
-import EnterpriseCertification from '@/pages/account/EnterpriseCertification';
-import PartTimeDetail from '@/pages/part-time/PartTimeDetail';
-
 // 注入 Vue Router 插件
 Vue.use(VueRouter);
 
@@ -36,27 +26,37 @@ export default new VueRouter({
       children: [
         {
           path: '/account/signUp',
-          component: SignUp
+          component: () => import('@/pages/account/SignUp')
         },
         {
           path: '/account/signIn',
-          component: SignIn
+          component: () => import('@/pages/account/SignIn')
         },
         {
           path: '/account/personal',
-          component: () => import('@/pages/account/Personal'),
+          component: () => import('@/pages/account/personal/Personal'),
           redirect: '/account/personal/partTimeApply',
           children: [
             {
               path: '/account/personal/partTimeApply',
-              component: PersonalPartTimeApply,
+              component: () => import('@/pages/account/personal/PersonalPartTimeApply'),
+              redirect: '/account/personal/partTimeApply/list',
               meta: {
                 needSignIn: true
-              }
+              },
+              children: [
+                {
+                  path: '/account/personal/partTimeApply/list',
+                  component: () => import('@/pages/account/personal/PersonalPartTimeApplyList'),
+                  meta: {
+                    needSignIn: true
+                  }
+                }
+              ]
             },
             {
               path: '/account/personal/resume',
-              component: PersonalResume,
+              component: () => import('@/pages/account/personal/PersonalResume'),
               meta: {
                 needSignIn: true
               }
@@ -65,26 +65,43 @@ export default new VueRouter({
         },
         {
           path: '/account/enterprise',
-          component: () => import('@/pages/account/Enterprise'),
-          redirect: '/account/enterprise/partTimePost',
+          component: () => import('@/pages/account/enterprise/Enterprise'),
+          redirect: '/account/enterprise/partTime',
           children: [
             {
-              path: '/account/enterprise/partTimePost',
-              component: EnterprisePartTimePost,
+              path: '/account/enterprise/partTime',
+              component: () => import('@/pages/account/enterprise/EnterprisePartTime'),
+              redirect: '/account/enterprise/partTime/list',
               meta: {
                 needSignIn: true
-              }
+              },
+              children: [
+                {
+                  path: '/account/enterprise/partTime/list',
+                  component: () => import('@/pages/account/enterprise/EnterprisePartTimeList'),
+                  meta: {
+                    needSignIn: true
+                  }
+                },
+                {
+                  path: '/account/enterprise/partTime/add',
+                  component: () => import('@/pages/account/enterprise/EnterprisePartTimeOperation'),
+                  meta: {
+                    needSignIn: true
+                  }
+                }
+              ]
             },
             {
               path: '/account/enterprise/partTimeRecruitment',
-              component: EnterprisePartTimeRecruitment,
+              component: () => import('@/pages/account/enterprise/EnterprisePartTimeRecruitment'),
               meta: {
                 needSignIn: true
               }
             },
             {
               path: '/account/enterprise/certification',
-              component: EnterpriseCertification,
+              component: () => import('@/pages/account/enterprise/EnterpriseCertification'),
               meta: {
                 needSignIn: true
               }
@@ -99,7 +116,7 @@ export default new VueRouter({
       children: [
         {
           path: '/partTime/detail/:id',
-          component: PartTimeDetail
+          component: () => import('@/pages/part-time/PartTimeDetail')
         }
       ]
     }
