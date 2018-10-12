@@ -67,7 +67,7 @@ export default {
             // 跳转首页
             setTimeout(() => {
               this.$router.replace('/');
-            }, 1500);
+            }, 500);
           } else {
             NProgress.done();
             this.doSignInFormLoading = false;

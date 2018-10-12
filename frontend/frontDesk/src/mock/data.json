@@ -509,5 +509,213 @@
       "code": 0,
       "id": 8
     }
+  ],
+  "partTimeBaseInfo": [
+    {
+      "id": 1,
+      "code": 0,
+      "message": "成功",
+      "partTimeTypes": [
+        {
+          "id": 1,
+          "name": "短期兼职"
+        },
+        {
+          "id": 2,
+          "name": "长期兼职"
+        },
+        {
+          "id": 3,
+          "name": "寒假工"
+        },
+        {
+          "id": 4,
+          "name": "暑假工"
+        }
+      ],
+      "partTimeSpecies": [
+        {
+          "id": 1,
+          "name": "传单派发"
+        },
+        {
+          "id": 2,
+          "name": "打包分拣"
+        }
+      ],
+      "settlementTypes": [
+        {
+          "id": 1,
+          "name": "日结"
+        },
+        {
+          "id": 2,
+          "name": "次日结"
+        },
+        {
+          "id": 3,
+          "name": "周结"
+        },
+        {
+          "id": 4,
+          "name": "半月结"
+        },
+        {
+          "id": 5,
+          "name": "月结"
+        },
+        {
+          "id": 6,
+          "name": "完工结"
+        }
+      ],
+      "calculationTypes": [
+        {
+          "id": 1,
+          "name": "天"
+        },
+        {
+          "id": 2,
+          "name": "周"
+        },
+        {
+          "id": 3,
+          "name": "小时"
+        },
+        {
+          "id": 4,
+          "name": "次"
+        },
+        {
+          "id": 5,
+          "name": "个"
+        },
+        {
+          "id": 6,
+          "name": "件"
+        }
+      ]
+    }
+  ],
+  "partTimePartTime": [
+    {
+      "code": 0,
+      "id": 1
+    },
+    {
+      "name": "123",
+      "recruitmentCount": "12",
+      "partTimeTypeId": "1",
+      "partTimeSpeciesId": "1",
+      "price": "1",
+      "calculationTypeId": "1",
+      "settlementTypeId": "1",
+      "priceDescription": "1",
+      "provinceId": "10000",
+      "cityId": "110000",
+      "areaId": "110100",
+      "detailAddress": "1",
+      "workingDateStart": "11457853200",
+      "workingDateEnd": "11457885600",
+      "workingTime": "9:0:0-18:0:0",
+      "workingDateWeek": "1",
+      "jobDescription": "1",
+      "contactPeople": "1",
+      "contactPhone": "2312312",
+      "code": 0,
+      "id": 2
+    },
+    {
+      "name": "123",
+      "recruitmentCount": "12",
+      "partTimeTypeId": "1",
+      "partTimeSpeciesId": "1",
+      "price": "1",
+      "calculationTypeId": "1",
+      "settlementTypeId": "1",
+      "priceDescription": "1",
+      "provinceId": "440000",
+      "cityId": "440100",
+      "areaId": "440103",
+      "detailAddress": "1",
+      "workingDateStart": "11457853200",
+      "workingDateEnd": "11457885600",
+      "workingTime": "9:0:0-18:0:0",
+      "workingTimeWeek": "1",
+      "jobDescription": "1",
+      "contactPeople": "1",
+      "contactPhone": "2312312",
+      "code": 0,
+      "id": 3
+    },
+    {
+      "name": "123",
+      "recruitmentCount": "12",
+      "partTimeTypeId": "1",
+      "partTimeSpeciesId": "1",
+      "price": "1",
+      "calculationTypeId": "1",
+      "settlementTypeId": "1",
+      "priceDescription": "1",
+      "provinceId": "440000",
+      "cityId": "440100",
+      "areaId": "440103",
+      "detailAddress": "1",
+      "workingDateStart": "11457853200",
+      "workingDateEnd": "11457885600",
+      "workingTime": "9:0:0-18:0:0",
+      "workingTimeWeek": "1",
+      "jobDescription": "1",
+      "contactPeople": "1",
+      "contactPhone": "2312312",
+      "code": 0,
+      "id": 4
+    },
+    {
+      "name": "123",
+      "recruitmentCount": "12",
+      "partTimeTypeId": "1",
+      "partTimeSpeciesId": "1",
+      "price": "1",
+      "calculationTypeId": "1",
+      "settlementTypeId": "1",
+      "priceDescription": "1",
+      "provinceId": "440000",
+      "cityId": "440100",
+      "areaId": "440103",
+      "detailAddress": "1",
+      "workingDateStart": "11457853200",
+      "workingDateEnd": "11457885600",
+      "workingTime": "9:0:0-18:0:0",
+      "workingTimeWeek": "1",
+      "jobDescription": "1",
+      "contactPeople": "1",
+      "contactPhone": "2312312",
+      "code": 0,
+      "id": 5
+    },
+    {
+      "name": "123",
+      "recruitmentCount": "12",
+      "partTimeTypeId": "1",
+      "partTimeSpeciesId": "1",
+      "price": "1",
+      "calculationTypeId": "1",
+      "settlementTypeId": "1",
+      "priceDescription": "",
+      "provinceId": "440000",
+      "cityId": "440100",
+      "areaId": "440103",
+      "detailAddress": "1",
+      "workingDateStart": "11457853200",
+      "workingDateEnd": "11457885600",
+      "workingTime": "9:0:0-18:0:0",
+      "workingTimeWeek": "1",
+      "jobDescription": "1",
+      "contactPeople": "1",
+      "contactPhone": "2312312",
+      "code": 0,
+      "id": 6
+    }
   ]
 }

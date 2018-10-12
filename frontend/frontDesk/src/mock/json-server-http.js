@@ -15,7 +15,9 @@ server.use(jsonServerHttp.rewriter({
   '/account/enterprise/signIn': '/accountEnterpriseSignIn',
   '/account/signOut': '/accountSignOut/1',
   '/account/accountInfo': '/accountAccountInfo/1',
-  '/account/sendMailCaptcha': '/sendMailCaptcha'
+  '/account/sendMailCaptcha': '/sendMailCaptcha',
+  '/partTime/baseInfo': '/partTimeBaseInfo/1',
+  '/partTime/partTime': '/partTimePartTime'
 }));
 
 // Add custom routes before JSON Server router
@@ -35,6 +37,7 @@ server.use((req, res, next) => {
         case '/account/enterprise/signUp':
         case '/account/enterprise/signIn':
         case '/account/sendMailCaptcha':
+        case '/partTime/partTime':
           req.body.code = 0;
           break;
       }

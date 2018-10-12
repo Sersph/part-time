@@ -11,6 +11,8 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex';
+import NProgress from 'nprogress';
 import HeaderNav from '@/components/header/HeaderNav';
 
 export default {
@@ -22,16 +24,61 @@ export default {
     return {
       transitionName: ''
     };
+  },
+  computed: {
+    ...mapState('account', [
+      'accountInfo'
+    ])
+  },
+  async created () {
+    NProgress.start();
+    // 初始化地区
+    const initRegionListPromise = this.initRegionList();
+    // 初始化兼职基本信息
+    const initPartTimeBaseInfoPromise = this.asyncInitPartTimeBaseInfo();
+    // 初始化用户信息
+    const asyncInitAccountInfoPromise = this.asyncInitAccountInfo();
+
+    await initRegionListPromise;
+    await initPartTimeBaseInfoPromise;
+    await asyncInitAccountInfoPromise;
+    NProgress.done();
+
+    // 判断登陆权限
+    this.checkSignIn(this.$route);
+
+    // 监听路由判断登陆权限
+    this.$router.beforeEach((to, from, next) => {
+      this.checkSignIn(to);
+      next();
+    });
+  },
+  methods: {
+    ...mapActions('location', [
+      'initRegionList'
+    ]),
+    ...mapActions('account', [
+      'asyncInitAccountInfo'
+    ]),
+    ...mapActions('partTime', [
+      'asyncInitPartTimeBaseInfo'
+    ]),
+    checkSignIn (route) {
+      if (route.meta.needSignIn) {
+        const type = route.path.indexOf('/account/enterprise') !== -1 ? 2 : 1;
+        // 验证路由是否需要登陆才能访问
+        // 验证路由是否需要企业登陆还是个人用户登陆
+        if (!this.accountInfo.id || this.accountInfo.type !== type) {
+          // 未登录跳转登陆页面
+          this.$router.push(`/account/signIn?type=${type === 1 ? 'personal' : 'enterprise'}`);
+        }
+      }
+    }
   }
 };
 </script>
 
 <style lang="scss">
-  html,
-  body {
-    height: 100%;
-  }
-
   body {
     overflow-y: scroll;
   }
@@ -40,8 +87,11 @@ export default {
     text-decoration: none;
   }
 
+  p {
+    margin: 0;
+  }
+
   #app {
-    height: 100%;
     .wrapper-container {
       width: 100%;
       & > :first-child {
@@ -82,8 +132,9 @@ export default {
   }
 
   .el-select,
-  .el-cascader {
-    width: 100%;
+  .el-cascader,
+  .el-date-editor {
+    width: 100% !important;
   }
 
   .el-notification {

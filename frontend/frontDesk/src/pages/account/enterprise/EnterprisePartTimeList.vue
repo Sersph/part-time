@@ -1,10 +1,10 @@
 <template>
-  <section class="enterprise-part-time-post-list-container">
-    <el-col class="part-time-post-tooltip">
+  <section class="enterprise-part-time-list-container">
+    <section class="header-action-tooltip-container">
       <router-link to="/account/enterprise/partTime/add">
         <el-button type="danger">发布兼职</el-button>
       </router-link>
-    </el-col>
+    </section>
     <el-table
       :data="enterprisePartTimePostList"
       style="width: 100%"
@@ -59,18 +59,14 @@ export default {
         return 'success-row';
       }
       return '';
-    },
-    toPartTimeAdd () {
-
     }
   }
 };
 </script>
 
 <style lang="scss">
-  .enterprise-part-time-post-list-container {
-    padding: 56px 0 0 65px;
-    .part-time-post-tooltip {
+  .enterprise-part-time-list-container {
+    .header-action-tooltip-container {
       margin-bottom: 20px;
       text-align: right;
     }

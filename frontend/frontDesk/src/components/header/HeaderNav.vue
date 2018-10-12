@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
+import { mapState } from 'vuex';
 import api from '@/api';
 import SelectCity from '@/components/location/SelectCity';
 
@@ -50,32 +50,7 @@ export default {
       'accountInfo'
     ])
   },
-  async created () {
-    // 初始化地区
-    const initRegionListPromise = this.initRegionList();
-
-    // 初始化用户信息
-    const asyncInitAccountInfoPromise = this.asyncInitAccountInfo();
-
-    await initRegionListPromise;
-    await asyncInitAccountInfoPromise;
-
-    // 判断登陆权限
-    this.checkSignIn(this.$route);
-
-    // 监听路由判断登陆权限
-    this.$router.beforeEach((to, from, next) => {
-      this.checkSignIn(to);
-      next();
-    });
-  },
   methods: {
-    ...mapActions('location', [
-      'initRegionList'
-    ]),
-    ...mapActions('account', [
-      'asyncInitAccountInfo'
-    ]),
     async signOut () {
       const result = await api.account.signOut();
       if (result.code === 0) {
@@ -91,17 +66,6 @@ export default {
           this.$router.replace('/');
         }
       }
-    },
-    checkSignIn (route) {
-      if (route.meta.needSignIn) {
-        const type = route.path.indexOf('/account/enterprise') !== -1 ? 2 : 1;
-        // 验证路由是否需要登陆才能访问
-        // 验证路由是否需要企业登陆还是个人用户登陆
-        if (!this.accountInfo.id || this.accountInfo.type !== type) {
-          // 未登录跳转登陆页面
-          this.$router.push(`/account/signIn?type=${type === 1 ? 'personal' : 'enterprise'}`);
-        }
-      }
     }
   }
 };
@@ -112,6 +76,7 @@ export default {
     display: flex;
     justify-content: center;
     background-color: #409EFF;
+    box-shadow: 0 2px 11px rgba(0, 0, 0, 0.2);
     .el-menu.el-menu--horizontal {
       border: none;
     }

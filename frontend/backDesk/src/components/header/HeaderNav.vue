@@ -24,8 +24,6 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
-
 export default {
   name: 'HeaderNav',
   data () {
@@ -34,46 +32,22 @@ export default {
       currentRoute: {}
     };
   },
-  computed: {
-    ...mapState('account', [
-      'accountInfo'
-    ])
-  },
-  watch: {
-    $route: {
-      handler (route) {
-        // 刷新面包屑导航
-        this.editCurrentRoute(route);
-      }
-    }
-  },
   async created () {
     // 刷新面包屑导航
     this.editCurrentRoute(this.$route);
-    // 初始化用户信息
-    await this.asyncInitAccountInfo();
-    // 判断登陆权限
-    this.checkSignIn(this.$route);
+    // 监听路由刷新面包屑导航
+    this.$router.beforeEach((to, from, next) => {
+      this.editCurrentRoute(to);
+      next();
+    });
   },
   methods: {
-    ...mapActions('account', [
-      'asyncInitAccountInfo'
-    ]),
     editCurrentRoute (route) {
       this.opacityFlag = false;
       setTimeout(() => {
         this.currentRoute = route;
         this.opacityFlag = true;
       }, 300);
-    },
-    checkSignIn (route) {
-      // 验证路由是否需要登陆才能访问
-      if (route.meta.needSignIn) {
-        if (!this.accountInfo.id) {
-          // 未登录跳转登陆页面
-          this.$router.push('/account/signIn');
-        }
-      }
     }
   }
 };
@@ -84,7 +58,6 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 100%;
     .el-breadcrumb {
       padding: 23px 0;
     }

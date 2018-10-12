@@ -7,9 +7,35 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex';
 
 export default {
-  name: 'Sidebar'
+  name: 'App',
+  computed: {
+    ...mapState('account', [
+      'accountInfo'
+    ])
+  },
+  async created () {
+    // 初始化用户信息
+    await this.asyncInitAccountInfo();
+    // 判断登陆权限
+    this.checkSignIn(this.$route);
+  },
+  methods: {
+    ...mapActions('account', [
+      'asyncInitAccountInfo'
+    ]),
+    checkSignIn (route) {
+      // 验证路由是否需要登陆才能访问
+      if (route.meta.needSignIn) {
+        if (!this.accountInfo.id) {
+          // 未登录跳转登陆页面
+          this.$router.push('/account/signIn');
+        }
+      }
+    }
+  }
 };
 </script>
 

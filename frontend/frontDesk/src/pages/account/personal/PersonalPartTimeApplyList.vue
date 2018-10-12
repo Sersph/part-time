@@ -60,10 +60,6 @@ export default {
 </script>
 
 <style lang="scss">
-  .personal-part-time-apply-container {
-    padding: 56px 0 0 65px;
-  }
-
   .el-table .warning-row {
     background: oldlace;
   }

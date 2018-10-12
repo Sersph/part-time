@@ -21,17 +21,17 @@
     <section class="part-time-search-condition-item">
       <div class="condition-name">类型</div>
       <div class="condition-list">
-        <el-radio-group v-model="typeId">
+        <el-radio-group v-model="partTimeTypeId">
           <div class="item" @click="setTypeId(0)">
             <el-radio-button :label="0">不限</el-radio-button>
           </div>
           <div class="item"
-               v-for="(typeItem, index) in typeList"
+               v-for="(partTimeTypeItem, index) in partTimeBaseInfo.partTimeTypeList"
                :key="index"
-               @click="setTypeId(typeItem.id)"
+               @click="setTypeId(partTimeTypeItem.id)"
           >
-            <el-radio-button :label="typeItem.id">{{ typeItem.name }}</el-radio-button>
-            <sup v-if="typeItem.isHot">hot</sup>
+            <el-radio-button :label="partTimeTypeItem.id">{{ partTimeTypeItem.name }}</el-radio-button>
+            <sup v-if="partTimeTypeItem.isHot">hot</sup>
           </div>
         </el-radio-group>
       </div>
@@ -39,17 +39,17 @@
     <section class="part-time-search-condition-item">
       <div class="condition-name">种类</div>
       <div class="condition-list">
-        <el-radio-group v-model="speciesId">
+        <el-radio-group v-model="partTimeSpeciesId">
           <div class="item" @click="setSpeciesId(0)">
             <el-radio-button :label="0">不限</el-radio-button>
           </div>
           <div class="item"
-               v-for="(speciesItem, index) in speciesList"
+               v-for="(partTimeSpeciesItem, index) in partTimeBaseInfo.partTimeSpeciesList"
                :key="index"
-               @click="setSpeciesId(speciesItem.id)"
+               @click="setSpeciesId(partTimeSpeciesItem.id)"
           >
-            <el-radio-button :label="speciesItem.id">{{ speciesItem.name }}</el-radio-button>
-            <sup v-if="speciesItem.isHot">hot</sup>
+            <el-radio-button :label="partTimeSpeciesItem.id">{{ partTimeSpeciesItem.name }}</el-radio-button>
+            <sup v-if="partTimeSpeciesItem.isHot">hot</sup>
           </div>
         </el-radio-group>
       </div>
@@ -65,35 +65,14 @@ export default {
   name: 'PartTimeSearchCondition',
   data () {
     return {
-      typeList: [
-        { id: 2, name: '短期兼职' },
-        { id: 3, name: '长期兼职' },
-        { id: 4, name: '寒假工' },
-        { id: 5, name: '暑假工' }
-      ],
-      speciesList: [
-        { id: 2, name: '其他' },
-        { id: 3, name: '派单' },
-        { id: 4, name: '销售' },
-        { id: 5, name: '翻译' },
-        { id: 6, name: '客服' },
-        { id: 7, name: '演出' },
-        { id: 8, name: '文员' },
-        { id: 9, name: '临时工' },
-        { id: 10, name: '实习' },
-        { id: 11, name: '临时工' },
-        { id: 12, name: '临时工', isHot: true },
-        { id: 13, name: '临时工', isHot: true },
-        { id: 14, name: '临时工' },
-        { id: 15, name: '临时工', isHot: true }
-      ],
       areaId: 0,
-      typeId: 0,
-      speciesId: 0
+      partTimeTypeId: 0,
+      partTimeSpeciesId: 0
     };
   },
   computed: {
     ...mapState('partTime', [
+      'partTimeBaseInfo',
       'partTimeSearchCondition'
     ]),
     ...mapState('location', [
@@ -109,12 +88,12 @@ export default {
           this.areaId = partTimeSearchCondition.areaId;
         }
         // init 搜索类型
-        if (this.typeId !== partTimeSearchCondition.typeId) {
-          this.typeId = partTimeSearchCondition.typeId;
+        if (this.partTimeTypeId !== partTimeSearchCondition.partTimeTypeId) {
+          this.partTimeTypeId = partTimeSearchCondition.partTimeTypeId;
         }
         // init 搜索种类
-        if (this.speciesId !== partTimeSearchCondition.speciesId) {
-          this.speciesId = partTimeSearchCondition.speciesId;
+        if (this.partTimeSpeciesId !== partTimeSearchCondition.partTimeSpeciesId) {
+          this.partTimeSpeciesId = partTimeSearchCondition.partTimeSpeciesId;
         }
       }
     }
@@ -130,23 +109,23 @@ export default {
         })
       });
     },
-    async setTypeId (typeId) {
-      if (this.typeId === typeId) return;
+    async setTypeId (partTimeTypeId) {
+      if (this.partTimeTypeId === partTimeTypeId) return;
       // url 更新兼职搜索类型
       this.$router.push({
         path: this.$router.pah,
         query: routerUtils.getNewPartTimeSearchConditionUrlParams(this.$route.query, {
-          typeId
+          partTimeTypeId
         })
       });
     },
-    async setSpeciesId (speciesId) {
-      if (this.speciesId === speciesId) return;
+    async setSpeciesId (partTimeSpeciesId) {
+      if (this.partTimeSpeciesId === partTimeSpeciesId) return;
       // url 更新兼职搜索类型
       this.$router.push({
         path: this.$router.pah,
         query: routerUtils.getNewPartTimeSearchConditionUrlParams(this.$route.query, {
-          speciesId
+          partTimeSpeciesId
         })
       });
     }
@@ -156,9 +135,8 @@ export default {
 
 <style lang="scss">
   .part-time-search-condition-container {
-    padding: 0 20px 5px;
-    border: 1px solid #dadada;
-    border-radius: 3px;
+    padding: 1px 20px;
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.1);
     .part-time-search-condition-item {
       display: flex;
       min-height: 48px;

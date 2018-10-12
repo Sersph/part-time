@@ -1,27 +1,44 @@
 <template>
   <section class="part-time-search-result-list-container">
     <div class="part-time-result-list">
-      <router-link href="javascript:void(0)" class="part-time-item"
+      <div class="part-time-item"
                    v-for="(partTimeItem, index) in partTimeSearchResultList"
-                   :key="index"
-                   :to="`/partTime/detail/${index}`"
-      >
-        <el-badge class="part-time-species">
-          <el-button size="small" :title="partTimeItem.type">{{ partTimeItem.type }}</el-button>
-        </el-badge>
-        <span class="part-time-title" :title="partTimeItem.title">{{ partTimeItem.title }}</span>
-        <span class="part-time-area">
-          <i class="material-icons">location_on</i>
-          <span :title="partTimeItem.location">{{ partTimeItem.location }}</span>
-        </span>
-        <span class="part-time-price-settle-type">
-          <i class="material-icons">attach_money</i>
-          <span :title="partTimeItem.viewCount">{{ partTimeItem.price }}元 / {{ partTimeItem.priceType }}</span>
-        </span>
-        <span class="part-time-settle-type">
-          <span :title="partTimeItem.createdAt">{{ partTimeItem.priceType }}结</span>
-        </span>
-      </router-link>
+                   :key="index">
+        <div class="part-time-base-info">
+          <router-link class="part-time-name" :to="`/partTime/detail/${index}`">
+            <p>简单小任务，在家躺赚</p>
+          </router-link>
+          <div class="part-time-base-info-list">
+            <div>
+              <span class="part-time-base-info-item">
+                <span>兼职类型: </span>
+                <span>长期可做</span>
+              </span>
+              <span class="part-time-base-info-item">
+                <span>兼职种类: </span>
+                <span>传单派发</span>
+              </span>
+            </div>
+            <div>
+              <span class="part-time-base-info-item">
+                <span>工作地点: </span>
+                <span>罗湖区</span>
+              </span>
+              <span class="part-time-base-info-item">
+                <span>招聘人数: </span>
+                <span>500</span>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="part-time-price-info">
+          <span class="price-info">
+            <span class="price">200</span>
+            <span>元 / 天</span>
+            <span class="settlement-type">日结</span>
+          </span>
+        </div>
+      </div>
     </div>
     <section class="part-time-search-result-p">
       <el-pagination
@@ -87,90 +104,57 @@ export default {
 
 <style lang="scss">
   .part-time-search-result-list-container {
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.1);
     margin-top: 20px;
     .part-time-result-list {
-      display: flex;
-      flex-direction: column;
-      border: 1px solid #dadada;
-      border-radius: 3px;
+      box-shadow: 5px 5px 11px rgba(0, 0, 0, 0.1);
       .part-time-item {
         display: flex;
-        align-items: center;
-        padding: 15px 20px;
-        border-bottom: 1px solid #dadada;
-        color: #606266;
-        transition: background-color .15s, border-color .15s;
-        .el-badge {
-          button {
-            width: 80px;
-            margin-right: 20px;
-            padding: 9px 15px;
-            border-radius: 3px;
-            border: 1px solid #dcdfe6;
-            text-align: left;
-            font-size: 12px;
-            transition: none;
-            span {
-              display: block;
-              overflow: hidden;
-              white-space: nowrap;
-              text-overflow: ellipsis;
+        justify-content: space-between;
+        padding: 20px;
+        border-bottom: 1px solid #ddd;
+        font-size: 12px;
+        color: #999;
+        .part-time-base-info {
+          .part-time-name {
+            display: block;
+            margin-bottom: 20px;
+            font: 700 16px "microsoft yahei";
+            color: #333;
+          }
+          .part-time-name:hover {
+            text-decoration: underline;
+          }
+          .part-time-base-info-list {
+            div {
+              display: flex;
+              margin-bottom: 10px;
+              .part-time-base-info-item {
+                width: 200px;
+                span:last-child {
+                  color: #666;
+                  margin-left: 5px;
+                }
+              }
+            }
+            div:last-child {
+              margin-bottom: 0;
             }
           }
-          button:active,
-          button:focus,
-          button:hover {
-            color: #666;
-            background-color: #fff;
-          }
         }
-        span {
-          .material-icons {
-            width: 20px;
-            height: 20px;
+        .part-time-price-info {
+          display: flex;
+          align-items: center;
+          .price {
             margin-right: 10px;
-            font-size: 21px;
+            font-weight: bold;
+            font-size: 19px;
+            color: #f60;
+          }
+          .settlement-type {
+            margin-left: 20px;
           }
         }
-        .part-time-species {
-          width: 80px;
-          margin-right: 29px;
-        }
-        .part-time-title,
-        .part-time-area,
-        .part-time-price-settle-type,
-        .part-time-settle-type {
-          overflow: hidden;
-          font-size: 15px;
-          white-space: nowrap;
-          text-overflow: ellipsis;
-          .material-icons {
-            width: 20px;
-            height: 20px;
-            position: relative;
-            top: .3rem;
-          }
-        }
-        .part-time-title {
-          width: 50%;
-          font-weight: bold;
-          font-size: 16px;
-        }
-        .part-time-area {
-          width: 15%;
-        }
-        .part-time-price-settle-type {
-          width: 15%;
-        }
-        .part-time-settle-type {
-          width: 15%;
-        }
-      }
-      .part-time-item:last-child {
-        border-bottom: 0;
-      }
-      .part-time-item:hover {
-        background-color: #ecf5ff;
       }
     }
     .part-time-search-result-p {

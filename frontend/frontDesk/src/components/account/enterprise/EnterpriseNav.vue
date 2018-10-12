@@ -1,6 +1,7 @@
 <template>
-  <section class="personal-nav-container">
+  <section class="enterprise-nav-container">
     <el-menu
+      class="enterprise-nav-menu"
       :default-openeds="['1', '2']"
       :router="true">
       <el-submenu
@@ -33,7 +34,7 @@ export default {
       enterpriseMenuList: [
         {
           index: '1',
-          title: '我的兼职',
+          title: '兼职管理',
           icon: 'personal',
           children: [
             { index: '1-1', title: '我的发布', path: '/account/enterprise/partTime' },
@@ -81,37 +82,39 @@ export default {
 </script>
 
 <style lang="scss">
-  .personal-nav-container {
-    min-width: 250px;
-    min-height: 50vh;
-    .el-menu {
+  .enterprise-nav-container {
+    min-width: 251px;
+    min-height: 100vh;
+    .enterprise-nav-menu {
       height: 100%;
-    }
-    .el-menu-item {
-      background-color: #fff;
-      padding-left: 55px !important;
-    }
-    .el-submenu__title,
-    .el-menu-item {
-      background-color: #fff;
-    }
-    .el-submenu__title:hover,
-    .el-menu-item:hover {
-      background: #ecf5ff;
-    }
-    .el-menu-item span {
-      transition: color .3s;
-    }
-    .is-active {
-      color: #303133;
-    }
-    .active {
-      color: #409EFF;
-    }
-    .material-icons {
-      width: 25px;
-      height: 25px;
-      margin-right: 10px;
+      background-color: #f5f5f5;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+      .el-menu-item {
+        padding-left: 55px !important;
+      }
+      .el-submenu__title,
+      .el-menu-item {
+        background-color: #f5f5f5;
+      }
+      .el-submenu__title:hover,
+      .el-menu-item:hover {
+        background: #dcdcdc;
+      }
+      .el-menu-item span {
+        transition: color .3s;
+      }
+      .is-active {
+        color: #303133;
+      }
+      .active {
+        color: #409EFF;
+        background: #dcdcdc;
+      }
+      .material-icons {
+        width: 25px;
+        height: 25px;
+        margin-right: 10px;
+      }
     }
   }
 </style>

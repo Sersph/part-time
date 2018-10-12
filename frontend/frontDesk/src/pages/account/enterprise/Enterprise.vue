@@ -23,6 +23,7 @@ export default {
     display: flex;
     & > section:last-child {
       flex: 1;
+      padding: 30px;
     }
   }
 </style>
