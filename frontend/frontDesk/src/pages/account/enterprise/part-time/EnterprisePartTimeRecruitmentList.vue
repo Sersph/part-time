@@ -1,22 +1,22 @@
 <template>
-  <section class="personal-part-time-apply-container">
+  <section class="enterprise-part-time-recruitment-list-container">
     <el-table
-      :data="personalPartTimeApplyList"
+      :data="enterprisePartTimeRecruitmentList"
       style="width: 100%"
       :row-class-name="tableRowClassName">
       <el-table-column
         prop="date"
-        label="日期"
+        label="日期1"
         width="180">
       </el-table-column>
       <el-table-column
         prop="name"
-        label="姓名"
+        label="姓名2"
         width="180">
       </el-table-column>
       <el-table-column
         prop="address"
-        label="地址">
+        label="地址3">
       </el-table-column>
     </el-table>
   </section>
@@ -24,10 +24,10 @@
 
 <script>
 export default {
-  name: 'PersonalPartTimeApplyLiST',
+  name: 'EnterprisePartTimeRecruitment',
   data () {
     return {
-      personalPartTimeApplyList: [{
+      enterprisePartTimeRecruitmentList: [{
         date: '2016-05-02',
         name: '王小虎',
         address: '上海市普陀区金沙江路 1518 弄'
@@ -60,11 +60,13 @@ export default {
 </script>
 
 <style lang="scss">
-  .el-table .warning-row {
-    background: oldlace;
-  }
+  .enterprise-part-time-recruitment-container {
+    .el-table .warning-row {
+      background: oldlace;
+    }
 
-  .el-table .success-row {
-    background: #f0f9eb;
+    .el-table .success-row {
+      background: #f0f9eb;
+    }
   }
 </style>

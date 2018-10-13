@@ -1,5 +1,5 @@
 <template>
-  <section class="enterprise-certification-container">
+  <section class="enterprise-part-time-post-container">
     <transition name="slide-bottom" mode="out-in">
       <router-view/>
     </transition>
@@ -7,8 +7,9 @@
 </template>
 
 <script>
+
 export default {
-  name: 'EnterpriseCertification'
+  name: 'EnterprisePartTimePost'
 };
 </script>
 

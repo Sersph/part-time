@@ -3,19 +3,19 @@ import types from '@/store/mutation-types';
 export default {
   namespaced: true,
   state: {
-    // 路由列表
-    routeList: {}
+    // 菜单
+    sidebarMenuList: {}
   },
   mutations: {
-    [types.EDIT_ROUTE_LIST] (state, { routeList }) {
-      state.routeList = routeList;
+    [types.EDIT_SIDEBAR_MENU_LIST] (state, { sidebarMenuList }) {
+      state.sidebarMenuList = sidebarMenuList;
     }
   },
   actions: {
-    editRouteList ({ commit }, { routeList }) {
+    editSidebarMenuList ({ commit }, { sidebarMenuList }) {
       // 修改可访问路由表
-      commit(types.EDIT_ROUTE_LIST, {
-        routeList
+      commit(types.EDIT_SIDEBAR_MENU_LIST, {
+        sidebarMenuList
       });
     }
   },

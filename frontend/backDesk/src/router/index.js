@@ -30,10 +30,7 @@ export default new VueRouter({
       children: [
         {
           path: '/account/signIn',
-          component: () => import('@/pages/account/SignIn'),
-          meta: {
-            isMasterPage: false
-          }
+          component: () => import('@/pages/account/SignIn')
         }
       ]
     },
@@ -54,7 +51,6 @@ export default new VueRouter({
           component: () => import('@/pages/dashboard/DashboardHome'),
           meta: {
             needSignIn: true,
-            isMasterPage: true,
             index: '1-1',
             name: '首页'
           }
@@ -78,7 +74,6 @@ export default new VueRouter({
           redirect: '/enterprise/certification/list',
           meta: {
             needSignIn: true,
-            isMasterPage: true,
             index: '2-1',
             name: '企业认证'
           },
@@ -88,7 +83,6 @@ export default new VueRouter({
               component: () => import('@/pages/enterprise/EnterpriseCertificationList'),
               meta: {
                 needSignIn: true,
-                isMasterPage: true,
                 index: '2-1-1',
                 name: '列表'
               }
@@ -98,7 +92,6 @@ export default new VueRouter({
               component: () => import('@/pages/enterprise/EnterpriseCertificationOperation'),
               meta: {
                 needSignIn: true,
-                isMasterPage: true,
                 index: '2-1-2',
                 name: '添加'
               }

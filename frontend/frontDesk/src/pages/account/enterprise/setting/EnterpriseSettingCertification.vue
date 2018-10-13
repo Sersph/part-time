@@ -16,7 +16,7 @@
 
 <script>
 export default {
-  name: 'EnterpriseCertification',
+  name: 'EnterpriseSettingCertification',
   data () {
     return {
       enterpriseCertificationForm: {},

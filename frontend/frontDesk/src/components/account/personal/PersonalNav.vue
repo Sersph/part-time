@@ -7,18 +7,18 @@
       <el-submenu
         v-for="(personalMenuItem, index) in personalMenuList"
         :key="index"
-        :index="personalMenuItem.index">
+        :index="personalMenuItem.meta.index">
         <template slot="title">
-          <i class="material-icons">{{ personalMenuItem.icon }}</i>
-          <span>{{ personalMenuItem.title }}</span>
+          <i class="material-icons">{{ personalMenuItem.meta.icon }}</i>
+          <span>{{ personalMenuItem.meta.name }}</span>
         </template>
         <el-menu-item
           v-for="(personalMenuChildrenItem, index) in personalMenuItem.children"
           :key="index"
           :route="personalMenuChildrenItem.path"
-          :index="personalMenuChildrenItem.index"
-          :class="{active: activeIndex === personalMenuChildrenItem.index}">
-          <span>{{ personalMenuChildrenItem.title }}</span>
+          :index="personalMenuChildrenItem.meta.index"
+          :class="{active: personalMenuActiveIndex === personalMenuChildrenItem.meta.index}">
+          <span>{{ personalMenuChildrenItem.meta.name }}</span>
         </el-menu-item>
       </el-submenu>
     </el-menu>
@@ -27,49 +27,46 @@
 
 <script>
 export default {
-  name: 'personalNav',
+  name: 'EnterpriseNav',
   data () {
     return {
-      activeIndex: null,
-      personalMenuList: [
-        {
-          index: '1',
-          title: '我的兼职',
-          icon: 'personal',
-          children: [
-            { index: '1-1', title: '我的申请', path: '/account/personal/partTimeApply/list' }
-          ]
-        },
-        {
-          index: '2',
-          title: '账户设置',
-          icon: 'view_list',
-          children: [
-            { index: '2-1', title: '修改简历', path: '/account/personal/resume' }
-          ]
-        }
-      ]
+      personalMenuActiveIndex: null,
+      personalMenuList: []
     };
   },
   mounted () {
+    // 刷新菜单列表
+    this.$router.options.routes.find(routeItem => {
+      if (routeItem.path === '/account') {
+        routeItem.children.find(routerChildItem => {
+          if (routerChildItem.path === '/account/personal') {
+            // 获取企业的路由列表
+            this.personalMenuList = routerChildItem.children;
+            return true;
+          }
+        });
+        return true;
+      }
+    });
     // 刷新菜单样式
-    this.editActiveClass(this.$route);
+    this.editPersonalMenuActiveIndex(this.$route);
     // 监听路由刷新菜单样式
     this.$router.beforeEach((to, from, next) => {
-      this.editActiveClass(to);
+      this.editPersonalMenuActiveIndex(to);
       next();
     });
   },
   methods: {
-    editActiveClass (route) {
+    editPersonalMenuActiveIndex (route) {
       // 激活菜单样式
       this.personalMenuList.find(personalMenuItem => {
         if (personalMenuItem.children) {
           return personalMenuItem.children.find(personalMenuChildrenItem => {
             const routerPathArr = route.path.split('/');
             const personalMenuChildrenItemPathArr = personalMenuChildrenItem.path.split('/');
-            if (routerPathArr[1] + routerPathArr[2] + routerPathArr[3] === personalMenuChildrenItemPathArr[1] + personalMenuChildrenItemPathArr[2] + personalMenuChildrenItemPathArr[3]) {
-              this.activeIndex = personalMenuChildrenItem.index;
+            if (routerPathArr[1] + routerPathArr[2] + routerPathArr[3] + routerPathArr[4] ===
+              personalMenuChildrenItemPathArr[1] + personalMenuChildrenItemPathArr[2] + personalMenuChildrenItemPathArr[3] + personalMenuChildrenItemPathArr[4]) {
+              this.personalMenuActiveIndex = personalMenuChildrenItem.meta.index;
               return true;
             }
           });

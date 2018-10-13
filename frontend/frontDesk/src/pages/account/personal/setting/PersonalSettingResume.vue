@@ -16,7 +16,7 @@
 
 <script>
 export default {
-  name: 'PersonalResume',
+  name: 'PersonalSettingResume',
   data () {
     return {
       personalResumeForm: {},

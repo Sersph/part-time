@@ -1,7 +1,7 @@
 <template>
-  <section class="enterprise-part-time-list-container">
+  <section class="enterprise-part-time-post-list-container">
     <section class="header-action-tooltip-container">
-      <router-link to="/account/enterprise/partTime/add">
+      <router-link to="/account/enterprise/partTime/partTimePost/add">
         <el-button type="danger">发布兼职</el-button>
       </router-link>
     </section>
@@ -29,7 +29,7 @@
 
 <script>
 export default {
-  name: 'EnterprisePartTimeList',
+  name: 'EnterprisePartTimePostList',
   data () {
     return {
       enterprisePartTimePostList: [{
@@ -65,7 +65,7 @@ export default {
 </script>
 
 <style lang="scss">
-  .enterprise-part-time-list-container {
+  .enterprise-part-time-post-list-container {
     .header-action-tooltip-container {
       margin-bottom: 20px;
       text-align: right;

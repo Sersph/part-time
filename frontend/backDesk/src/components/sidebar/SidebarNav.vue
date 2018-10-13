@@ -3,7 +3,7 @@
     :default-openeds="['1', '2']"
     :router="true">
     <el-submenu
-      v-for="(sidebarMenuItem, index) in routeList"
+      v-for="(sidebarMenuItem, index) in sidebarMenuList"
       :key="index"
       :index="sidebarMenuItem.meta.index">
       <template slot="title">
@@ -15,7 +15,7 @@
         :key="index"
         :route="sidebarMenuChildItem.path"
         :index="sidebarMenuChildItem.meta.index"
-        :class="{'active': sidebarMenuChildItem.meta.index === activeIndex}">
+        :class="{'active': sidebarMenuChildItem.meta.index === sidebarMenuActiveIndex}">
         <span>{{ sidebarMenuChildItem.meta.name }}</span>
       </el-menu-item>
     </el-submenu>
@@ -30,44 +30,44 @@ export default {
   name: 'SidebarNav',
   data () {
     return {
-      activeIndex: null
+      sidebarMenuActiveIndex: null
     };
   },
   computed: {
     ...mapState('permission', [
-      'routeList'
+      'sidebarMenuList'
     ])
   },
   mounted () {
     // 刷新菜单列表
-    this.editRouteList({
-      routeList: this.$router.options.routes.filter(routeItem => {
+    this.editSidebarMenuList({
+      sidebarMenuList: this.$router.options.routes.filter(routeItem => {
         return routeItem.meta.isMasterPage;
       })
     });
     // 刷新菜单样式
-    this.editActiveClass(this.$route);
+    this.editSidebarMenuActiveIndex(this.$route);
     // 监听路由刷新菜单样式
     this.$router.beforeEach((to, from, next) => {
-      this.editActiveClass(to);
+      this.editSidebarMenuActiveIndex(to);
       next();
     });
   },
   methods: {
     ...mapActions('permission', [
-      'editRouteList',
-      'editCurrentRouter'
+      'editSidebarMenuList'
     ]),
-    editActiveClass (route) {
+    editSidebarMenuActiveIndex (route) {
       NProgress.start();
       // 激活菜单样式
-      this.routeList.find(routeItem => {
+      this.sidebarMenuList.find(routeItem => {
         if (routeItem.children) {
           return routeItem.children.find(routeChildrenItem => {
             const routerPathArr = route.path.split('/');
             const routeChildrenItemPathArr = routeChildrenItem.path.split('/');
-            if (routerPathArr[1] + routerPathArr[2] === routeChildrenItemPathArr[1] + routeChildrenItemPathArr[2]) {
-              this.activeIndex = routeChildrenItem.meta.index;
+            if (routerPathArr[1] + routerPathArr[2] ===
+              routeChildrenItemPathArr[1] + routeChildrenItemPathArr[2]) {
+              this.sidebarMenuActiveIndex = routeChildrenItem.meta.index;
               return true;
             }
           });

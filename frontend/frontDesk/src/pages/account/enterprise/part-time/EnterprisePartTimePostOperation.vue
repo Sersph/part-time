@@ -1,5 +1,5 @@
 <template>
-  <section class="enterprise-part-time-operation-container">
+  <section class="enterprise-part-time-post-operation-container">
     <el-form :model="partTimeForm" :rules="partTimeFormRules" ref="partTimeForm" label-width="100px">
       <el-row>
         <el-col :span="24">
@@ -168,7 +168,7 @@ import NProgress from 'nprogress';
 import api from '@/api';
 
 export default {
-  name: 'EnterprisePartTimeOperation',
+  name: 'EnterprisePartTimePostOperation',
   data () {
     return {
       doPartTimeSaveFormLoading: false,
@@ -264,6 +264,9 @@ export default {
       'regionList'
     ])
   },
+  beforeCreate () {
+    document.documentElement.scrollTop = 0;
+  },
   methods: {
     ...mapActions('partTime', [
       'asyncInitPartTimeBaseInfo'
@@ -310,7 +313,8 @@ export default {
             NProgress.done();
             // 跳转首页
             setTimeout(() => {
-              this.$router.replace('/account/enterprise/partTime/list');
+              this.$router.replace('/account/enterprise/partTime/partTimePost/list');
+              document.documentElement.scrollTop = 0;
             }, 500);
           } else {
             NProgress.done();
@@ -333,7 +337,7 @@ export default {
 </script>
 
 <style lang="scss">
-  .enterprise-part-time-operation-container {
+  .enterprise-part-time-post-operation-container {
     color: #606266;
     .el-form {
       overflow: hidden;
