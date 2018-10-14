@@ -10,6 +10,7 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.listener.PatternTopic;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.data.redis.listener.adapter.MessageListenerAdapter;
+
 import java.util.concurrent.CountDownLatch;
 
 
@@ -42,16 +43,12 @@ public class RedisConfig extends CachingConfigurerSupport {
     }
 
 
-
     public class Receiver {
         private CountDownLatch latch;
-
         @Autowired
         public Receiver(CountDownLatch countDownLatch){
             this.latch = countDownLatch;
         }
-
-
         public void receiveMessage(String message){
             this.latch.countDown();
         }

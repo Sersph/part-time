@@ -27,7 +27,6 @@ public class SwaggerConfig {
                 .enable(swaggerShow)
                 .select()
                 .apis(RequestHandlerSelectors.any())
-//                .paths(Predicates.not(PathSelectors.regex("/handle.*")))
                 .paths(Predicates.not(PathSelectors.regex("/error.*")))
                 .build()
                 .apiInfo(apiInfo());
@@ -38,7 +37,6 @@ public class SwaggerConfig {
                 .title("兼职君 APIs")
                 .description("更多请关注http://www.tidc.com")
                 .termsOfServiceUrl("http://www.tidc.com")
-                .contact("sunf")
                 .version("0.1")
                 .build();
     }

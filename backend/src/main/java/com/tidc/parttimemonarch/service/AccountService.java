@@ -3,7 +3,6 @@ package com.tidc.parttimemonarch.service;
 import com.tidc.parttimemonarch.pojo.EnterpriseUser;
 import com.tidc.parttimemonarch.pojo.PersonalUser;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 

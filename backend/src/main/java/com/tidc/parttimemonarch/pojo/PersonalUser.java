@@ -9,11 +9,12 @@ import org.springframework.util.DigestUtils;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Pattern;
+import java.io.Serializable;
 import java.sql.Date;
 
 @ApiModel
 @Component
-public class PersonalUser {
+public class PersonalUser implements Serializable {
 
     @ApiModelProperty(hidden = true)
     private int id;
@@ -49,7 +50,7 @@ public class PersonalUser {
 
     //头像
     @ApiModelProperty(hidden = true)
-    private String avatar;
+    private String avatar = "default.jpg";
 
 
     public PersonalUser() {}

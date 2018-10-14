@@ -2,6 +2,7 @@ package com.tidc.parttimemonarch.util;
 
 
 import com.tidc.parttimemonarch.exceptions.ResultExceptions;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 
@@ -9,7 +10,7 @@ import javax.mail.internet.MimeMessage;
 
 public class EMailUtil {
 
-    private static final String FROM = "18934086807@163.com";
+    private static final String FROM = "2675835744@qq.com";
 
 
     public static boolean sendMailCaptcha(String email, String code, JavaMailSender javaMailSender){
@@ -62,7 +63,8 @@ public class EMailUtil {
             javaMailSender.send(mimeMessage);
 
         }catch (Exception e){
-            throw new ResultExceptions(0, "未知错误");
+            e.printStackTrace();
+            throw new ResultExceptions(1, "未知错误");
         }
 
         return true;

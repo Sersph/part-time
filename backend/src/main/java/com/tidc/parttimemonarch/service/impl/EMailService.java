@@ -44,12 +44,9 @@ public class EMailService {
         String code = String.valueOf( new Random().nextInt(999999));
 
         if(!EMailUtil.sendMailCaptcha(email, code, javaMailSender)){
-            System.out.println(email);
-
             throw new ResultExceptions(1002, "邮箱不存在");
         }
 
         RedisUtil.set(email + "code", code, 300 ,this.stringRedisTemplate);
-        System.out.println(email + "code");
     }
 }

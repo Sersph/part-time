@@ -46,7 +46,7 @@ public interface AccountDAO{
 //    PersonalUser findByUsername(@Param("username") String username);
 
     //注册
-    @Insert("INSERT INTO personal_user(username, password, created_at, updated_at, last_sign_in_at) VALUES (#{username},#{password},#{createdAt},#{updatedAt},#{lastSignInAt})")
+    @Insert("INSERT INTO personal_user(username, password, status, created_at, updated_at, last_sign_in_at) VALUES (#{username},#{password}, #{status}, #{createdAt},#{updatedAt},#{lastSignInAt})")
     @Options(useGeneratedKeys = true, keyColumn = "id")
     int addPersonalUser(PersonalUser personalUser);
 
@@ -55,6 +55,6 @@ public interface AccountDAO{
     int updateLastSignInAtInPersonal(@Param("username") String username, @Param("date")Date date);
 
     //登陆
-    @Select("SELECT id,username,email,phone FROM personal_user WHERE username = #{username} AND password = #{password} || phone = #{username} AND password = #{password}")
+    @Select("SELECT id,username,email,phone,avatar FROM personal_user WHERE username = #{username} AND password = #{password} || phone = #{username} AND password = #{password}")
     PersonalUser signIn(PersonalUser personalUser);
 }

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.UUID;
 
 @Api(tags = "用户接口")
 @RestController
@@ -41,25 +42,22 @@ public class AccountController {
 
     @ApiOperation(value="获取用户信息")
     @GetMapping(value = "/accountInfo")
-    public RequestResult getAccountInfo(HttpServletRequest httpServletRequest){
+    public RequestResult getAccountInfo(){
+        Object account = SessionUtil.getSessionAttribute("user");
 
-        HttpSession session = httpServletRequest.getSession();
-
-        if (!SessionUtil.isSession("user", session)){
+        if (account!= null){
+            this.result.succeed(account);
+        }else {
             this.result.error(1003, "用户未登陆");
-        }else{
-            this.result.succeed(session.getAttribute("user"));
         }
-
-
         return this.result;
     }
 
 
     @ApiOperation(value = "退出登陆")
     @DeleteMapping(value = "/signOut")
-    public RequestResult signOut(HttpServletRequest httpServletRequest){
-        if (!SessionUtil.removeSession("user", httpServletRequest.getSession())){
+    public RequestResult signOut(){
+        if (!SessionUtil.removeSession("user")){
             this.result.error(1, "失败");
         }else{
             this.result.succeed(null);
@@ -97,9 +95,9 @@ public class AccountController {
             @ApiImplicitParam(name = "captcha", value = "验证码", required = true, dataType = "String", paramType = "query"),
     })
     @PostMapping(value = "enterprise/signUp")
-    public RequestResult enterpriseSignUp(@Valid EnterpriseUser enterpriseUser, @RequestParam(value = "captcha") String captcha, HttpServletRequest httpServletRequest){
+    public RequestResult enterpriseSignUp(@Valid EnterpriseUser enterpriseUser, @RequestParam(value = "captcha") String captcha){
         enterpriseUser = this.accountService.enterpriseSignUp(enterpriseUser, captcha);
-        SessionUtil.signUpSession(enterpriseUser, httpServletRequest.getSession());
+        SessionUtil.signUpSession(enterpriseUser);
         this.result.succeed();
         return this.result;
     }
@@ -115,10 +113,10 @@ public class AccountController {
             @ApiImplicitParam(name = "email", value = "email", required = true, dataType = "String", paramType = "query")
     })
     @PostMapping(value = "enterprise/signIn")
-    public RequestResult enterpriseSignIn(@Valid EnterpriseUser enterpriseUser, HttpServletRequest httpServletRequest){
+    public RequestResult enterpriseSignIn(@Valid EnterpriseUser enterpriseUser){
 
         enterpriseUser = this.accountService.enterpriseSignIn(enterpriseUser);
-        SessionUtil.signUpSession(enterpriseUser, httpServletRequest.getSession());
+        SessionUtil.signUpSession(enterpriseUser);
         this.result.succeed();
         return this.result;
     }
@@ -162,11 +160,11 @@ public class AccountController {
             @ApiImplicitParam(name = "password", value = "密码", required = true, dataType = "String", paramType = "query")
     })
     @PostMapping(value = "/personal/signUp")
-    public RequestResult personalSignUp(@Valid PersonalUser personalUser, HttpServletRequest httpServletRequest){
+    public RequestResult personalSignUp(@Valid PersonalUser personalUser){
 
         personalUser = accountService.personalSignUp(personalUser);
 
-        SessionUtil.signUpSession(personalUser, httpServletRequest.getSession());
+        SessionUtil.signUpSession(personalUser);
 
         this.result.succeed();
         return this.result;
@@ -182,9 +180,9 @@ public class AccountController {
             @ApiImplicitParam(name = "password", value = "密码", required = true, dataType = "String", paramType = "query"),
     })
     @PostMapping(value = "/personal/signIn")
-    public RequestResult personalSignIn(@Valid PersonalUser personalUser, HttpServletRequest httpServletRequest){
+    public RequestResult personalSignIn(@Valid PersonalUser personalUser){
 
-        SessionUtil.signUpSession(accountService.personalSignIn(personalUser), httpServletRequest.getSession());
+        SessionUtil.signUpSession(accountService.personalSignIn(personalUser));
 
         this.result.succeed();
         return this.result;

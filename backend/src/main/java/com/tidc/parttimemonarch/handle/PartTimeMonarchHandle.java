@@ -51,10 +51,6 @@ public class PartTimeMonarchHandle {
         } else {
             message = errorList.get(0).getDefaultMessage();
         }
-
-
-        System.out.println("message: " + message);
-
         this.result.error(1006, message);
         return this.result;
     }

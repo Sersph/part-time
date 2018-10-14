@@ -2,28 +2,33 @@ server:
   port: 8080
 spring:
   datasource:
-    url: jdbc:mysql://39.105.96.239:3306/part_time_monarch?useSSL=false
+    url: ENC(ghVcWtQpdChG04TZzdSsPUgimEXB6EeUO00bpwd0YAQI22HfDrktcUQMyC6Fx7jWEa8puw2ChFyk3d+ZH6AIDZC7PA7QMV5L)
     driver-class-name: com.mysql.jdbc.Driver
-    username: root
-    password: 662662
-  mail:
-    default-encoding: UTF-8
-    host: smtp.163.com
-    password: tidc662662
-    port: 25
-    protocol: smtp
-    username: 18934086807@163.com
+    username: ENC(syF66GGc1bKx+aneat1NBg==)
+    password: ENC(9ly9TeF57UcW3/VbNT0+0g==)
   redis:
     database: 0
-    host: 39.105.96.239
-    password: 662662
+    host: ENC(zTw5I00nNHfRr9TxgOrTYyoxs3wydBVW)
+    password: ENC(9ly9TeF57UcW3/VbNT0+0g==)
     jedis:
       pool:
         max-active: 8
         max-idle: 8
         min-idle: 0
+  mail:
+    default-encoding: UTF-8
+    host: smtp.qq.com
+    password: ENC(8KhM8z/JN0sNaeQMlkEnh+ExvjSe3XmH6lsIVxwqyZQ=)
+    port: 587
+    protocol: smtp
+    username: ENC(L8QQkZ9KsRvEPLY3t52t2SMTWndR1IkGULAiSFuULt4=)
   jackson:
     default-property-inclusion: non_null
+  session:
+    store-type: redis
+    timeout: 30s
+    redis:
+      namespace: session
 
 
 mybatis:
@@ -37,3 +42,12 @@ logging:
 
 swagger:
   show: true
+
+email:
+  util:
+    username: ENC(L8QQkZ9KsRvEPLY3t52t2SMTWndR1IkGULAiSFuULt4=)
+
+
+jasypt:
+  encryptor:
+    password: EbfYkitulv73I2p0mXI50JMXoaxZTKJ7

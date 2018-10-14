@@ -10,6 +10,7 @@ import org.springframework.util.DigestUtils;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Pattern;
+import java.io.Serializable;
 import java.sql.Date;
 
 /**
@@ -19,7 +20,7 @@ import java.sql.Date;
  */
 @ApiModel
 @Component
-public class EnterpriseUser {
+public class EnterpriseUser implements Serializable {
 
     @ApiModelProperty(hidden = true)
     //主键, 自增
