@@ -4,6 +4,7 @@ import com.tidc.parttimemonarch.pojo.EnterpriseUser;
 import com.tidc.parttimemonarch.pojo.PersonalUser;
 import com.tidc.parttimemonarch.service.AccountService;
 import com.tidc.parttimemonarch.service.impl.EMailService;
+import com.tidc.parttimemonarch.util.CookieUtil;
 import com.tidc.parttimemonarch.util.SessionUtil;
 import com.tidc.parttimemonarch.vo.AccountRequestResult;
 import com.tidc.parttimemonarch.vo.RequestResult;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.UUID;
@@ -43,7 +45,7 @@ public class AccountController {
     @ApiOperation(value="获取用户信息")
     @GetMapping(value = "/accountInfo")
     public RequestResult getAccountInfo(){
-        Object account = SessionUtil.getSessionAttribute("user");
+        Object account = SessionUtil.getSessionAttribute(CookieUtil.getCookie().getValue());
 
         if (account!= null){
             this.result.succeed(account);
@@ -56,13 +58,10 @@ public class AccountController {
 
     @ApiOperation(value = "退出登陆")
     @DeleteMapping(value = "/signOut")
-    public RequestResult signOut(){
-        if (!SessionUtil.removeSession("user")){
-            this.result.error(1, "失败");
-        }else{
-            this.result.succeed(null);
-        }
-
+    public RequestResult signOut(HttpServletResponse response){
+        SessionUtil.removeSession(CookieUtil.getCookie().getValue());
+        CookieUtil.removeCookie(response);
+        this.result.succeed(null);
         return this.result;
     }
 
@@ -95,9 +94,9 @@ public class AccountController {
             @ApiImplicitParam(name = "captcha", value = "验证码", required = true, dataType = "String", paramType = "query"),
     })
     @PostMapping(value = "enterprise/signUp")
-    public RequestResult enterpriseSignUp(@Valid EnterpriseUser enterpriseUser, @RequestParam(value = "captcha") String captcha){
+    public RequestResult enterpriseSignUp(@Valid EnterpriseUser enterpriseUser, @RequestParam(value = "captcha") String captcha, HttpServletResponse response){
         enterpriseUser = this.accountService.enterpriseSignUp(enterpriseUser, captcha);
-        SessionUtil.signUpSession(enterpriseUser);
+        this.login(response, enterpriseUser);
         this.result.succeed();
         return this.result;
     }
@@ -113,10 +112,10 @@ public class AccountController {
             @ApiImplicitParam(name = "email", value = "email", required = true, dataType = "String", paramType = "query")
     })
     @PostMapping(value = "enterprise/signIn")
-    public RequestResult enterpriseSignIn(@Valid EnterpriseUser enterpriseUser){
+    public RequestResult enterpriseSignIn(@Valid EnterpriseUser enterpriseUser, HttpServletResponse response){
 
         enterpriseUser = this.accountService.enterpriseSignIn(enterpriseUser);
-        SessionUtil.signUpSession(enterpriseUser);
+        this.login(response, enterpriseUser);
         this.result.succeed();
         return this.result;
     }
@@ -160,12 +159,10 @@ public class AccountController {
             @ApiImplicitParam(name = "password", value = "密码", required = true, dataType = "String", paramType = "query")
     })
     @PostMapping(value = "/personal/signUp")
-    public RequestResult personalSignUp(@Valid PersonalUser personalUser){
+    public RequestResult personalSignUp(@Valid PersonalUser personalUser, HttpServletResponse response){
 
         personalUser = accountService.personalSignUp(personalUser);
-
-        SessionUtil.signUpSession(personalUser);
-
+        this.login(response, personalUser);
         this.result.succeed();
         return this.result;
     }
@@ -180,12 +177,20 @@ public class AccountController {
             @ApiImplicitParam(name = "password", value = "密码", required = true, dataType = "String", paramType = "query"),
     })
     @PostMapping(value = "/personal/signIn")
-    public RequestResult personalSignIn(@Valid PersonalUser personalUser){
-
-        SessionUtil.signUpSession(accountService.personalSignIn(personalUser));
-
+    public RequestResult personalSignIn(@Valid PersonalUser personalUser, HttpServletResponse response){
+        PersonalUser personalUser1 = accountService.personalSignIn(personalUser);
+        this.login(response, personalUser);
         this.result.succeed();
         return this.result;
+    }
+
+
+    private void login(HttpServletResponse response, Object value){
+        String key = UUID.randomUUID().toString();
+
+        CookieUtil.addCookie(key, response);
+
+        SessionUtil.addSession(key, value);
     }
 }
 

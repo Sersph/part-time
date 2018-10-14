@@ -7,6 +7,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.sql.Date;
 
 /**
@@ -38,7 +39,7 @@ public class PartTime {
     private String detailAddress;
     //招聘人数
     @NotNull(message = "招聘人数不能为空")
-    private int recruitmentCont;
+    private int recruitmentCount;
     //工资
     @NotNull(message = "工资不能为空")
     private float price;
@@ -53,7 +54,8 @@ public class PartTime {
     //发布企业id 取 session
     private int enterpriseUserId;
     //工作描述
-    @Pattern(regexp = "^.{1,500}$", message = "工作描述长度不正确")
+//    @Pattern(regexp = "^.{1,500}$", message = "工作描述长度不正确")
+    @Size(min = 1, max = 500)
     private String jobDescription;
     //联系人
     @Pattern(regexp = "^.{1,20}$", message = "联系人格式不正确")
@@ -135,13 +137,13 @@ public class PartTime {
         this.detailAddress = detailAddress;
     }
 
-    public int getRecruitmentCont() {
-        return recruitmentCont;
+    public int getRecruitmentCount() {
+        return recruitmentCount;
     }
 
-    public void setRecruitmentCont(int recruitmentCont) {
-        NumberUtil.validNumberLength(recruitmentCont, 1, 6, "招聘人数不符合规范");
-        this.recruitmentCont = recruitmentCont;
+    public void setRecruitmentCount(int recruitmentCount) {
+        NumberUtil.validNumberLength(recruitmentCount, 1, 5, "招聘人数不符合规范");
+        this.recruitmentCount = recruitmentCount;
     }
 
     public float getPrice() {
@@ -267,7 +269,7 @@ public class PartTime {
                 ", cityId=" + cityId +
                 ", areaId=" + areaId +
                 ", detailAddress='" + detailAddress + '\'' +
-                ", recruitmentCont=" + recruitmentCont +
+                ", recruitmentCount=" + recruitmentCount +
                 ", price=" + price +
                 ", calculationTypeId=" + calculationTypeId +
                 ", settlementTypeId=" + settlementTypeId +

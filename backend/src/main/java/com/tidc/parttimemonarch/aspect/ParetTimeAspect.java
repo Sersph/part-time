@@ -2,6 +2,7 @@ package com.tidc.parttimemonarch.aspect;
 
 import com.tidc.parttimemonarch.exceptions.ResultExceptions;
 import com.tidc.parttimemonarch.pojo.EnterpriseUser;
+import com.tidc.parttimemonarch.util.CookieUtil;
 import com.tidc.parttimemonarch.util.SessionUtil;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -29,7 +30,7 @@ public class ParetTimeAspect {
     @Before("verifyUserPermissions()")
     public void verifyUserPermissionsBefore(){
 
-        if (!SessionUtil.isSession("user")){
+        if (!SessionUtil.isSession(CookieUtil.getCookie().getValue())){
             throw new ResultExceptions(1003, "用户未登陆");
         }
         try {

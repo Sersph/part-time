@@ -4,6 +4,8 @@ import com.tidc.parttimemonarch.dao.PartTimeDAO;
 import com.tidc.parttimemonarch.pojo.EnterpriseUser;
 import com.tidc.parttimemonarch.pojo.PartTime;
 import com.tidc.parttimemonarch.service.PartTimeService;
+import com.tidc.parttimemonarch.util.CookieUtil;
+import com.tidc.parttimemonarch.util.SessionUtil;
 import com.tidc.parttimemonarch.vo.PartTimeResult;
 import com.tidc.parttimemonarch.vo.RequestResult;
 import io.swagger.annotations.Api;
@@ -15,8 +17,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 /**
@@ -40,6 +40,8 @@ public class PartTimeController {
     @Autowired
     private PartTimeService partTimeService;
 
+    @Autowired
+    private RequestResult requestResult;
 
     /**
      * 获取兼职种类，兼职类型，结算类型，工资结算方式
@@ -63,7 +65,6 @@ public class PartTimeController {
      * 发布兼职
      *
      * @param partTime
-     * @param httpServletRequest
      * @return RequestResult
      */
 
@@ -73,7 +74,7 @@ public class PartTimeController {
             @ApiImplicitParam(name = "cityId", value = "城市id", required = true, dataType = "int", paramType = "query"),
             @ApiImplicitParam(name = "areaId", value = "地区id", required = true, dataType = "int", paramType = "query"),
             @ApiImplicitParam(name = "detailAddress", value = "详细地址", required = true, dataType = "String", paramType = "query"),
-            @ApiImplicitParam(name = "recruitmentCont", value = "招聘人数", required = true, dataType = "int", paramType = "query"),
+            @ApiImplicitParam(name = "recruitmentCount", value = "招聘人数", required = true, dataType = "int", paramType = "query"),
             @ApiImplicitParam(name = "price", value = "工资", required = true, dataType = "float", paramType = "query"),
             @ApiImplicitParam(name = "calculationTypeId", value = "工资计算方式", required = true, dataType = "int", paramType = "query"),
             @ApiImplicitParam(name = "settlementTypeId", value = "工资结算方式", required = true, dataType = "int", paramType = "query"),
@@ -90,15 +91,14 @@ public class PartTimeController {
     })
     @ApiOperation(value = "发布兼职")
     @PostMapping(value = "/partTime")
-    public RequestResult addPartTime(@Valid PartTime partTime, HttpServletRequest httpServletRequest){
-
-        EnterpriseUser user = (EnterpriseUser) httpServletRequest.getSession().getAttribute("user");
+    public RequestResult addPartTime(@Valid PartTime partTime){
+        EnterpriseUser user = (EnterpriseUser) SessionUtil.getSessionAttribute(CookieUtil.getCookie().getValue());
 
         partTime.setEnterpriseUserId(user.getId());
         this.partTimeService.addPartTime(partTime);
 
-        this.result.succeed();
-        return this.result;
+        this.requestResult.succeed();
+        return this.requestResult;
     }
 
 

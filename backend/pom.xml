@@ -5,11 +5,11 @@
 
     <groupId>com.tidc</groupId>
     <artifactId>parttimemonarch</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.3-test-version</version>
     <packaging>jar</packaging>
 
     <name>parttimemonarch</name>
-    <description>Demo project for Spring Boot</description>
+    <description>test version</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>

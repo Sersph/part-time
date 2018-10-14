@@ -2,39 +2,35 @@ package com.tidc.parttimemonarch.util;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.net.HttpCookie;
 
 public class SessionUtil {
 
     private static HttpSession session;
 
-    private static HttpCookie cookie;
-
+    private static HttpServletRequest request;
     static {
         ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        request = servletRequestAttributes.getRequest();
         session = servletRequestAttributes.getRequest().getSession();
     }
 
-    public static void signUpSession(Object object){
-        addSession("user", object);
-    }
 
-
-    public static void addSession(String key, Object object){
-        SessionUtil.session.setAttribute(key, object);
+    public static void addSession(String key, Object value){
+        session.setAttribute(key, value);
     }
 
 
     public static boolean isSession(String key){
-        if (SessionUtil.session.getAttribute(key) != null){
+        if (session.getAttribute(key) != null){
             return true;
         }
         return false;
     }
 
     public static boolean removeSession(String key){
-        SessionUtil.session.removeAttribute(key);
+        session.removeAttribute(key);
         return !isSession(key);
     }
 
@@ -42,8 +38,9 @@ public class SessionUtil {
         return session.getAttribute(key);
     }
 
-    private static HttpSession getSession(){
-        ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        return servletRequestAttributes.getRequest().getSession();
+    public static HttpServletRequest getRequest(){
+        return request;
     }
+
+
 }
