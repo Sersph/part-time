@@ -6,6 +6,18 @@
       "password": "21321321321",
       "code": 0,
       "id": 1
+    },
+    {
+      "username": "321321321",
+      "password": "213213",
+      "code": 0,
+      "id": 2
+    },
+    {
+      "username": "123456",
+      "password": "123456",
+      "code": 0,
+      "id": 3
     }
   ],
   "accountPersonalSignIn": [
@@ -20,19 +32,168 @@
       "password": "321321321",
       "code": 0,
       "id": 2
-    }
-  ],
-  "accountSignOut": [
+    },
     {
-      "id": 1,
-      "code": 0
+      "username": "213213213",
+      "password": "132131232",
+      "code": 0,
+      "id": 3
+    },
+    {
+      "username": "2132121321",
+      "password": "3213213",
+      "code": 0,
+      "id": 4
+    },
+    {
+      "username": "1312321",
+      "password": "321321",
+      "code": 0,
+      "id": 5
+    },
+    {
+      "username": "3123321",
+      "password": "21321321",
+      "code": 0,
+      "id": 6
+    },
+    {
+      "username": "eqweqwe",
+      "password": "qweqwewq",
+      "code": 0,
+      "id": 7
+    },
+    {
+      "username": "3213123",
+      "password": "21321321",
+      "code": 0,
+      "id": 8
+    },
+    {
+      "username": "312321321",
+      "password": "321321321",
+      "code": 0,
+      "id": 9
+    },
+    {
+      "username": "123123",
+      "password": "123123",
+      "code": 0,
+      "id": 10
+    },
+    {
+      "username": "123123",
+      "password": "123123",
+      "code": 0,
+      "id": 11
+    },
+    {
+      "username": "123123",
+      "password": "123123",
+      "code": 0,
+      "id": 12
+    },
+    {
+      "username": "123123",
+      "password": "123123",
+      "code": 0,
+      "id": 13
+    },
+    {
+      "username": "123123",
+      "password": "123123",
+      "code": 0,
+      "id": 14
+    },
+    {
+      "username": "123123",
+      "password": "123123",
+      "code": 0,
+      "id": 15
+    },
+    {
+      "username": "123123",
+      "password": "123123",
+      "code": 0,
+      "id": 16
+    },
+    {
+      "username": "123123",
+      "password": "123123",
+      "code": 0,
+      "id": 17
+    },
+    {
+      "username": "123123",
+      "password": "123123",
+      "code": 0,
+      "id": 18
+    },
+    {
+      "username": "123456",
+      "password": "123456",
+      "code": 0,
+      "id": 19
+    },
+    {
+      "username": "123456",
+      "password": "123456",
+      "code": 0,
+      "id": 20
     }
   ],
+  "accountEnterpriseSignUp": [
+    {
+      "enterpriseName": "12312",
+      "cityId": "110000",
+      "email": "1092879991@qq.com",
+      "captcha": "123121",
+      "password": "123121",
+      "code": 0,
+      "id": 1
+    },
+    {
+      "enterpriseName": "123456",
+      "cityId": "110000",
+      "email": "123456@qq.com",
+      "captcha": "123456",
+      "password": "123456",
+      "code": 0,
+      "id": 2
+    }
+  ],
+  "accountEnterpriseSignIn": [
+    {
+      "email": "12312@qq.com",
+      "password": "12312@qq.com",
+      "code": 0,
+      "id": 1
+    },
+    {
+      "email": "123123@qq.com",
+      "password": "123123",
+      "code": 0,
+      "id": 2
+    },
+    {
+      "email": "123123@qq.com",
+      "password": "123123",
+      "code": 0,
+      "id": 3
+    },
+    {
+      "email": "123456@qq.com",
+      "password": "123456",
+      "code": 0,
+      "id": 4
+    }
+  ],
+  "accountSignOut": [],
   "accountAccountInfo": [
     {
       "id": 1,
-      "code": 10,
-      "userInfo": {
+      "code": 0,
+      "accountInfo": {
         "id": 1,
         "username": "123",
         "type": 1
@@ -342,6 +503,495 @@
       "email": "1092879991@qq.com",
       "code": 0,
       "id": 7
+    },
+    {
+      "email": "123456@qq.com",
+      "code": 0,
+      "id": 8
+    }
+  ],
+  "partTimeBaseInfo": [
+    {
+      "id": 1,
+      "code": 0,
+      "message": "成功",
+      "partTimeTypes": [
+        {
+          "id": 1,
+          "name": "短期兼职"
+        },
+        {
+          "id": 2,
+          "name": "长期兼职"
+        },
+        {
+          "id": 3,
+          "name": "寒假工"
+        },
+        {
+          "id": 4,
+          "name": "暑假工"
+        }
+      ],
+      "partTimeSpecies": [
+        {
+          "id": 1,
+          "name": "传单派发"
+        },
+        {
+          "id": 2,
+          "name": "打包分拣"
+        }
+      ],
+      "settlementTypes": [
+        {
+          "id": 1,
+          "name": "日结"
+        },
+        {
+          "id": 2,
+          "name": "次日结"
+        },
+        {
+          "id": 3,
+          "name": "周结"
+        },
+        {
+          "id": 4,
+          "name": "半月结"
+        },
+        {
+          "id": 5,
+          "name": "月结"
+        },
+        {
+          "id": 6,
+          "name": "完工结"
+        }
+      ],
+      "calculationTypes": [
+        {
+          "id": 1,
+          "name": "天"
+        },
+        {
+          "id": 2,
+          "name": "周"
+        },
+        {
+          "id": 3,
+          "name": "小时"
+        },
+        {
+          "id": 4,
+          "name": "次"
+        },
+        {
+          "id": 5,
+          "name": "个"
+        },
+        {
+          "id": 6,
+          "name": "件"
+        }
+      ]
+    }
+  ],
+  "partTimePartTime": [
+    {
+      "code": 0,
+      "id": 1
+    },
+    {
+      "name": "123",
+      "recruitmentCount": "12",
+      "partTimeTypeId": "1",
+      "partTimeSpeciesId": "1",
+      "price": "1",
+      "calculationTypeId": "1",
+      "settlementTypeId": "1",
+      "priceDescription": "1",
+      "provinceId": "10000",
+      "cityId": "110000",
+      "areaId": "110100",
+      "detailAddress": "1",
+      "workingDateStart": "11457853200",
+      "workingDateEnd": "11457885600",
+      "workingTime": "9:0:0-18:0:0",
+      "workingDateWeek": "1",
+      "jobDescription": "1",
+      "contactPeople": "1",
+      "contactPhone": "2312312",
+      "code": 0,
+      "id": 2
+    },
+    {
+      "name": "123",
+      "recruitmentCount": "12",
+      "partTimeTypeId": "1",
+      "partTimeSpeciesId": "1",
+      "price": "1",
+      "calculationTypeId": "1",
+      "settlementTypeId": "1",
+      "priceDescription": "1",
+      "provinceId": "440000",
+      "cityId": "440100",
+      "areaId": "440103",
+      "detailAddress": "1",
+      "workingDateStart": "11457853200",
+      "workingDateEnd": "11457885600",
+      "workingTime": "9:0:0-18:0:0",
+      "workingTimeWeek": "1",
+      "jobDescription": "1",
+      "contactPeople": "1",
+      "contactPhone": "2312312",
+      "code": 0,
+      "id": 3
+    },
+    {
+      "name": "123",
+      "recruitmentCount": "12",
+      "partTimeTypeId": "1",
+      "partTimeSpeciesId": "1",
+      "price": "1",
+      "calculationTypeId": "1",
+      "settlementTypeId": "1",
+      "priceDescription": "1",
+      "provinceId": "440000",
+      "cityId": "440100",
+      "areaId": "440103",
+      "detailAddress": "1",
+      "workingDateStart": "11457853200",
+      "workingDateEnd": "11457885600",
+      "workingTime": "9:0:0-18:0:0",
+      "workingTimeWeek": "1",
+      "jobDescription": "1",
+      "contactPeople": "1",
+      "contactPhone": "2312312",
+      "code": 0,
+      "id": 4
+    },
+    {
+      "name": "123",
+      "recruitmentCount": "12",
+      "partTimeTypeId": "1",
+      "partTimeSpeciesId": "1",
+      "price": "1",
+      "calculationTypeId": "1",
+      "settlementTypeId": "1",
+      "priceDescription": "1",
+      "provinceId": "440000",
+      "cityId": "440100",
+      "areaId": "440103",
+      "detailAddress": "1",
+      "workingDateStart": "11457853200",
+      "workingDateEnd": "11457885600",
+      "workingTime": "9:0:0-18:0:0",
+      "workingTimeWeek": "1",
+      "jobDescription": "1",
+      "contactPeople": "1",
+      "contactPhone": "2312312",
+      "code": 0,
+      "id": 5
+    },
+    {
+      "name": "123",
+      "recruitmentCount": "12",
+      "partTimeTypeId": "1",
+      "partTimeSpeciesId": "1",
+      "price": "1",
+      "calculationTypeId": "1",
+      "settlementTypeId": "1",
+      "priceDescription": "",
+      "provinceId": "440000",
+      "cityId": "440100",
+      "areaId": "440103",
+      "detailAddress": "1",
+      "workingDateStart": "11457853200",
+      "workingDateEnd": "11457885600",
+      "workingTime": "9:0:0-18:0:0",
+      "workingTimeWeek": "1",
+      "jobDescription": "1",
+      "contactPeople": "1",
+      "contactPhone": "2312312",
+      "code": 0,
+      "id": 6
+    },
+    {
+      "name": "123",
+      "recruitmentCount": "12",
+      "partTimeTypeId": "1",
+      "partTimeSpeciesId": "1",
+      "price": "1",
+      "calculationTypeId": "1",
+      "settlementTypeId": "1",
+      "priceDescription": "1",
+      "provinceId": "440000",
+      "cityId": "440100",
+      "areaId": "440103",
+      "detailAddress": "1",
+      "workingDateStart": "11457853200",
+      "workingDateEnd": "11457885600",
+      "workingTime": "9:0:0-18:0:0",
+      "workingTimeWeek": "1",
+      "jobDescription": "1",
+      "contactPeople": "1",
+      "contactPhone": "2312312",
+      "code": 0,
+      "id": 7
+    },
+    {
+      "name": "123",
+      "recruitmentCount": "12",
+      "partTimeTypeId": "1",
+      "partTimeSpeciesId": "1",
+      "price": "1",
+      "calculationTypeId": "1",
+      "settlementTypeId": "1",
+      "priceDescription": "1",
+      "provinceId": "440000",
+      "cityId": "440100",
+      "areaId": "440103",
+      "detailAddress": "1",
+      "workingDateStart": "11457853200",
+      "workingDateEnd": "11457885600",
+      "workingTime": "9:0:0-18:0:0",
+      "workingTimeWeek": "1",
+      "jobDescription": "1",
+      "contactPeople": "1",
+      "contactPhone": "2312312",
+      "code": 0,
+      "id": 8
+    },
+    {
+      "name": "123",
+      "recruitmentCount": "12",
+      "partTimeTypeId": "1",
+      "partTimeSpeciesId": "1",
+      "price": "1",
+      "calculationTypeId": "1",
+      "settlementTypeId": "1",
+      "priceDescription": "1",
+      "provinceId": "440000",
+      "cityId": "440100",
+      "areaId": "440103",
+      "detailAddress": "1",
+      "workingDateStart": "11457853200",
+      "workingDateEnd": "11457885600",
+      "workingTime": "9:0:0-18:0:0",
+      "workingTimeWeek": "1",
+      "jobDescription": "1",
+      "contactPeople": "1",
+      "contactPhone": "2312312",
+      "code": 0,
+      "id": 9
+    },
+    {
+      "name": "123",
+      "recruitmentCount": "12",
+      "partTimeTypeId": "1",
+      "partTimeSpeciesId": "1",
+      "price": "1",
+      "calculationTypeId": "1",
+      "settlementTypeId": "1",
+      "priceDescription": "1",
+      "provinceId": "440000",
+      "cityId": "440100",
+      "areaId": "440103",
+      "detailAddress": "1",
+      "workingDateStart": "11457853200",
+      "workingDateEnd": "11457885600",
+      "workingTime": "9:0:0-18:0:0",
+      "workingTimeWeek": "1",
+      "jobDescription": "1",
+      "contactPeople": "1",
+      "contactPhone": "2312312",
+      "code": 0,
+      "id": 10
+    },
+    {
+      "name": "123",
+      "recruitmentCount": "12",
+      "partTimeTypeId": "1",
+      "partTimeSpeciesId": "1",
+      "price": "1",
+      "calculationTypeId": "1",
+      "settlementTypeId": "1",
+      "priceDescription": "1",
+      "provinceId": "440000",
+      "cityId": "440100",
+      "areaId": "440103",
+      "detailAddress": "1",
+      "workingDateStart": "11457853200",
+      "workingDateEnd": "11457885600",
+      "workingTime": "9:0:0-18:0:0",
+      "workingTimeWeek": "1",
+      "jobDescription": "1",
+      "contactPeople": "1",
+      "contactPhone": "2312312",
+      "code": 0,
+      "id": 11
+    },
+    {
+      "name": "123",
+      "recruitmentCount": "12",
+      "partTimeTypeId": "1",
+      "partTimeSpeciesId": "1",
+      "price": "1",
+      "calculationTypeId": "1",
+      "settlementTypeId": "1",
+      "priceDescription": "1",
+      "provinceId": "440000",
+      "cityId": "440100",
+      "areaId": "440103",
+      "detailAddress": "1",
+      "workingDateStart": "11457853200",
+      "workingDateEnd": "11457885600",
+      "workingTime": "9:0:0-18:0:0",
+      "workingTimeWeek": "1",
+      "jobDescription": "1",
+      "contactPeople": "1",
+      "contactPhone": "2312312",
+      "code": 0,
+      "id": 12
+    },
+    {
+      "name": "123",
+      "recruitmentCount": "12",
+      "partTimeTypeId": "1",
+      "partTimeSpeciesId": "1",
+      "price": "1",
+      "calculationTypeId": "1",
+      "settlementTypeId": "1",
+      "priceDescription": "1",
+      "provinceId": "440000",
+      "cityId": "440100",
+      "areaId": "440103",
+      "detailAddress": "1",
+      "workingDateStart": "11457853200",
+      "workingDateEnd": "11457885600",
+      "workingTime": "9:0:0-18:0:0",
+      "workingTimeWeek": "1",
+      "jobDescription": "1",
+      "contactPeople": "1",
+      "contactPhone": "2312312",
+      "code": 0,
+      "id": 13
+    },
+    {
+      "name": "123",
+      "recruitmentCount": "12",
+      "partTimeTypeId": "1",
+      "partTimeSpeciesId": "1",
+      "price": "1",
+      "calculationTypeId": "1",
+      "settlementTypeId": "1",
+      "priceDescription": "1",
+      "provinceId": "440000",
+      "cityId": "440100",
+      "areaId": "440103",
+      "detailAddress": "1",
+      "workingDateStart": "11457853200",
+      "workingDateEnd": "11457885600",
+      "workingTime": "9:0:0-18:0:0",
+      "workingTimeWeek": "1",
+      "jobDescription": "1",
+      "contactPeople": "1",
+      "contactPhone": "2312312",
+      "code": 0,
+      "id": 14
+    },
+    {
+      "name": "123",
+      "recruitmentCount": "12",
+      "partTimeTypeId": "1",
+      "partTimeSpeciesId": "1",
+      "price": "1",
+      "calculationTypeId": "1",
+      "settlementTypeId": "1",
+      "priceDescription": "1",
+      "provinceId": "440000",
+      "cityId": "440100",
+      "areaId": "440103",
+      "detailAddress": "1",
+      "workingDateStart": "11457853200",
+      "workingDateEnd": "11457885600",
+      "workingTime": "9:0:0-18:0:0",
+      "workingTimeWeek": "1",
+      "jobDescription": "1",
+      "contactPeople": "1",
+      "contactPhone": "2312312",
+      "code": 0,
+      "id": 15
+    },
+    {
+      "name": "123",
+      "recruitmentCount": "12",
+      "partTimeTypeId": "1",
+      "partTimeSpeciesId": "1",
+      "price": "1",
+      "calculationTypeId": "1",
+      "settlementTypeId": "1",
+      "priceDescription": "1",
+      "provinceId": "440000",
+      "cityId": "440100",
+      "areaId": "440103",
+      "detailAddress": "1",
+      "workingDateStart": "11457853200",
+      "workingDateEnd": "11457885600",
+      "workingTime": "9:0:0-18:0:0",
+      "workingTimeWeek": "1",
+      "jobDescription": "1",
+      "contactPeople": "1",
+      "contactPhone": "2312312",
+      "code": 0,
+      "id": 16
+    },
+    {
+      "name": "123",
+      "recruitmentCount": "12",
+      "partTimeTypeId": "1",
+      "partTimeSpeciesId": "1",
+      "price": "1",
+      "calculationTypeId": "1",
+      "settlementTypeId": "1",
+      "priceDescription": "1",
+      "provinceId": "440000",
+      "cityId": "440100",
+      "areaId": "440103",
+      "detailAddress": "1",
+      "workingDateStart": "11457853200",
+      "workingDateEnd": "11457885600",
+      "workingTime": "9:0:0-18:0:0",
+      "workingTimeWeek": "1",
+      "jobDescription": "1",
+      "contactPeople": "1",
+      "contactPhone": "2312312",
+      "code": 0,
+      "id": 17
+    },
+    {
+      "name": "123",
+      "recruitmentCount": "12",
+      "partTimeTypeId": "1",
+      "partTimeSpeciesId": "1",
+      "price": "1",
+      "calculationTypeId": "1",
+      "settlementTypeId": "1",
+      "priceDescription": "1",
+      "provinceId": "440000",
+      "cityId": "440100",
+      "areaId": "440103",
+      "detailAddress": "1",
+      "workingDateStart": "11457853200",
+      "workingDateEnd": "11457885600",
+      "workingTime": "9:0:0-18:0:0",
+      "workingTimeWeek": "1",
+      "jobDescription": "1",
+      "contactPeople": "1",
+      "contactPhone": "2312312",
+      "code": 0,
+      "id": 18
     }
   ]
 }

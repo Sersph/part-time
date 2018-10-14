@@ -1,5 +1,9 @@
 <template>
-  <router-view/>
+  <section class="enterprise-container">
+    <transition name="slide-bottom" mode="out-in">
+      <router-view/>
+    </transition>
+  </section>
 </template>
 
 <script>

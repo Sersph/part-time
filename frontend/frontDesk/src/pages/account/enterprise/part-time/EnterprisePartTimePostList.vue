@@ -1,7 +1,12 @@
 <template>
-  <section class="personal-part-time-apply-container">
+  <section class="enterprise-part-time-post-list-container">
+    <section class="header-action-tooltip-container">
+      <router-link to="/account/enterprise/partTime/partTimePost/add">
+        <el-button type="danger">发布兼职</el-button>
+      </router-link>
+    </section>
     <el-table
-      :data="personalPartTimeApplyList"
+      :data="enterprisePartTimePostList"
       style="width: 100%"
       :row-class-name="tableRowClassName">
       <el-table-column
@@ -24,10 +29,10 @@
 
 <script>
 export default {
-  name: 'PersonalPartTimeApply',
+  name: 'EnterprisePartTimePostList',
   data () {
     return {
-      personalPartTimeApplyList: [{
+      enterprisePartTimePostList: [{
         date: '2016-05-02',
         name: '王小虎',
         address: '上海市普陀区金沙江路 1518 弄'
@@ -60,15 +65,16 @@ export default {
 </script>
 
 <style lang="scss">
-  .personal-part-time-apply-container {
-    padding: 56px 0 0 65px;
-  }
-
-  .el-table .warning-row {
-    background: oldlace;
-  }
-
-  .el-table .success-row {
-    background: #f0f9eb;
+  .enterprise-part-time-post-list-container {
+    .header-action-tooltip-container {
+      margin-bottom: 20px;
+      text-align: right;
+    }
+    .el-table .warning-row {
+      background: oldlace;
+    }
+    .el-table .success-row {
+      background: #f0f9eb;
+    }
   }
 </style>

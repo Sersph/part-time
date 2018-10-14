@@ -3,7 +3,7 @@
     :default-openeds="['1', '2']"
     :router="true">
     <el-submenu
-      v-for="(sidebarMenuItem, index) in routerList"
+      v-for="(sidebarMenuItem, index) in sidebarMenuList"
       :key="index"
       :index="sidebarMenuItem.meta.index">
       <template slot="title">
@@ -15,8 +15,8 @@
         :key="index"
         :route="sidebarMenuChildItem.path"
         :index="sidebarMenuChildItem.meta.index"
-        :class="{'active': sidebarMenuChildItem.meta.index === activeIndex}">
-        <span :class="{active: $route.path === sidebarMenuChildItem.path ? 'active': ''}">{{ sidebarMenuChildItem.meta.name }}</span>
+        :class="{'active': sidebarMenuChildItem.meta.index === sidebarMenuActiveIndex}">
+        <span>{{ sidebarMenuChildItem.meta.name }}</span>
       </el-menu-item>
     </el-submenu>
   </el-menu>
@@ -30,23 +30,44 @@ export default {
   name: 'SidebarNav',
   data () {
     return {
-      activeIndex: null
+      sidebarMenuActiveIndex: null
     };
   },
   computed: {
     ...mapState('permission', [
-      'routerList'
+      'sidebarMenuList'
     ])
   },
-  watch: {
-    $route (to, from) {
+  mounted () {
+    // 刷新菜单列表
+    this.editSidebarMenuList({
+      sidebarMenuList: this.$router.options.routes.filter(routeItem => {
+        return routeItem.meta.isMasterPage;
+      })
+    });
+    // 刷新菜单样式
+    this.editSidebarMenuActiveIndex(this.$route);
+    // 监听路由刷新菜单样式
+    this.$router.beforeEach((to, from, next) => {
+      this.editSidebarMenuActiveIndex(to);
+      next();
+    });
+  },
+  methods: {
+    ...mapActions('permission', [
+      'editSidebarMenuList'
+    ]),
+    editSidebarMenuActiveIndex (route) {
       NProgress.start();
       // 激活菜单样式
-      this.routerList.find(sidebarMenuItem => {
-        if (sidebarMenuItem.children) {
-          return sidebarMenuItem.children.find(sidebarMenuChildItem => {
-            if (to.path.indexOf(sidebarMenuChildItem.path) > -1) {
-              this.activeIndex = sidebarMenuChildItem.meta.index;
+      this.sidebarMenuList.find(routeItem => {
+        if (routeItem.children) {
+          return routeItem.children.find(routeChildrenItem => {
+            const routerPathArr = route.path.split('/');
+            const routeChildrenItemPathArr = routeChildrenItem.path.split('/');
+            if (routerPathArr[1] + routerPathArr[2] ===
+              routeChildrenItemPathArr[1] + routeChildrenItemPathArr[2]) {
+              this.sidebarMenuActiveIndex = routeChildrenItem.meta.index;
               return true;
             }
           });
@@ -54,18 +75,6 @@ export default {
       });
       NProgress.done();
     }
-  },
-  created () {
-    // 初始化路由列表
-    this.editRouterList({
-      routerList: this.$router.options.routes
-    });
-  },
-  methods: {
-    ...mapActions('permission', [
-      'editRouterList',
-      'editCurrentRouter'
-    ])
   }
 };
 </script>

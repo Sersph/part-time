@@ -11,7 +11,7 @@
         </el-input>
       </el-col>
       <el-col :span="6" class="part-time-tooltip">
-        <router-link to="/account/enterprise/partTimePost">
+        <router-link to="/account/enterprise/partTime/partTimePost/add">
           <el-button type="danger">发布兼职</el-button>
         </router-link>
       </el-col>
@@ -78,6 +78,7 @@ export default {
         input {
           height: 45px;
           font-size: 15px;
+          box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
         }
         .el-input-group__append {
           font-size: 20px;

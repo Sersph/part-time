@@ -16,6 +16,20 @@ export default {
       params
     );
   },
+  enterpriseSignUp (params) {
+    return ajax(
+      'POST',
+      `${config.API_ROOT}/account/enterprise/signUp`,
+      params
+    );
+  },
+  enterpriseSignIn (params) {
+    return ajax(
+      'POST',
+      `${config.API_ROOT}/account/enterprise/signIn`,
+      params
+    );
+  },
   signOut () {
     return ajax(
       'DELETE',

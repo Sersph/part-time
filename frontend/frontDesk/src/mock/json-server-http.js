@@ -11,9 +11,13 @@ server.use(jsonServerHttp.rewriter({
   '/common/location/regionList': '/commonLocationRegionList/1',
   '/account/personal/signUp': '/accountPersonalSignUp',
   '/account/personal/signIn': '/accountPersonalSignIn',
+  '/account/enterprise/signUp': '/accountEnterpriseSignUp',
+  '/account/enterprise/signIn': '/accountEnterpriseSignIn',
   '/account/signOut': '/accountSignOut/1',
   '/account/accountInfo': '/accountAccountInfo/1',
-  '/account/sendMailCaptcha': '/sendMailCaptcha'
+  '/account/sendMailCaptcha': '/sendMailCaptcha',
+  '/partTime/baseInfo': '/partTimeBaseInfo/1',
+  '/partTime/partTime': '/partTimePartTime'
 }));
 
 // Add custom routes before JSON Server router
@@ -30,14 +34,25 @@ server.use((req, res, next) => {
       switch (req.originalUrl) {
         case '/account/personal/signUp':
         case '/account/personal/signIn':
+        case '/account/enterprise/signUp':
+        case '/account/enterprise/signIn':
         case '/account/sendMailCaptcha':
+        case '/partTime/partTime':
           req.body.code = 0;
           break;
       }
     }
-    // Continue to JSON Server router
+    if (req.method === 'DELETE') {
+      switch (req.originalUrl) {
+        case '/account/signOut':
+          res.send(JSON.stringify({
+            "code": 0
+          }));
+          break;
+      }
+    }
     next();
-  }, 1000);
+  }, 500);
 });
 
 // Use default router

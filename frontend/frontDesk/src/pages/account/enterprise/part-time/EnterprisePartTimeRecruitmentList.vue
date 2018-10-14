@@ -1,5 +1,5 @@
 <template>
-  <section class="enterprise-part-time-recruitment-container">
+  <section class="enterprise-part-time-recruitment-list-container">
     <el-table
       :data="enterprisePartTimeRecruitmentList"
       style="width: 100%"
@@ -61,14 +61,12 @@ export default {
 
 <style lang="scss">
   .enterprise-part-time-recruitment-container {
-    padding: 56px 0 0 65px;
-  }
+    .el-table .warning-row {
+      background: oldlace;
+    }
 
-  .el-table .warning-row {
-    background: oldlace;
-  }
-
-  .el-table .success-row {
-    background: #f0f9eb;
+    .el-table .success-row {
+      background: #f0f9eb;
+    }
   }
 </style>

@@ -21,7 +21,7 @@
         <template slot="title">我的</template>
         <el-menu-item index="5-1"
                       @click="$router.push(accountInfo.type === 1 ? '/account/personal' : '/account/enterprise')">
-          <a>个人中心</a>
+          <a>{{ accountInfo.type === 1 ? '个人中心' : '控制台' }}</a>
         </el-menu-item>
         <el-menu-item index="5-2" @click="signOut">
           <a>退出</a>
@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
+import { mapState } from 'vuex';
 import api from '@/api';
 import SelectCity from '@/components/location/SelectCity';
 
@@ -50,19 +50,7 @@ export default {
       'accountInfo'
     ])
   },
-  async mounted () {
-    // 初始化地区
-    await this.initRegionList();
-    // 初始化用户信息
-    await this.asyncInitAccountInfo();
-  },
   methods: {
-    ...mapActions('location', [
-      'initRegionList'
-    ]),
-    ...mapActions('account', [
-      'asyncInitAccountInfo'
-    ]),
     async signOut () {
       const result = await api.account.signOut();
       if (result.code === 0) {
@@ -73,7 +61,7 @@ export default {
           duration: 1500,
           showClose: false
         });
-        // 跳转首页
+        // 跳转到首页
         if (this.$route.path !== '/home') {
           this.$router.replace('/');
         }
@@ -88,6 +76,7 @@ export default {
     display: flex;
     justify-content: center;
     background-color: #409EFF;
+    box-shadow: 0 2px 11px rgba(0, 0, 0, 0.2);
     .el-menu.el-menu--horizontal {
       border: none;
     }

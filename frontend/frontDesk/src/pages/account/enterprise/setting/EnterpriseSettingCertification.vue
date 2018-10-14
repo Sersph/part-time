@@ -16,7 +16,7 @@
 
 <script>
 export default {
-  name: 'EnterpriseCertification',
+  name: 'EnterpriseSettingCertification',
   data () {
     return {
       enterpriseCertificationForm: {},
@@ -49,7 +49,6 @@ export default {
 
 <style lang="scss">
   .enterprise-certification-container {
-    padding: 56px 0 0 0;
     .el-form {
       max-width: 500px;
     }

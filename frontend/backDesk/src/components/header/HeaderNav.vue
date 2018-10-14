@@ -3,7 +3,7 @@
     <transition name="slide-left" mode="out-in">
       <el-breadcrumb separator="/" v-show="opacityFlag">
         <el-breadcrumb-item
-          v-for="(router, index) in currentRouter.matched"
+          v-for="(router, index) in currentRouteMatched"
           :key="index"
         >{{ router.meta.name }}
         </el-breadcrumb-item>
@@ -29,14 +29,23 @@ export default {
   data () {
     return {
       opacityFlag: true,
-      currentRouter: {}
+      currentRouteMatched: {}
     };
   },
-  watch: {
-    $route (to, from) {
+  async created () {
+    // 刷新面包屑导航
+    this.editCurrentRouteMatched(this.$route);
+    // 监听路由刷新面包屑导航
+    this.$router.beforeEach((to, from, next) => {
+      this.editCurrentRouteMatched(to);
+      next();
+    });
+  },
+  methods: {
+    editCurrentRouteMatched (route) {
       this.opacityFlag = false;
-      this.currentRouter = to;
       setTimeout(() => {
+        this.currentRouteMatched = route.matched;
         this.opacityFlag = true;
       }, 300);
     }
@@ -48,10 +57,9 @@ export default {
   .header-container {
     display: flex;
     justify-content: space-between;
-    align-items:center;
-    height: 100%;
+    align-items: center;
     .el-breadcrumb {
-      padding: 23px 0;
+      padding: 25px 0;
     }
     .user-action-container {
       display: flex;

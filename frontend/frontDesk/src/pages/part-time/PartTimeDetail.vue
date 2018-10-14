@@ -35,17 +35,16 @@
                 <span>200</span>
               </li>
               <li>
-                <span>工作地点：</span>
-                <span>全国-不限</span>
+                <span>兼职类型：</span>
+                <span>短期兼职</span>
               </li>
               <li>
-                <span>工作时间：</span>
-                <span>2018-10-05 至 2018-10-13</span>
+                <span>兼职种类：</span>
+                <span>传单派发</span>
               </li>
-              <li>
-                <span>工作时段：</span>
-                <span>18:00 - 5:00</span>
-              </li>
+            </ul>
+            <p class="title">薪资待遇</p>
+            <ul class="part-time-detail-info-list">
               <li>
                 <span>基本工资：</span>
                 <span>100元/天</span>
@@ -54,30 +53,57 @@
                 <span>结算方式：</span>
                 <span>月结</span>
               </li>
+              <li>
+                <span>薪资描述：</span>
+                <span>带带我去带我去带我去带我去带我去带我去带我去带我去带我去带我去带我去带我去带我去带我去我去</span>
+              </li>
             </ul>
             <p class="title">工作详情</p>
-            <div class="part-time-detail-job-info">
-              <p>
-                【一】工作内容
-                1、本次招聘为富士康人资公开免费招聘
-              </p>
-              <p>
-                【一】工作内容
-                1、本次招聘为富士康人资公开免费招聘
-              </p>
-              <p>
-                【一】工作内容
-                1、本次招聘为富士康人资公开免费招聘
-              </p>
-              <p>
-                【一】工作内容
-                1、本次招聘为富士康人资公开免费招聘
-              </p>
-              <p>
-                【一】工作内容
-                1、本次招聘为富士康人资公开免费招聘
-              </p>
-            </div>
+            <ul class="part-time-detail-info-list">
+              <li>
+                <span>工作地址：</span>
+                <span>全国-不限</span>
+              </li>
+              <li>
+                <span>工作日期：</span>
+                <span>2018-10-05 至 2018-10-13</span>
+              </li>
+              <li>
+                <span>上班时间：</span>
+                <span>18:00 - 5:00</span>
+              </li>
+              <li>
+                <span>工作时间：</span>
+                <span>周一 ~ 周二</span>
+              </li>
+              <li>
+                <span>工作描述：</span>
+                <span>
+                  <div class="part-time-detail-job-info">
+                    <p>
+                      【一】工作内容
+                      1、本次招聘为富士康人资公开免费招聘
+                    </p>
+                    <p>
+                      【一】工作内容
+                      1、本次招聘为富士康人资公开免费招聘
+                    </p>
+                    <p>
+                      【一】工作内容
+                      1、本次招聘为富士康人资公开免费招聘
+                    </p>
+                    <p>
+                      【一】工作内容
+                      1、本次招聘为富士康人资公开免费招聘
+                    </p>
+                    <p>
+                      【一】工作内容
+                      1、本次招聘为富士康人资公开免费招聘
+                    </p>
+                  </div>
+                </span>
+              </li>
+            </ul>
           </section>
         </section>
       </el-col>
@@ -134,7 +160,7 @@
 <script>
 export default {
   name: 'PartTimeDetail',
-  mounted () {
+  beforeCreate () {
     document.documentElement.scrollTop = 0;
   }
 };
@@ -153,7 +179,7 @@ export default {
     }
     .part-time-detail-left {
       padding: 20px;
-      border: 1px solid #dadada;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
       .part-time-base-info {
         .title {
           display: flex;
@@ -217,11 +243,14 @@ export default {
               text-align: right;
               color: #989393;
             }
+            span:last-child {
+              flex: 1;
+              word-break: break-all;
+            }
           }
         }
         .part-time-detail-job-info {
           font-size: 16px;
-          padding: 0 0 0 15px;
           line-height: 29px;
           p {
             margin-bottom: 20px;
@@ -231,15 +260,15 @@ export default {
     }
     .part-time-detail-right {
       margin-left: 20px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
       .enterprise {
         padding: 20px;
-        border: 1px solid #dadada;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
         .enterprise-img {
           display: flex;
           justify-content: center;
           margin-bottom: 20px;
           padding: 0 0 20px 0;
-          border-bottom: 1px solid #dadada;
           img {
             width: 115px;
             height: 115px;
@@ -262,8 +291,6 @@ export default {
         }
       }
       .recommend-part-time-list {
-        margin-top: 20px;
-        border: 1px solid #dadada;
         ul {
           list-style-type: none;
           margin: 0;

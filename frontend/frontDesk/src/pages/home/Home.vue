@@ -33,7 +33,7 @@ export default {
       'currentCity'
     ])
   },
-  async mounted () {
+  async created () {
     NProgress.start();
     // 初始化搜索结果
     await this.asyncEditPartTimeSearchResultListByUrlParams();
@@ -78,11 +78,10 @@ export default {
         partTimeSearchCondition: routerUtils.getNewPartTimeSearchConditionUrlParams({
           cityId: this.currentCity.id,
           areaId: '0',
-          typeId: '0',
-          speciesId: '0',
+          partTimeTypeId: '0',
+          partTimeSpeciesId: '0',
           keyword: '',
           limitStart: '0',
-          endStart: '0',
           limitSize: '10'
         }, partTimeSearchConditionURLParams)
       });

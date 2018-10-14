@@ -9,6 +9,8 @@ export default {
   // 修改用户信息
   EDIT_ACCOUNT_INFO: 'editAccountInfo',
 
+  // 修改兼职基本信息
+  EDIT_PART_TIME_BASE_INFO: 'editPartTimeBaseInfo',
   // 修改搜索兼职条件
   EDIT_PART_TIME_SEARCH_CONDITION: 'editPartTimeSearchCondition'
 };

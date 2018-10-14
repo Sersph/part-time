@@ -1,16 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
-// 非懒加载路由组件
-import SignIn from '@/pages/account/SignIn';
-import SignUp from '@/pages/account/SignUp';
-import PersonalPartTimeApply from '@/pages/account/PersonalPartTimeApply';
-import PersonalResume from '@/pages/account/PersonalResume';
-import EnterprisePartTimePost from '@/pages/account/EnterprisePartTimePost';
-import EnterprisePartTimeRecruitment from '@/pages/account/EnterprisePartTimeRecruitment';
-import EnterpriseCertification from '@/pages/account/EnterpriseCertification';
-import PartTimeDetail from '@/pages/part-time/PartTimeDetail';
-
 // 注入 Vue Router 插件
 Vue.use(VueRouter);
 
@@ -36,49 +26,165 @@ export default new VueRouter({
       children: [
         {
           path: '/account/signUp',
-          component: SignUp
+          component: () => import('@/pages/account/SignUp')
         },
         {
           path: '/account/signIn',
-          component: SignIn
+          component: () => import('@/pages/account/SignIn')
         },
         {
           path: '/account/personal',
-          component: () => import('@/pages/account/Personal'),
+          component: () => import('@/pages/account/personal/Personal'),
+          redirect: '/account/personal/partTime',
           children: [
             {
-              path: '/account/personal',
-              redirect: '/account/personal/partTimeApply'
+              path: '/account/personal/partTime',
+              component: () => import('@/pages/account/personal/part-time/PersonalPartTime'),
+              redirect: '/account/personal/partTime/partTimeApply',
+              meta: {
+                needSignIn: true,
+                index: '1',
+                icon: 'people',
+                name: '我的兼职'
+              },
+              children: [
+                {
+                  path: '/account/personal/partTime/partTimeApply',
+                  component: () => import('@/pages/account/personal/part-time/PersonalPartTimeApply'),
+                  redirect: '/account/personal/partTime/partTimeApply/list',
+                  meta: {
+                    needSignIn: true,
+                    index: '1-1',
+                    name: '我的申请'
+                  },
+                  children: [
+                    {
+                      path: '/account/personal/partTime/partTimeApply/list',
+                      component: () => import('@/pages/account/personal/part-time/PersonalPartTimeApplyList'),
+                      meta: {
+                        needSignIn: true,
+                        index: '1-1',
+                        name: '申请列表'
+                      }
+                    }
+                  ]
+                }
+              ]
             },
             {
-              path: '/account/personal/partTimeApply',
-              component: PersonalPartTimeApply
-            },
-            {
-              path: '/account/personal/resume',
-              component: PersonalResume
+              path: '/account/personal/setting',
+              component: () => import('@/pages/account/personal/setting/PersonalSetting'),
+              redirect: '/account/personal/setting/resume',
+              meta: {
+                needSignIn: true,
+                index: '2',
+                icon: 'view_list',
+                name: '设置'
+              },
+              children: [
+                {
+                  path: '/account/personal/setting/resume',
+                  component: () => import('@/pages/account/personal/setting/PersonalSettingResume'),
+                  meta: {
+                    needSignIn: true,
+                    index: '2-1',
+                    name: '我的简历'
+                  }
+                }
+              ]
             }
           ]
         },
         {
           path: '/account/enterprise',
-          component: () => import('@/pages/account/Enterprise'),
+          component: () => import('@/pages/account/enterprise/Enterprise'),
+          redirect: '/account/enterprise/partTime',
           children: [
             {
-              path: '/account/enterprise',
-              redirect: '/account/enterprise/partTimePost'
+              path: '/account/enterprise/partTime',
+              component: () => import('@/pages/account/enterprise/part-time/EnterprisePartTime'),
+              redirect: '/account/enterprise/partTime/partTimePost',
+              meta: {
+                needSignIn: true,
+                index: '1',
+                icon: 'people',
+                name: '我的兼职'
+              },
+              children: [
+                {
+                  path: '/account/enterprise/partTime/partTimePost',
+                  component: () => import('@/pages/account/enterprise/part-time/EnterprisePartTimePost'),
+                  redirect: '/account/enterprise/partTime/partTimePost/list',
+                  meta: {
+                    needSignIn: true,
+                    index: '1-1',
+                    name: '我的发布'
+                  },
+                  children: [
+                    {
+                      path: '/account/enterprise/partTime/partTimePost/list',
+                      component: () => import('@/pages/account/enterprise/part-time/EnterprisePartTimePostList'),
+                      meta: {
+                        needSignIn: true,
+                        index: '1-1-1',
+                        name: '兼职列表'
+                      }
+                    },
+                    {
+                      path: '/account/enterprise/partTime/partTimePost/add',
+                      component: () => import('@/pages/account/enterprise/part-time/EnterprisePartTimePostOperation'),
+                      meta: {
+                        needSignIn: true,
+                        index: '1-1-2',
+                        name: '发布兼职'
+                      }
+                    }
+                  ]
+                },
+                {
+                  path: '/account/enterprise/partTime/partTimeRecruitment',
+                  component: () => import('@/pages/account/enterprise/part-time/EnterprisePartTimeRecruitment'),
+                  redirect: '/account/enterprise/partTime/partTimeRecruitment/list',
+                  meta: {
+                    needSignIn: true,
+                    index: '1-2',
+                    name: '我的招聘'
+                  },
+                  children: [
+                    {
+                      path: '/account/enterprise/partTime/partTimeRecruitment/list',
+                      component: () => import('@/pages/account/enterprise/part-time/EnterprisePartTimeRecruitmentList'),
+                      meta: {
+                        needSignIn: true,
+                        index: '1-1-1',
+                        name: '招聘列表'
+                      }
+                    }
+                  ]
+                }
+              ]
             },
             {
-              path: '/account/enterprise/partTimePost',
-              component: EnterprisePartTimePost
-            },
-            {
-              path: '/account/enterprise/partTimeRecruitment',
-              component: EnterprisePartTimeRecruitment
-            },
-            {
-              path: '/account/enterprise/certification',
-              component: EnterpriseCertification
+              path: '/account/enterprise/setting',
+              component: () => import('@/pages/account/enterprise/setting/EnterpriseSetting'),
+              redirect: '/account/enterprise/partTime/setting/certification',
+              meta: {
+                needSignIn: true,
+                index: '2',
+                icon: 'view_list',
+                name: '设置'
+              },
+              children: [
+                {
+                  path: '/account/enterprise/setting/certification',
+                  component: () => import('@/pages/account/enterprise/setting/EnterpriseSettingCertification'),
+                  meta: {
+                    needSignIn: true,
+                    index: '2-2',
+                    name: '企业认证'
+                  }
+                }
+              ]
             }
           ]
         }
@@ -90,7 +196,7 @@ export default new VueRouter({
       children: [
         {
           path: '/partTime/detail/:id',
-          component: PartTimeDetail
+          component: () => import('@/pages/part-time/PartTimeDetail')
         }
       ]
     }
