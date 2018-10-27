@@ -29,7 +29,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         //配置两个客户端,一个用于password认证一个用于client认证
         clients.inMemory()
-                .withClient("TIDC-X")
+                .withClient("part-time-monarch")
                 .authorizedGrantTypes("password", "refresh_token")
                 .scopes("all")
                 .secret("{noop}4f2155ae-c707-4e6f-9e4d-11a138a9a052");
