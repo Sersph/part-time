@@ -1,0 +1,41 @@
+#服务器端口
+server:
+  port: 8000
+
+
+spring:
+# 数据库配置
+  datasource:
+    url: ENC(6AvZUhtNl6OTDC4wFEVPXlHPTwxrgYgVVFV8mm1GuRJgQ9hRO6FD/vVGNoe3qUErjwcKIRO2hAIwqbFMucId9mGcjpZOdm/m7rfrxgJkJ1xpQS49OiKVHHguRfkhpmvzaFFSO5EVHtiDPZVtCwdQAg==)
+    driver-class-name: com.mysql.jdbc.Driver
+    username: ENC(syF66GGc1bKx+aneat1NBg==)
+    password: ENC(9ly9TeF57UcW3/VbNT0+0g==)
+#   连接池
+    hikari:
+      maximum-pool-size: 10
+      auto-commit: true
+      minimum-idle: 5
+      idle-timeout: 30000
+      connection-test-query: SELECT 1
+      connection-timeout: 30000
+    type: com.zaxxer.hikari.HikariDataSource
+  #  设置为null的值不参与序列化
+  jackson:
+    default-property-inclusion: non_null
+
+mybatis:
+  type-aliases-package: com.tidc.parttimemonarch.dao
+  configuration:
+    map-underscore-to-camel-case: true
+
+# 日志
+logging:
+  level:
+    #    日志输出 mapper 的 sql 语句
+    com.security.demo.mapper: DEBUG
+
+
+# 配置文件加密公钥
+jasypt:
+  encryptor:
+    password: EbfYkitulv73I2p0mXI50JMXoaxZTKJ7
