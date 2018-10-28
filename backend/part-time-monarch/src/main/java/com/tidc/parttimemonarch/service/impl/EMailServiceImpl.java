@@ -2,6 +2,7 @@ package com.tidc.parttimemonarch.service.impl;
 
 import com.tidc.parttimemonarch.exceptions.ResultExceptions;
 import com.tidc.parttimemonarch.mapper.UserInfoMapper;
+import com.tidc.parttimemonarch.service.EMailService;
 import com.tidc.parttimemonarch.util.EMailUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -13,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 
 
 @Component
-public class EMailService {
+public class EMailServiceImpl implements EMailService {
 
     @Autowired
     private JavaMailSender javaMailSender;
@@ -23,6 +24,7 @@ public class EMailService {
 
     @Autowired
     private UserInfoMapper userInfoMapper;
+
     /**
      * 发送邮箱验证码
      * @param email

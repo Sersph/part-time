@@ -1,7 +1,6 @@
 package com.tidc.parttimemonarch.service.impl;
 
 import com.tidc.parttimemonarch.domain.UserRole;
-import com.tidc.parttimemonarch.mapper.AccountMapper;
 import com.tidc.parttimemonarch.exceptions.ResultExceptions;
 import com.tidc.parttimemonarch.domain.User;
 import com.tidc.parttimemonarch.domain.UserInfo;
@@ -54,10 +53,6 @@ public class AccountServiceImpl implements AccountService {
     @Value("${ResourceServerConfiguration.logoutUrl}")
     private String logoutUrl;
 
-    // 持久层操作接口
-    @Autowired
-    private AccountMapper accountMapper;
-
     // redis 操作对象
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
@@ -107,7 +102,7 @@ public class AccountServiceImpl implements AccountService {
 
         UserTokenDTO userTokenDTO = new UserTokenDTO();
 
-        user.setId(this.accountMapper.selectUserIdByUsername(user.getUsername()));
+        user.setId(this.userMapper.selectUserIdByUsername(user.getUsername()));
         if (user.getId() == 0) {
             userTokenDTO.setCode(1005);
             userTokenDTO.setMessage("用户名或密码错误");

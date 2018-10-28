@@ -24,7 +24,6 @@ public class CityController {
     @ApiOperation(value = "获取城市数据")
     @GetMapping(value = "/regionList")
     public RequestResult obtainCity(){
-
         return this.cityService.obtainCity();
     }
 }
