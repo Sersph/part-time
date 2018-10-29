@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.validation.constraints.Email;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.sql.Date;
 
@@ -41,7 +42,7 @@ public class UserInfo {
     private String email;
 
     @ApiModelProperty("城市id")
-    @Size(min = 6, max = 6,message = "城市id为六位", groups = EnterpriseVerifyUserInfo.class)
+    @Pattern(regexp = "^{6,20}$", message = "城市id为六位", groups = EnterpriseVerifyUserInfo.class)
     private String cityId;
 
     @ApiModelProperty(value = "具体地址", hidden = true)

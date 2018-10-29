@@ -2,6 +2,7 @@ package com.tidc.parttimemonarch.controller;
 
 import com.tidc.parttimemonarch.domain.User;
 import com.tidc.parttimemonarch.domain.UserInfo;
+import com.tidc.parttimemonarch.exceptions.ResultExceptions;
 import com.tidc.parttimemonarch.security.UserTokenDTO;
 import com.tidc.parttimemonarch.service.AccountService;
 import com.tidc.parttimemonarch.service.EMailService;
@@ -17,6 +18,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @Api(tags = "用户接口")
@@ -38,24 +40,26 @@ public class AccountController {
 
 
     /**
-     * 获取用户信息
-     * 只有登陆的才能获取
-     * @param token
+     * 使用 token 获取用户信息
+     * 不带 token 过来视为未登录
+     * @param request
      * @return
      */
 
     @ApiOperation(value="获取用户信息")
     @GetMapping(value = "/accountInfo")
-    @PreAuthorize(value = "hasAnyAuthority('root','enterprise', 'personal')")
-    public RequestResult getAccountInfo(@RequestParam(value = "access_token") String token){
+    public RequestResult getAccountInfo(HttpServletRequest request){
 
-        System.out.println(token);
+        String token = request.getParameter("access_token");
+
+        if (token == null){
+            throw new ResultExceptions(1002, "用户未登陆");
+        }
 
         this.userInfoRequestResult.setUserInfo(this.accountService.getAccountInfo(token));
 
         return this.userInfoRequestResult;
     }
-
 
     /**
      * 退出登陆
@@ -79,9 +83,10 @@ public class AccountController {
      * @return
      */
     @ApiOperation(value = "发送邮件验证码")
-    @ApiImplicitParam(name = "email", value = "邮箱", required = true, dataType = "String", paramType = "header")
+    @ApiImplicitParam(name = "email", value = "邮箱", required = true, dataType = "String", paramType = "query")
     @PostMapping(value = "/sendMailCaptcha")
-    public RequestResult sendMailCaptcha(@RequestHeader(value = "email") String email){
+    public RequestResult sendMailCaptcha(@RequestParam(value = "email") String email){
+        System.out.println();
         this.eMailService.sendMailCaptcha(email);
         this.requestResult.succeed();
         return this.requestResult;
@@ -107,7 +112,7 @@ public class AccountController {
     @PostMapping(value = "enterprise/signUp")
     public RequestResult enterpriseSignUp(@Validated(value = EnterpriseVerifyUserInfo.class) UserInfo userInfo,
                                           @Validated(value = EnterpriseVerifyUserInfo.class) User user,
-                                          @RequestHeader(value = "captcha") String captcha){
+                                          @RequestParam(value = "captcha") String captcha){
 
 
         this.accountService.enterpriseSignUp(userInfo, user, captcha);
@@ -153,35 +158,6 @@ public class AccountController {
     })
     @PostMapping(value = "/personal/signIn")
     public UserTokenDTO personalSignIn(@Valid User user){
-        System.out.println(user);
         return this.accountService.signIn(user);
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

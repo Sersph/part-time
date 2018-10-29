@@ -65,6 +65,8 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
     }
 
 
+
+
     private final CustomAccessDeniedHandler customAccessDeniedHandler;
 
     /**

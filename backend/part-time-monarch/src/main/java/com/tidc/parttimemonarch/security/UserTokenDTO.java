@@ -24,8 +24,8 @@ public class UserTokenDTO implements Serializable {
     @ApiModelProperty(value = "密码的模式", hidden = true)
     private String token_type;
 
-//    @ApiModelProperty("用于刷新的令牌")
-//    private String refresh_token;
+    @ApiModelProperty("用于刷新的令牌")
+    private String refresh_token;
 
     @ApiModelProperty("token持续时间")
     private Integer expires_in;

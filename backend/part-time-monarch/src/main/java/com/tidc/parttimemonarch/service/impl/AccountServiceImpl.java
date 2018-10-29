@@ -100,12 +100,12 @@ public class AccountServiceImpl implements AccountService {
      */
     public UserTokenDTO signIn(User user) {
 
-        UserTokenDTO userTokenDTO = new UserTokenDTO();
+        UserTokenDTO userTokenDTO;
 
-        user.setId(this.userMapper.selectUserIdByUsername(user.getUsername()));
-        if (user.getId() == 0) {
-            userTokenDTO.setCode(1005);
-            userTokenDTO.setMessage("用户名或密码错误");
+        try {
+            user.setId(this.userMapper.selectUserIdByUsername(user.getUsername()));
+        }catch (Exception e){
+            throw new ResultExceptions(1005, "用户名或密码错误");
         }
 
         userTokenDTO = this.sendLoginData(user);

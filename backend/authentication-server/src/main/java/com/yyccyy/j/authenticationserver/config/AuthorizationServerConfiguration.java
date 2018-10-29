@@ -32,7 +32,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
                 .withClient("part-time-monarch")
                 .authorizedGrantTypes("password", "refresh_token")
                 .scopes("all")
-                .secret("{noop}4f2155ae-c707-4e6f-9e4d-11a138a9a052");
+                .secret("{noop}4f2155ae-c707-4e6f-9e4d-11a138a9a052").accessTokenValiditySeconds(24*60*60);
     }
 
     @Override
