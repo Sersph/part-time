@@ -272,6 +272,7 @@ public class AccountServiceImpl implements AccountService {
             userTokenDTO = restTemplate.postForObject(oauthTokenUrl, requestEntity, UserTokenDTO.class);
 
             //将 token 作为 key, userId 作为 value 存到 redis
+            user.setPassword(null);
             this.redisTemplate.opsForValue().set(userTokenDTO.getAccess_token(), user, 30669, TimeUnit.SECONDS);
 
             userTokenDTO.setCode(0);

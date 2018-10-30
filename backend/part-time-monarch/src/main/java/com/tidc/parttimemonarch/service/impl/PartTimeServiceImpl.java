@@ -1,9 +1,12 @@
 package com.tidc.parttimemonarch.service.impl;
 
+import com.tidc.parttimemonarch.domain.PartTime;
+import com.tidc.parttimemonarch.domain.User;
 import com.tidc.parttimemonarch.mapper.PartTimeMapper;
 import com.tidc.parttimemonarch.service.PartTimeService;
 import com.tidc.parttimemonarch.vo.PartTimeRequesResult;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 /**
@@ -19,6 +22,9 @@ public class PartTimeServiceImpl implements PartTimeService {
     @Autowired
     private PartTimeRequesResult partTimeRequesResult;
 
+    @Autowired
+    private RedisTemplate redisTemplate;
+
     @Override
     public PartTimeRequesResult getBaseInfo() {
 
@@ -30,5 +36,18 @@ public class PartTimeServiceImpl implements PartTimeService {
         );
 
         return this.partTimeRequesResult;
+    }
+
+
+    /**
+     * 添加兼职
+     * @param partTime
+     * @param token
+     */
+    @Override
+    public void addPartTime(PartTime partTime, String token) {
+        User user = (User) this.redisTemplate.opsForValue().get(token);
+        partTime.setUserId(user.getId());
+
     }
 }

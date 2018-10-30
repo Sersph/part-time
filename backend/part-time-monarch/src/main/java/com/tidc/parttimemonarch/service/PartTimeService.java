@@ -1,5 +1,6 @@
 package com.tidc.parttimemonarch.service;
 
+import com.tidc.parttimemonarch.domain.PartTime;
 import com.tidc.parttimemonarch.vo.PartTimeRequesResult;
 
 /**
@@ -10,4 +11,5 @@ public interface PartTimeService {
 
     PartTimeRequesResult getBaseInfo();
 
+    void addPartTime(PartTime partTime, String token);
 }
