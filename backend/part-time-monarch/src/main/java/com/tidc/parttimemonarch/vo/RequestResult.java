@@ -2,8 +2,10 @@ package com.tidc.parttimemonarch.vo;
 
 import org.springframework.stereotype.Component;
 
+import java.io.Serializable;
+
 @Component
-public class RequestResult{
+public class RequestResult implements Serializable {
     private int code;
     private String message;
 

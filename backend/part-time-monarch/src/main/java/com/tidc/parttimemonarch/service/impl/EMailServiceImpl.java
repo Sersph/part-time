@@ -32,21 +32,30 @@ public class EMailServiceImpl implements EMailService {
      */
     public void sendMailCaptcha(String email){
 
+        System.out.println("判断 邮箱格式");
+
         //判断 邮箱格式
         if (!email.matches("^\\w+@(\\w+\\.)+\\w+$")){
             throw new ResultExceptions(1007, "邮箱格式错误");
         }
 
+        System.out.println("判断 该邮箱已被注册");
         if(this.userInfoMapper.selectUserInfoByEmail(email) != null){
             throw new ResultExceptions(1001, "该邮箱已被注册");
         }
 
-
+        System.out.println("随机生成六位验证码");
         //随机生成六位验证码
         String code = String.valueOf( new Random().nextInt(999999));
 
-        if(!EMailUtil.sendMailCaptcha(email, code, javaMailSender)){
+        while (true) {
+            if (code.length() == 6){
+                break;
+            }
+            code = String.valueOf( new Random().nextInt(999999));
+        }
 
+        if(!EMailUtil.sendMailCaptcha(email, code, javaMailSender)){
             throw new ResultExceptions(1002, "邮箱不存在");
         }
 

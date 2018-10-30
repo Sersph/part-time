@@ -9,6 +9,7 @@ import org.springframework.validation.BindException;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
@@ -33,6 +34,7 @@ public class PartTimeMonarchHandle {
     public RequestResult handle(Exception e){
         e.printStackTrace();
         this.result.error(1, "未知错误");
+
         return this.result;
     }
 
@@ -40,7 +42,7 @@ public class PartTimeMonarchHandle {
     @ExceptionHandler(value = BindException.class)
     @ResponseBody
     public RequestResult result(BindException bindException){
-
+        bindException.printStackTrace();
         List<ObjectError> errorList = bindException.getBindingResult().getAllErrors();
         String message;
         if (errorList.size() != 1) {
@@ -63,11 +65,9 @@ public class PartTimeMonarchHandle {
     @ExceptionHandler(value = ResultExceptions.class)
     @ResponseBody
     public RequestResult resultHandle(ResultExceptions e){
-
-        this.result.error(e.getCode(), e.getMessage());
-
-        return this.result;
+        System.out.println("e.getMessage()" + e.getMessage());
+        RequestResult requestResult = new RequestResult();
+        requestResult.error(e.getCode(), e.getMessage());
+        return requestResult;
     }
-
-
 }

@@ -42,7 +42,7 @@ public class UserInfo {
     private String email;
 
     @ApiModelProperty("城市id")
-    @Pattern(regexp = "^{6,20}$", message = "城市id为六位", groups = EnterpriseVerifyUserInfo.class)
+    @Pattern(regexp = "^\\d{6}$", message = "城市id为六位", groups = EnterpriseVerifyUserInfo.class)
     private String cityId;
 
     @ApiModelProperty(value = "具体地址", hidden = true)

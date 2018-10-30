@@ -8,11 +8,21 @@ spring:
     password: 662662
   mail:
     default-encoding: UTF-8
-    host: smtp.163.com
-    password: tidc662662
-    port: 25
+    host: smtp.qq.com
+    password: ldqmwqgyzzdbdjaj
+    port: 465
     protocol: smtp
-    username: 18934086807@163.com
+    username: 2675835744@qq.com
+    properties:
+      mail:
+        debug:
+          true
+        smtp:
+          socketFactory:
+            class: javax.net.ssl.SSLSocketFactory
+
+
+  #    spring.mail.properties.mail.smtp.socketFactory.class=javax.net.ssl.SSLSocketFactory
   redis:
     database: 0
     host: 39.105.96.239
@@ -56,3 +66,8 @@ ResourceServerConfiguration:
 jasypt:
   encryptor:
     password: EbfYkitulv73I2p0mXI50JMXoaxZTKJ7
+
+
+email:
+  util:
+    email: 2675835744@qq.com
