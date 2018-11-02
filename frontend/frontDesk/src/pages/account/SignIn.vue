@@ -2,7 +2,8 @@
   <section class="sign-in-container">
     <el-tabs class="tab" v-model="signInType" :stretch="true">
       <el-tab-pane label="个人用户登陆" name="personal">
-        <el-form :model="personalSignInForm" :rules="personalSignInFormRules" ref="personalSignInForm" label-width="128px">
+        <el-form :model="personalSignInForm" :rules="personalSignInFormRules" ref="personalSignInForm"
+                 label-width="128px">
           <el-form-item label="用户名" prop="username">
             <el-input v-model="personalSignInForm.username"></el-input>
           </el-form-item>
@@ -10,7 +11,9 @@
             <el-input type="password" v-model="personalSignInForm.password"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" :loading="doPersonalSignInLoading" @click="doPersonalSignIn('personalSignInForm')">立即登陆</el-button>
+            <el-button type="primary" :loading="doPersonalSignInLoading"
+                       @click="doPersonalSignIn('personalSignInForm')">立即登陆
+            </el-button>
           </el-form-item>
         </el-form>
         <p class="sign-up-tooltip">
@@ -19,7 +22,8 @@
         </p>
       </el-tab-pane>
       <el-tab-pane label="企业用户登陆" name="enterprise">
-        <el-form :model="enterpriseSignInForm" :rules="enterpriseSignInFormRules" ref="enterpriseSignInForm" label-width="128px">
+        <el-form :model="enterpriseSignInForm" :rules="enterpriseSignInFormRules" ref="enterpriseSignInForm"
+                 label-width="128px">
           <el-form-item label="邮箱" prop="email">
             <el-input v-model="enterpriseSignInForm.email"></el-input>
           </el-form-item>
@@ -27,7 +31,9 @@
             <el-input type="password" v-model="enterpriseSignInForm.password"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" :loading="doEnterpriseSignInLoading" @click="doEnterpriseSignIn('enterpriseSignInForm')">立即登陆</el-button>
+            <el-button type="primary" :loading="doEnterpriseSignInLoading"
+                       @click="doEnterpriseSignIn('enterpriseSignInForm')">立即登陆
+            </el-button>
           </el-form-item>
         </el-form>
         <p class="sign-up-tooltip">
@@ -46,7 +52,7 @@ import api from '@/api';
 
 export default {
   name: 'SignIn',
-  data () {
+  data() {
     return {
       signInType: this.$route.query.type !== undefined ? this.$route.query.type : 'personal',
       doPersonalSignInLoading: false,
@@ -82,7 +88,7 @@ export default {
     ...mapActions('account', [
       'asyncInitAccountInfo'
     ]),
-    doPersonalSignIn (formName) {
+    doPersonalSignIn(formName) {
       this.$refs[formName].validate(async (valid) => {
         if (valid) {
           this.doPersonalSignInLoading = true;
@@ -93,6 +99,8 @@ export default {
           });
           if (result.code === 0) {
             // 登陆成功逻辑
+            // 保存 token
+            window.localStorage.setItem('access_token', result.access_token);
             this.$notify({
               message: '登陆成功',
               position: 'bottom-left',
@@ -122,17 +130,19 @@ export default {
         }
       });
     },
-    doEnterpriseSignIn (formName) {
+    doEnterpriseSignIn(formName) {
       this.$refs[formName].validate(async (valid) => {
         if (valid) {
           this.doEnterpriseSignInLoading = true;
           NProgress.start();
           const result = await api.account.enterpriseSignIn({
-            email: this.enterpriseSignInForm.email,
+            username: this.enterpriseSignInForm.email,
             password: this.enterpriseSignInForm.password
           });
           if (result.code === 0) {
             // 登陆成功逻辑
+            // 保存 token
+            window.localStorage.setItem('access_token', result.access_token);
             this.$notify({
               message: '登陆成功',
               position: 'bottom-left',

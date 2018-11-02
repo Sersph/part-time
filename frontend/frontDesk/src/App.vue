@@ -30,6 +30,14 @@ export default {
       'accountInfo'
     ])
   },
+  watch: {
+    // 监听路由判断登陆权限
+    $route: {
+      handler(route) {
+        this.checkSignIn(route);
+      }
+    }
+  },
   async created () {
     NProgress.start();
     // 初始化地区
@@ -43,15 +51,6 @@ export default {
     await initPartTimeBaseInfoPromise;
     await asyncInitAccountInfoPromise;
     NProgress.done();
-
-    // 判断登陆权限
-    this.checkSignIn(this.$route);
-
-    // 监听路由判断登陆权限
-    this.$router.beforeEach((to, from, next) => {
-      this.checkSignIn(to);
-      next();
-    });
   },
   methods: {
     ...mapActions('location', [
@@ -64,13 +63,13 @@ export default {
       'asyncInitPartTimeBaseInfo'
     ]),
     checkSignIn (route) {
+      // 验证路由是否需要登陆才能访问
       if (route.meta.needSignIn) {
-        const type = route.path.indexOf('/account/enterprise') !== -1 ? 2 : 1;
-        // 验证路由是否需要登陆才能访问
+        const type = route.path.indexOf('/account/enterprise') !== -1 ? 2 : 3;
         // 验证路由是否需要企业登陆还是个人用户登陆
-        if (!this.accountInfo.id || this.accountInfo.type !== type) {
+        if (!this.accountInfo.id || this.accountInfo.roleId !== type) {
           // 未登录跳转登陆页面
-          this.$router.push(`/account/signIn?type=${type === 1 ? 'personal' : 'enterprise'}`);
+          this.$router.push(`/account/signIn?type=${type === 2 ? 'enterprise' : 'personal'}`);
         }
       }
     }
@@ -79,6 +78,15 @@ export default {
 </script>
 
 <style lang="scss">
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+  }
+
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
+
   body {
     overflow-y: scroll;
   }
@@ -92,10 +100,11 @@ export default {
   }
 
   #app {
+    min-width: 1000px;
     .wrapper-container {
       width: 100%;
       & > :first-child {
-        width: 83.33333%;
+        width: 79%;
         margin-left: auto;
         margin-right: auto;
       }

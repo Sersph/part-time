@@ -9,6 +9,7 @@ Vue.use(VueRouter);
 
 // 导出 Vue Router 对象
 export default new VueRouter({
+  base: '/admin/',
   mode: 'history',
   linkActiveClass: 'active',
   routes: [

@@ -63,7 +63,7 @@ import routerUtils from '@/utils/router';
 
 export default {
   name: 'PartTimeSearchCondition',
-  data () {
+  data() {
     return {
       areaId: 0,
       partTimeTypeId: 0,
@@ -82,7 +82,7 @@ export default {
   watch: {
     partTimeSearchCondition: {
       deep: true,
-      handler (partTimeSearchCondition) {
+      handler(partTimeSearchCondition) {
         // init 搜索地区
         if (this.areaId !== partTimeSearchCondition.areId) {
           this.areaId = partTimeSearchCondition.areaId;
@@ -99,7 +99,7 @@ export default {
     }
   },
   methods: {
-    async setAreaId (areaId) {
+    async setAreaId(areaId) {
       if (this.areaId === areaId) return;
       // url 更新兼职搜索地区
       this.$router.push({
@@ -109,7 +109,7 @@ export default {
         })
       });
     },
-    async setTypeId (partTimeTypeId) {
+    async setTypeId(partTimeTypeId) {
       if (this.partTimeTypeId === partTimeTypeId) return;
       // url 更新兼职搜索类型
       this.$router.push({
@@ -119,7 +119,7 @@ export default {
         })
       });
     },
-    async setSpeciesId (partTimeSpeciesId) {
+    async setSpeciesId(partTimeSpeciesId) {
       if (this.partTimeSpeciesId === partTimeSpeciesId) return;
       // url 更新兼职搜索类型
       this.$router.push({

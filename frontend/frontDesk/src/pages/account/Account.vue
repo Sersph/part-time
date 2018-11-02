@@ -49,5 +49,8 @@ export default {
         }
       }
     }
+    .el-table__body, .el-table__footer, .el-table__header {
+      width: auto !important;
+    }
   }
 </style>

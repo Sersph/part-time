@@ -12,7 +12,7 @@ export default {
   components: {
     Tinymce
   },
-  data () {
+  data() {
     return {
       content: `123`
     };

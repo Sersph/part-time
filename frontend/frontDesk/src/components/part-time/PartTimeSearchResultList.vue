@@ -2,8 +2,8 @@
   <section class="part-time-search-result-list-container">
     <div class="part-time-result-list">
       <div class="part-time-item"
-                   v-for="(partTimeItem, index) in partTimeSearchResultList"
-                   :key="index">
+           v-for="(partTimeItem, index) in partTimeSearchResultList"
+           :key="index">
         <div class="part-time-base-info">
           <router-link class="part-time-name" :to="`/partTime/detail/${index}`">
             <p>简单小任务，在家躺赚</p>
@@ -60,7 +60,7 @@ import routerUtils from '@/utils/router';
 
 export default {
   name: 'PartTimeList',
-  data () {
+  data() {
     return {
       pageSize: 10,
       pageCount: 11,
@@ -77,7 +77,7 @@ export default {
   watch: {
     partTimeSearchCondition: {
       deep: true,
-      handler (partTimeSearchCondition) {
+      handler(partTimeSearchCondition) {
         // init 分页
         if (this.currentPage !== partTimeSearchCondition.limitStart / 10) {
           this.currentPage = partTimeSearchCondition.limitStart / 10;
@@ -86,7 +86,7 @@ export default {
     }
   },
   methods: {
-    async searchPartTime (currentPage) {
+    async searchPartTime(currentPage) {
       const limitStart = currentPage * this.pageSize;
       const limitSize = this.pageSize;
       // url 更新兼职搜索分页

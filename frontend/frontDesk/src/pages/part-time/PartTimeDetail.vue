@@ -111,7 +111,7 @@
         <section class="part-time-detail-right">
           <section class="enterprise">
             <div class="enterprise-img">
-              <img src="http://sta.doumistatic.com/src/image/company_default.png">
+              <img src="https://sta.doumistatic.com/src/image/company_default.png">
             </div>
             <p class="enterprise-name">大吉利公司</p>
             <ul class="enterprise-info-list">
@@ -160,7 +160,7 @@
 <script>
 export default {
   name: 'PartTimeDetail',
-  beforeCreate () {
+  beforeCreate() {
     document.documentElement.scrollTop = 0;
   }
 };
@@ -168,7 +168,7 @@ export default {
 
 <style lang="scss">
   .part-time-detail-container {
-    width: 1100px !important;
+    max-width: 1100px !important;
     color: #666;
     p {
       margin: 0;

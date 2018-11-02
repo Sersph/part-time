@@ -23,7 +23,7 @@ import { mapGetters } from 'vuex';
 
 export default {
   name: 'SelectCity',
-  data () {
+  data() {
     return {
       selectCityContainerVisibleFlag: false,
       selectCityForm: {},
@@ -42,14 +42,14 @@ export default {
   watch: {
     // 监听 url
     $route: {
-      handler () {
+      handler() {
         // url 只要变动关闭搜索框
         this.selectCityContainerVisibleFlag = false;
       }
     }
   },
   methods: {
-    confirm () {
+    confirm() {
       this.$refs['selectCityForm'].validate((valid) => {
         if (valid) {
           // url 更新兼职搜索区域

@@ -18,6 +18,30 @@
       "password": "123456",
       "code": 0,
       "id": 3
+    },
+    {
+      "username": "dwqdqw",
+      "password": "dqwdqw",
+      "code": 0,
+      "id": 4
+    },
+    {
+      "username": "1321321",
+      "password": "321321321",
+      "code": 0,
+      "id": 5
+    },
+    {
+      "username": "123213",
+      "password": "21321321",
+      "code": 0,
+      "id": 6
+    },
+    {
+      "username": "3213213",
+      "password": "1232132132",
+      "code": 0,
+      "id": 7
     }
   ],
   "accountPersonalSignIn": [
@@ -160,6 +184,15 @@
       "password": "123456",
       "code": 0,
       "id": 2
+    },
+    {
+      "enterpriseName": "111",
+      "cityId": "110000",
+      "email": "dqw@qq.com",
+      "captcha": "111111",
+      "password": "12321321",
+      "code": 0,
+      "id": 3
     }
   ],
   "accountEnterpriseSignIn": [
@@ -196,7 +229,7 @@
       "accountInfo": {
         "id": 1,
         "username": "123",
-        "type": 1
+        "type": 2
       }
     }
   ],
@@ -992,6 +1025,52 @@
       "contactPhone": "2312312",
       "code": 0,
       "id": 18
+    },
+    {
+      "name": "123",
+      "recruitmentCount": "12",
+      "partTimeTypeId": "1",
+      "partTimeSpeciesId": "1",
+      "price": "1",
+      "calculationTypeId": "1",
+      "settlementTypeId": "1",
+      "priceDescription": "1",
+      "provinceId": "440000",
+      "cityId": "440100",
+      "areaId": "440103",
+      "detailAddress": "1",
+      "workingDateStart": "11457853200",
+      "workingDateEnd": "11457885600",
+      "workingTime": "9:0:0-18:0:0",
+      "workingTimeWeek": "1",
+      "jobDescription": "1",
+      "contactPeople": "1",
+      "contactPhone": "2312312",
+      "code": 0,
+      "id": 19
+    },
+    {
+      "name": "123",
+      "recruitmentCount": "12",
+      "partTimeTypeId": "1",
+      "partTimeSpeciesId": "1",
+      "price": "1",
+      "calculationTypeId": "1",
+      "settlementTypeId": "1",
+      "priceDescription": "1",
+      "provinceId": "440000",
+      "cityId": "440100",
+      "areaId": "440103",
+      "detailAddress": "1",
+      "workingDateStart": "11457853200",
+      "workingDateEnd": "11457885600",
+      "workingTime": "9:0:0-18:0:0",
+      "workingTimeWeek": "1",
+      "jobDescription": "1",
+      "contactPeople": "1",
+      "contactPhone": "2312312",
+      "code": 0,
+      "id": 20
     }
   ]
 }

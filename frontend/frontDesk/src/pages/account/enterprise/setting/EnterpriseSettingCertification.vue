@@ -1,6 +1,7 @@
 <template>
   <section class="enterprise-certification-container">
-    <el-form :model="enterpriseCertificationForm" :rules="enterpriseCertificationFormRules" ref="enterpriseCertificationForm" label-width="128px">
+    <el-form :model="enterpriseCertificationForm" :rules="enterpriseCertificationFormRules"
+             ref="enterpriseCertificationForm" label-width="128px">
       <el-form-item label="用户名" prop="username">
         <el-input v-model="enterpriseCertificationForm.username"></el-input>
       </el-form-item>
@@ -8,7 +9,8 @@
         <el-input v-model="enterpriseCertificationForm.password"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="submitEnterpriseCertificationForm('enterpriseCertificationForm')">立即注册</el-button>
+        <el-button type="primary" @click="submitEnterpriseCertificationForm('enterpriseCertificationForm')">立即注册
+        </el-button>
       </el-form-item>
     </el-form>
   </section>
@@ -17,7 +19,7 @@
 <script>
 export default {
   name: 'EnterpriseSettingCertification',
-  data () {
+  data() {
     return {
       enterpriseCertificationForm: {},
       enterpriseCertificationFormRules: {
@@ -33,7 +35,7 @@ export default {
     };
   },
   methods: {
-    submitEnterpriseCertificationForm (formName) {
+    submitEnterpriseCertificationForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           alert('submit p!');

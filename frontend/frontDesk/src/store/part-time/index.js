@@ -1,4 +1,4 @@
-import types from '@/store/mutation-types';
+import types from '@/store/mutation-type';
 import api from '@/api';
 
 export default {
@@ -151,15 +151,15 @@ export default {
     ]
   },
   mutations: {
-    [types.EDIT_PART_TIME_SEARCH_CONDITION] (state, { partTimeSearchCondition }) {
+    [types.EDIT_PART_TIME_SEARCH_CONDITION](state, { partTimeSearchCondition }) {
       state.partTimeSearchCondition = partTimeSearchCondition;
     },
-    [types.EDIT_PART_TIME_BASE_INFO] (state, { partTimeBaseInfo }) {
+    [types.EDIT_PART_TIME_BASE_INFO](state, { partTimeBaseInfo }) {
       state.partTimeBaseInfo = partTimeBaseInfo;
     }
   },
   actions: {
-    async asyncInitPartTimeBaseInfo ({ commit }) {
+    async asyncInitPartTimeBaseInfo({ commit }) {
       const result = await api.partTime.getBaseInfo();
       // 必须为新对象, 需要触发 watch
       let partTimeBaseInfo = {
@@ -178,10 +178,10 @@ export default {
         partTimeBaseInfo: partTimeBaseInfo
       });
     },
-    editPartTimeSearchCondition ({ commit }, { partTimeSearchCondition }) {
+    editPartTimeSearchCondition({ commit }, { partTimeSearchCondition }) {
       commit(types.EDIT_PART_TIME_SEARCH_CONDITION, { partTimeSearchCondition });
     },
-    async asyncEditPartTimeSearchResultList ({ commit, state }) {
+    async asyncEditPartTimeSearchResultList({ commit, state }) {
       console.log(JSON.stringify(state.partTimeSearchCondition));
       return new Promise((resolve, reject) => {
         setTimeout(() => {

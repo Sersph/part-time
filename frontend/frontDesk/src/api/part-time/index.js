@@ -2,17 +2,17 @@ import ajax from '@/api/ajax';
 import config from '@/config';
 
 export default {
-  getBaseInfo () {
+  getBaseInfo() {
     return ajax(
       'GET',
       `${config.API_ROOT}/partTime/baseInfo`,
       {}
     );
   },
-  partTimeAdd (params) {
+  partTimeAdd(params) {
     return ajax(
       'POST',
-      `${config.API_ROOT}/partTime/partTime`,
+      `${config.API_ROOT}/partTime/addPartTime`,
       params
     );
   }

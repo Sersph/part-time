@@ -1,3 +1,3 @@
 export default {
-  API_ROOT: 'http://127.0.0.1:3000'
+  API_ROOT: 'https://j-java.yyccyy.com'
 };

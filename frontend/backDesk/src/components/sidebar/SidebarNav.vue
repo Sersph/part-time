@@ -1,5 +1,6 @@
 <template>
   <el-menu
+    class="sidebar-menu"
     :default-openeds="['1', '2']"
     :router="true">
     <el-submenu
@@ -28,7 +29,7 @@ import NProgress from 'nprogress';
 
 export default {
   name: 'SidebarNav',
-  data () {
+  data() {
     return {
       sidebarMenuActiveIndex: null
     };
@@ -38,7 +39,7 @@ export default {
       'sidebarMenuList'
     ])
   },
-  mounted () {
+  mounted() {
     // 刷新菜单列表
     this.editSidebarMenuList({
       sidebarMenuList: this.$router.options.routes.filter(routeItem => {
@@ -57,7 +58,7 @@ export default {
     ...mapActions('permission', [
       'editSidebarMenuList'
     ]),
-    editSidebarMenuActiveIndex (route) {
+    editSidebarMenuActiveIndex(route) {
       NProgress.start();
       // 激活菜单样式
       this.sidebarMenuList.find(routeItem => {
@@ -80,28 +81,31 @@ export default {
 </script>
 
 <style lang="scss">
-  .el-menu {
-    background-color: #304156;
+  .sidebar-menu {
+    background-color: #304156 !important;
     .material-icons {
       width: 24px;
       height: 24px;
       margin-right: 15px;
     }
+    .el-submenu__title,
+    .el-menu-item {
+      background-color: #304156 !important;
+      color: #bfcbd9;
+    }
     .el-menu-item {
       padding-left: 59px !important;
       transition: color .3s;
     }
-    .el-submenu__title,
-    .el-menu-item {
-      background-color: #304156;
-      color: rgb(191, 203, 217);
+    .el-menu-item.active {
+      color: #409eff !important;
+    }
+    .el-menu-item.is-active {
+      color: #bfcbd9;
     }
     .el-submenu__title:hover,
     .el-menu-item:hover {
       background-color: #263445 !important;
-    }
-    .el-menu-item.active {
-      color: #409eff;
     }
   }
 </style>

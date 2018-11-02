@@ -46,7 +46,7 @@ server.use((req, res, next) => {
       switch (req.originalUrl) {
         case '/account/signOut':
           res.send(JSON.stringify({
-            "code": 0
+            'code': 0
           }));
           break;
       }

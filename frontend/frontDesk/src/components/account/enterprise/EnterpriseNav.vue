@@ -28,13 +28,13 @@
 <script>
 export default {
   name: 'EnterpriseNav',
-  data () {
+  data() {
     return {
       enterpriseMenuActiveIndex: null,
       enterpriseMenuList: []
     };
   },
-  mounted () {
+  mounted() {
     // 刷新菜单列表
     this.$router.options.routes.find(routeItem => {
       if (routeItem.path === '/account') {
@@ -57,7 +57,7 @@ export default {
     });
   },
   methods: {
-    editEnterpriseMenuActiveIndex (route) {
+    editEnterpriseMenuActiveIndex(route) {
       // 激活菜单样式
       this.enterpriseMenuList.find(enterpriseMenuItem => {
         if (enterpriseMenuItem.children) {

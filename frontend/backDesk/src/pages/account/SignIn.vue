@@ -26,7 +26,7 @@ import api from '@/api';
 
 export default {
   name: 'SignIn',
-  data () {
+  data() {
     return {
       doSignInFormLoading: false,
       signInForm: {},
@@ -44,7 +44,7 @@ export default {
     ...mapActions('account', [
       'asyncInitAccountInfo'
     ]),
-    doSignInForm (formName) {
+    doSignInForm(formName) {
       this.$refs[formName].validate(async (valid) => {
         if (valid) {
           this.doSignInFormLoading = true;
