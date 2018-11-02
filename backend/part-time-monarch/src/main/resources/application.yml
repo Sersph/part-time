@@ -1,0 +1,73 @@
+server:
+  port: 8080
+spring:
+  datasource:
+    url: jdbc:mysql://39.105.96.239:3306/part_time_monarch?useSSL=false
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: 662662
+  mail:
+    default-encoding: UTF-8
+    host: smtp.qq.com
+    password: ldqmwqgyzzdbdjaj
+    port: 465
+    protocol: smtp
+    username: 2675835744@qq.com
+    properties:
+      mail:
+        debug:
+          true
+        smtp:
+          socketFactory:
+            class: javax.net.ssl.SSLSocketFactory
+
+
+  #    spring.mail.properties.mail.smtp.socketFactory.class=javax.net.ssl.SSLSocketFactory
+  redis:
+    database: 0
+    host: 39.105.96.239
+    password: 662662
+    # boot拥有两种集成redis的方式，一种是Jedis(非线程安全的，除非使用连接池),一种是Lettuce基于Netty的连接实例
+    lettuce:
+      pool:
+        min-idle: 0
+        max-idle: 8
+        max-active: 8
+        max-wait: -1ms
+      shutdown-timeout: 100ms
+  jackson:
+    default-property-inclusion: non_null
+
+
+mybatis:
+  type-aliases-package: com.tidc.parttimemonarch.mapper
+  configuration:
+    map-underscore-to-camel-case: true
+
+logging:
+  level:
+    com.onepro.custom.mapper: DEBUG
+
+swagger:
+  show: true
+
+
+
+# 用户认证地址(自定义配置)
+ResourceServerConfiguration:
+  oauthUrl: http://39.105.96.239:8000
+  checkTokenEndpointUrl: http://39.105.96.239:8000/oauth/check_token
+  oauthTokenUrl: http://39.105.96.239:8000/oauth/token
+  logoutUrl: http://39.105.96.239:8000/logout
+  clientId: part-time-monarch
+  clientSecret: ENC(Vm0rqLgZKXLlO3zEyCUENet7HyhBi/Q9wwybOx3vMnWUB7afyHpdak0q3v/EicNz)
+
+# 配置文件加密公钥
+jasypt:
+  encryptor:
+    password: EbfYkitulv73I2p0mXI50JMXoaxZTKJ7
+
+
+email:
+  util:
+    email: 2675835744@qq.com
