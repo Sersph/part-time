@@ -12,5 +12,7 @@ export default {
   // 修改兼职基本信息
   EDIT_PART_TIME_BASE_INFO: 'editPartTimeBaseInfo',
   // 修改搜索兼职条件
-  EDIT_PART_TIME_SEARCH_CONDITION: 'editPartTimeSearchCondition'
+  EDIT_PART_TIME_SEARCH_CONDITION: 'editPartTimeSearchCondition',
+  // 修改兼职搜索结果
+  EDIT_PART_TIME_SEARCH_RESULT: 'editPartTimeSearchResultList'
 };

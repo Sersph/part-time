@@ -5,7 +5,7 @@
         <img src="../../assets/logo.png"/>
       </el-col>
       <el-col :span="12" class="part-time-search">
-        <el-input placeholder="搜索兼职" v-model="keyword">
+        <el-input placeholder="搜索兼职" v-model="partTimeSearchCondition.keyword">
           <el-button slot="append" @click="searchPartTime"><i class="material-icons">search</i></el-button>
         </el-input>
       </el-col>
@@ -24,26 +24,10 @@ import routerUtils from '@/utils/router';
 
 export default {
   name: 'PartTimeHeader',
-  data () {
-    return {
-      keyword: ''
-    };
-  },
   computed: {
     ...mapState('partTime', [
       'partTimeSearchCondition'
     ])
-  },
-  watch: {
-    partTimeSearchCondition: {
-      deep: true,
-      handler (partTimeSearchCondition) {
-        // init 搜索关键字
-        if (this.keyword !== partTimeSearchCondition.keyword) {
-          this.keyword = partTimeSearchCondition.keyword;
-        }
-      }
-    }
   },
   methods: {
     async searchPartTime () {
@@ -51,7 +35,7 @@ export default {
       this.$router.push({
         path: this.$router.pah,
         query: routerUtils.getNewPartTimeSearchConditionUrlParams(this.$route.query, {
-          keyword: this.keyword.trim()
+          keyword: this.partTimeSearchCondition.keyword.trim()
         })
       });
     }

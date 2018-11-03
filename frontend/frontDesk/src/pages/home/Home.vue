@@ -81,8 +81,8 @@ export default {
           partTimeTypeId: '0',
           partTimeSpeciesId: '0',
           keyword: '',
-          limitStart: '0',
-          limitSize: '10'
+          pageNumber: '1',
+          pageSize: '10'
         }, partTimeSearchConditionURLParams)
       });
 

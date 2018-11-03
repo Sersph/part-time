@@ -71,17 +71,11 @@ export default function ajax(method = 'GET', url, data = {}) {
     try {
       switch (method) {
         case 'GET':
-          if (dataStr !== '') {
-            if (url.indexOf('?') === '-1') {
-              url += '?' + dataStr;
-            } else {
-              url += '&' + dataStr;
-            }
-          }
           // 发送 get
           response = await axios({
             method,
-            url
+            url,
+            params: data
           });
           break;
         case 'POST':

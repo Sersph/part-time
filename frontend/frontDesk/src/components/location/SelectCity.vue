@@ -43,7 +43,7 @@ export default {
     // 监听 url
     $route: {
       handler() {
-        // url 只要变动关闭搜索框
+        // url 只要变动关闭弹框
         this.selectCityContainerVisibleFlag = false;
       }
     }

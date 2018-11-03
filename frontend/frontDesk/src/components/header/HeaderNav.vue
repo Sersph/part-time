@@ -20,8 +20,8 @@
       <el-submenu index="5" :show-timeout="50" :hide-timeout="50" v-if="accountInfo.id">
         <template slot="title">我的</template>
         <el-menu-item index="5-1"
-                      @click="$router.push(accountInfo.roleId === 3 ? '/account/personal' : '/account/enterprise')">
-          <a>{{ accountInfo.roleId === 3 ? '个人中心' : '控制台' }}</a>
+                      @click="$router.push(accountInfo.roleId === 2 ? '/account/enterprise' : '/account/personal')">
+          <a>{{ accountInfo.roleId === 2 ? '控制台' : '个人中心' }}</a>
         </el-menu-item>
         <el-menu-item index="5-2" @click="signOut">
           <a>退出</a>

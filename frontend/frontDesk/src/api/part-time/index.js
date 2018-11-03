@@ -9,11 +9,25 @@ export default {
       {}
     );
   },
-  partTimeAdd(params) {
+  addPartTime(params) {
     return ajax(
       'POST',
       `${config.API_ROOT}/partTime/addPartTime`,
       params
+    );
+  },
+  getPartTime(params) {
+    return ajax(
+      'GET',
+      `${config.API_ROOT}/partTime/getPartTime`,
+      params
+    );
+  },
+  getPartTimeDetail(id) {
+    return ajax(
+      'GET',
+      `${config.API_ROOT}/partTime/getPartTime/${id}`,
+      {}
     );
   }
 };

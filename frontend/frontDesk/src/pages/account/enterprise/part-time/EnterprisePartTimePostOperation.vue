@@ -173,13 +173,13 @@ export default {
     return {
       doPartTimeSaveFormLoading: false,
       partTimeForm: {
-        name: '简单小任务，在家躺赚',
-        partTimeTypeId: 1,
-        partTimeSpeciesId: 2,
-        calculationTypeId: 5,
-        settlementTypeId: 5,
-        priceDescription: '多劳多得',
-        regionIds: [440000, 440100, 440103],
+        name: '',
+        partTimeTypeId: '',
+        partTimeSpeciesId: '',
+        calculationTypeId: '',
+        settlementTypeId: '',
+        priceDescription: '',
+        regionIds: [],
         detailAddress: '艺展中心1栋1楼1房',
         workingDate: [],
         workingTimeWeek: [],
@@ -194,7 +194,7 @@ export default {
           '最后声明，绝不收费，不要受外面不健康兼职的影响。\n' +
           '利用闲暇时间赚钱，好玩有乐趣！',
         contactPeople: '科创工作室',
-        contactPhone: '13026628310'
+        contactPhone: '15000000000'
       },
       partTimeFormRules: {
         name: [
@@ -203,7 +203,7 @@ export default {
         ],
         recruitmentCount: [
           { required: true, message: '请输入招聘人数', trigger: 'change' },
-          { min: 1, max: 5, message: '招聘人数最多5位数字', trigger: 'change' }
+          { min: 1, max: 4, message: '招聘人数最多4位数字', trigger: 'change' }
         ],
         partTimeTypeId: [
           { required: true, message: '请选择兼职类型', trigger: 'change' }
@@ -213,7 +213,7 @@ export default {
         ],
         price: [
           { required: true, message: '请输入薪资', trigger: 'change' },
-          { min: 1, max: 11, message: '薪资最多11位数字', trigger: 'change' }
+          { min: 1, max: 5, message: '薪资最多5位数字', trigger: 'change' }
         ],
         calculationTypeId: [
           { required: true, message: '请选择资新类型', trigger: 'change' }
@@ -307,7 +307,7 @@ export default {
 
           this.doPartTimeSaveFormLoading = true;
           NProgress.start();
-          const result = await api.partTime.partTimeAdd(data);
+          const result = await api.partTime.addPartTime(data);
           if (result.code === 0) {
             // 保存成功逻辑
             this.$notify({
