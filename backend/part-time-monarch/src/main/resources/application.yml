@@ -44,9 +44,16 @@ mybatis:
   configuration:
     map-underscore-to-camel-case: true
 
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+
+
 logging:
   level:
-    com.onepro.custom.mapper: DEBUG
+    com.tidc.parttimemonarch.mapper: DEBUG
 
 swagger:
   show: true

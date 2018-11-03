@@ -12,14 +12,16 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * 获取城市列表
+ * @Author 李家宝
+ */
 @Component
 public class CityServiceImpl implements CityService {
 
     @Autowired
     private CityDAO cityDAO;
-
-    @Autowired
-    private CityListRequestResult result;
 
     @Override
     public RequestResult obtainCity() {
@@ -30,8 +32,7 @@ public class CityServiceImpl implements CityService {
         List<City> cities = new ArrayList<>();
         Region region = new Region(dongGuan, this.getRegionList(dongGuan.getId(), cities, cityList));
 
-        this.result.succeed(this.neaten(cityList), region);
-        return this.result;
+        return new CityListRequestResult().succeed(this.neaten(cityList), region);
     }
 
     private List neaten(List cityList) {

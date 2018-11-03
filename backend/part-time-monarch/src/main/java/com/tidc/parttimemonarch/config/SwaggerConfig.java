@@ -27,7 +27,7 @@ public class SwaggerConfig {
                 .enable(swaggerShow)
                 .select()
                 .apis(RequestHandlerSelectors.any())
-//                .paths(Predicates.not(PathSelectors.regex("/handle.*")))
+//                .paths(Predicates.not(PathSelectors.regex("/handler.*")))
                 .paths(Predicates.not(PathSelectors.regex("/error.*")))
                 .build()
                 .apiInfo(apiInfo());

@@ -1,7 +1,7 @@
 //package com.tidc.parttimemonarch.controller;
 //
 //
-//import com.tidc.parttimemonarch.service.impl.EMailServiceImpl;
+//import com.tidc.parttimemonarch.service.impl.EmailServiceImpl;
 //import com.tidc.parttimemonarch.vo.RequestResult;
 //import io.swagger.annotations.Api;
 //import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@
 //public class TestController {
 //
 //    @Autowired
-//    private EMailServiceImpl eMailService;
+//    private EmailServiceImpl eMailService;
 //
 //    @Autowired
 //    @Qualifier("requestResult")

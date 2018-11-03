@@ -2,10 +2,10 @@ package com.tidc.parttimemonarch.controller;
 
 import com.tidc.parttimemonarch.domain.User;
 import com.tidc.parttimemonarch.domain.UserInfo;
-import com.tidc.parttimemonarch.exceptions.ResultExceptions;
+import com.tidc.parttimemonarch.exception.ResultException;
 import com.tidc.parttimemonarch.security.UserTokenDTO;
 import com.tidc.parttimemonarch.service.AccountService;
-import com.tidc.parttimemonarch.service.EMailService;
+import com.tidc.parttimemonarch.service.EmailService;
 import com.tidc.parttimemonarch.verify.EnterpriseVerifyUserInfo;
 import com.tidc.parttimemonarch.vo.RequestResult;
 import com.tidc.parttimemonarch.vo.UserInfoRequestResult;
@@ -18,9 +18,13 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+
+/**
+ * 用户 controller
+ * @author 李家宝
+ */
 @Api(tags = "用户接口")
 @RestController
 @RequestMapping(value = "/account")
@@ -30,35 +34,23 @@ public class AccountController {
     private AccountService accountService;
 
     @Autowired
-    private EMailService eMailService;
-
-    @Autowired
-    private UserInfoRequestResult userInfoRequestResult;
-
-    @Autowired
-    private RequestResult requestResult;
-
+    private EmailService eMailService;
 
     /**
      * 使用 token 获取用户信息
      * 不带 token 过来视为未登录
-     * @param request
      * @return
      */
-
     @ApiOperation(value="获取用户信息")
     @GetMapping(value = "/accountInfo")
-    public RequestResult getAccountInfo(HttpServletRequest request){
+    public RequestResult getAccountInfo(@RequestParam(value = "access_token", defaultValue = "") String token){
 
-        String token = request.getParameter("access_token");
-
-        if (token == null){
-            throw new ResultExceptions(1002, "用户未登陆");
+        if (token.equals("")){
+            throw new ResultException(1002, "用户未登陆");
         }
+        UserInfo accountInfo = this.accountService.getAccountInfo(token);
 
-        this.userInfoRequestResult.setUserInfo(this.accountService.getAccountInfo(token));
-
-        return this.userInfoRequestResult;
+        return new UserInfoRequestResult().succeed(accountInfo);
     }
 
     /**
@@ -72,8 +64,7 @@ public class AccountController {
     @PreAuthorize(value = "hasAnyAuthority('root','enterprise', 'personal')")
     public RequestResult signOut(@RequestParam(value = "access_token") String token){
         this.accountService.logout(token);
-        this.requestResult.succeed();
-        return this.requestResult;
+        return new RequestResult().succeed();
     }
 
 
@@ -86,10 +77,8 @@ public class AccountController {
     @ApiImplicitParam(name = "email", value = "邮箱", required = true, dataType = "String", paramType = "query")
     @PostMapping(value = "/sendMailCaptcha")
     public RequestResult sendMailCaptcha(@RequestParam(value = "email") String email){
-        System.out.println();
         this.eMailService.sendMailCaptcha(email);
-        this.requestResult.succeed();
-        return this.requestResult;
+        return new RequestResult().succeed();
     }
 
 
@@ -107,7 +96,7 @@ public class AccountController {
             @ApiImplicitParam(name = "password", value = "密码", required = true, dataType = "String", paramType = "query"),
             @ApiImplicitParam(name = "email", value = "email", required = true, dataType = "String", paramType = "query"),
             @ApiImplicitParam(name = "cityId", value = "企业所在城市", required = true, dataType = "int", paramType = "query"),
-            @ApiImplicitParam(name = "captcha", value = "验证码", required = true, dataType = "String", paramType = "header"),
+            @ApiImplicitParam(name = "captcha", value = "验证码", required = true, dataType = "String", paramType = "query"),
     })
     @PostMapping(value = "enterprise/signUp")
     public RequestResult enterpriseSignUp(@Validated(value = EnterpriseVerifyUserInfo.class) UserInfo userInfo,
@@ -117,7 +106,7 @@ public class AccountController {
 
         this.accountService.enterpriseSignUp(userInfo, user, captcha);
 
-        return this.requestResult;
+        return new RequestResult().succeed();
     }
 
 
@@ -134,14 +123,9 @@ public class AccountController {
 
     @PostMapping(value = "/personal/signUp")
     public RequestResult personalSignUp(@Valid User user){
-
         this.accountService.personalSignUp(user);
-
         this.accountService.signIn(user);
-
-        this.requestResult.succeed();
-
-        return this.requestResult;
+        return new RequestResult().succeed();
     }
 
 

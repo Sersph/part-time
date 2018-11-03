@@ -5,11 +5,11 @@
 
     <groupId>com.tidc</groupId>
     <artifactId>parttimemonarch</artifactId>
-    <version>0.1.2.1-SNAPSHOT</version>
+    <version>0.3.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>parttimemonarch</name>
-    <description>repair send email error</description>
+    <description>Change search mode</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -109,6 +109,7 @@
             <artifactId>jasypt-spring-boot-starter</artifactId>
             <version>2.1.0</version>
         </dependency>
+
     </dependencies>
 
     <build>
@@ -118,7 +119,6 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
+
     </build>
-
-
 </project>

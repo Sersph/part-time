@@ -1,7 +1,7 @@
 package com.tidc.parttimemonarch.service.impl;
 
 import com.tidc.parttimemonarch.domain.UserRole;
-import com.tidc.parttimemonarch.exceptions.ResultExceptions;
+import com.tidc.parttimemonarch.exception.ResultException;
 import com.tidc.parttimemonarch.domain.User;
 import com.tidc.parttimemonarch.domain.UserInfo;
 import com.tidc.parttimemonarch.mapper.UserInfoMapper;
@@ -105,7 +105,7 @@ public class AccountServiceImpl implements AccountService {
         try {
             user.setId(this.userMapper.selectUserIdByUsername(user.getUsername()));
         }catch (Exception e){
-            throw new ResultExceptions(1005, "用户名或密码错误");
+            throw new ResultException(1005, "用户名或密码错误");
         }
 
         userTokenDTO = this.sendLoginData(user);
@@ -143,17 +143,16 @@ public class AccountServiceImpl implements AccountService {
     public void enterpriseSignUp(UserInfo userInfo, User user, String captcha) {
 
         if (captcha == null){
-            throw new ResultExceptions(1002, "验证码不能为空");
+            throw new ResultException(1002, "验证码不能为空");
         }
 
-        System.out.println(captcha.equals(this.redisTemplate.opsForValue().get(userInfo.getEmail())));
 
         if (this.redisTemplate.opsForValue().get(userInfo.getEmail()) == null){
-            throw new ResultExceptions(1002, "请先获取验证码");
+            throw new ResultException(1002, "请先获取验证码");
         }
 
         if (!captcha.equals(this.redisTemplate.opsForValue().get(userInfo.getEmail()))){
-            throw new ResultExceptions(1005, "验证码不正确");
+            throw new ResultException(1005, "验证码不正确");
         }
 
         user.setPassword(ENCODINGID + bCryptPasswordEncoder.encode(user.getPassword()));
@@ -163,6 +162,7 @@ public class AccountServiceImpl implements AccountService {
 
         // 将用户保存到数据库
         this.addUser(user, userInfo, roleId);
+
 
 
         // 删除 redis 里面的验证码
@@ -218,7 +218,7 @@ public class AccountServiceImpl implements AccountService {
         try {
             this.userMapper.addUser(user);
         }catch (Exception e){
-            throw new ResultExceptions(1001,"用户名已存在");
+            throw new ResultException(1001,"用户名已存在");
         }
         userInfo.setUserId(user.getId());
         userInfo.setRoleId(roleId);

@@ -1,15 +1,10 @@
 package com.tidc.parttimemonarch.domain;
 
-import com.tidc.parttimemonarch.exceptions.ResultExceptions;
-import com.tidc.parttimemonarch.validation.NumberSize;
-import com.tidc.parttimemonarch.validation.enumerate.ValidNumberSizeType;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.sql.Date;
 import java.text.DecimalFormat;
 
@@ -29,27 +24,29 @@ public class PartTime {
     private String name;
 
     @ApiModelProperty("省份id为六位数")
-    @NumberSize(min = 6, max = 6, type = ValidNumberSizeType.LENGTH, message = "省份id为六位数")
-    private int provinceId;
+    @Size( min = 6, max = 6,message = "地区id为六位数")
+    private String provinceId;
 
     @ApiModelProperty("城市id为六位数")
-    @NumberSize(min = 6, max = 6, type = ValidNumberSizeType.LENGTH, message = "城市id为六位数")
-    private int cityId;
+    @Size( min = 6, max = 6,message = "地区id为六位数")
+    private String cityId;
 
     @ApiModelProperty("地区id为六位数")
-    @NumberSize(min = 6, max = 6, type = ValidNumberSizeType.LENGTH, message = "地区id为六位数")
-    private int areaId;
+    @Size( min = 6, max = 6,message = "地区id为六位数")
+    private String areaId;
 
     @ApiModelProperty("详细地址")
     @Size(min = 1, max = 50, message = "详细地址1到50个字符")
     private String detailAddress;
 
     @ApiModelProperty("招聘人数 1 - 9999人")
-    @NumberSize(min = 1, max = 9999, type = ValidNumberSizeType.INTERVAL, message = "招聘人数 1 - 9999人")
-    private int recruitmentCont;
+    @Min(value = 1, message = "招聘人数 1 - 9999人")
+    @Max(value = 9999, message = "招聘人数 1 - 9999人")
+    private int recruitmentCount;
 
     @ApiModelProperty("工资不能大于99999或者小于1")
-    @NumberSize(min = 1, max = 99999, type = ValidNumberSizeType.INTERVAL, message = "工资不能大于99999或者小于1")
+    @Min(value = 1, message = "工资不能大于99999或者小于1")
+    @Max(value = 99999, message = "工资不能大于99999或者小于1")
     private double price;
 
     @ApiModelProperty("工资计算方式")
@@ -72,8 +69,8 @@ public class PartTime {
     private String contactPeople;
 
     @ApiModelProperty("联系电话由7到11位之间的字符组成")
-    @NumberSize(min = 7, max = 11, type = ValidNumberSizeType.LENGTH, message = "联系电话由7到11位之间的字符组成")
-    private int contactPhone;
+    @Size(min = 7, max = 11, message = "联系电话由7到11位之间的字符组成")
+    private String contactPhone;
 
     @ApiModelProperty("工作开始日期")
     @NotNull(message = "工作开始日期错误")
@@ -120,7 +117,4 @@ public class PartTime {
     public void setWorkingDateEnd(long time) {
         this.workingDateEnd = new Date(time);
     }
-
-//    DecimalFormat decimalFormat = new DecimalFormat("#.00");
-//        System.out.println(decimalFormat.format(1.3333333));
 }

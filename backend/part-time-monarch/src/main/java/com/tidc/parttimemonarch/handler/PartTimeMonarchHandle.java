@@ -1,41 +1,36 @@
-package com.tidc.parttimemonarch.handle;
+package com.tidc.parttimemonarch.handler;
 
 
-import com.tidc.parttimemonarch.exceptions.ResultExceptions;
+import com.tidc.parttimemonarch.exception.ResultException;
 import com.tidc.parttimemonarch.vo.RequestResult;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.validation.BindException;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 统一异常处理
+ * @Author: 李家宝
+ */
 @ControllerAdvice
 public class PartTimeMonarchHandle {
-
-
-    @Autowired
-    @Qualifier("requestResult")
-    private RequestResult result;
 
 
     /**
      * 未知错误
      * @param e
-     * @return
+     * @return ov
      */
     @ExceptionHandler(value = Exception.class)
     @ResponseBody
     public RequestResult handle(Exception e){
         e.printStackTrace();
-        this.result.error(1, "未知错误");
 
-        return this.result;
+        return new RequestResult().error(1, "未知错误");
     }
 
 
@@ -55,19 +50,14 @@ public class PartTimeMonarchHandle {
         }
 
 
-        System.out.println("message: " + message);
-
-        this.result.error(1006, message);
-        return this.result;
+        return new RequestResult().error(1006, message);
     }
 
 
-    @ExceptionHandler(value = ResultExceptions.class)
+    @ExceptionHandler(value = ResultException.class)
     @ResponseBody
-    public RequestResult resultHandle(ResultExceptions e){
-        System.out.println("e.getMessage()" + e.getMessage());
-        RequestResult requestResult = new RequestResult();
-        requestResult.error(e.getCode(), e.getMessage());
-        return requestResult;
+    public RequestResult resultHandle(ResultException e){
+        System.err.println("e.getMessage()" + e.getMessage());
+        return new RequestResult().error(e.getCode(), e.getMessage());
     }
 }

@@ -9,6 +9,8 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+
+
 @EnableResourceServer
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @SpringBootApplication
@@ -21,6 +23,5 @@ public class PartTimeMonarchApplication {
     public static void main(String[] args) {
         SpringApplication.run(PartTimeMonarchApplication.class, args);
     }
-
 }
 

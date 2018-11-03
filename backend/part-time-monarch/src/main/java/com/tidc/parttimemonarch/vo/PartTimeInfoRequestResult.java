@@ -2,7 +2,6 @@ package com.tidc.parttimemonarch.vo;
 
 import com.tidc.parttimemonarch.domain.PartTimeInfo;
 import lombok.Data;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 
@@ -10,9 +9,8 @@ import java.util.List;
  * @Author: 李家宝
  * @Date: 2018/10/28 22:02
  */
-@Component
 @Data
-public class PartTimeRequesResult extends RequestResult {
+public class PartTimeInfoRequestResult extends RequestResult {
 
     private List<PartTimeInfo> partTimeTypes;
 
@@ -23,10 +21,10 @@ public class PartTimeRequesResult extends RequestResult {
     private List<PartTimeInfo> settlementTypes;
 
 
-    public void succeed(List<PartTimeInfo> partTimeTypes,
-                        List<PartTimeInfo> partTimeSpecies,
-                        List<PartTimeInfo> calculationTypes,
-                        List<PartTimeInfo> settlementTypes) {
+    public PartTimeInfoRequestResult succeed(List<PartTimeInfo> partTimeTypes,
+                                             List<PartTimeInfo> partTimeSpecies,
+                                             List<PartTimeInfo> calculationTypes,
+                                             List<PartTimeInfo> settlementTypes) {
 
         super.succeed();
 
@@ -35,5 +33,6 @@ public class PartTimeRequesResult extends RequestResult {
         this.calculationTypes = calculationTypes;
         this.settlementTypes = settlementTypes;
 
+        return this;
     }
 }

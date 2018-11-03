@@ -1,5 +1,6 @@
 package com.tidc.parttimemonarch.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.tidc.parttimemonarch.verify.EnterpriseVerifyUserInfo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -8,6 +9,7 @@ import lombok.Data;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.sql.Date;
 
 /**
@@ -18,7 +20,7 @@ import java.sql.Date;
  */
 @ApiModel(description = "用户数据实体类")
 @Data
-public class UserInfo {
+public class UserInfo implements Serializable {
 
 
     @ApiModelProperty(hidden = true)

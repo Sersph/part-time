@@ -18,8 +18,6 @@ public class CityController {
     @Autowired
     private CityService cityService;
 
-    @Autowired
-    private CityListRequestResult requestResult;
 
     @ApiOperation(value = "获取城市数据")
     @GetMapping(value = "/regionList")

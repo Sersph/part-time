@@ -1,7 +1,7 @@
 package com.tidc.parttimemonarch.util;
 
 
-import com.tidc.parttimemonarch.exceptions.ResultExceptions;
+import com.tidc.parttimemonarch.exception.ResultException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -65,7 +65,7 @@ public class EMailUtil {
 
         }catch (Exception e){
             e.printStackTrace();
-            throw new ResultExceptions(0, "未知错误");
+            throw new ResultException(0, "未知错误");
         }
 
         return true;
