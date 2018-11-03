@@ -20,8 +20,8 @@
       <el-submenu index="5" :show-timeout="50" :hide-timeout="50" v-if="accountInfo.id">
         <template slot="title">我的</template>
         <el-menu-item index="5-1"
-                      @click="$router.push(accountInfo.type === 1 ? '/account/personal' : '/account/enterprise')">
-          <a>{{ accountInfo.type === 1 ? '个人中心' : '控制台' }}</a>
+                      @click="$router.push(accountInfo.roleId === 2 ? '/account/enterprise' : '/account/personal')">
+          <a>{{ accountInfo.roleId === 2 ? '控制台' : '个人中心' }}</a>
         </el-menu-item>
         <el-menu-item index="5-2" @click="signOut">
           <a>退出</a>
@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 import api from '@/api';
 import SelectCity from '@/components/location/SelectCity';
 
@@ -51,7 +51,10 @@ export default {
     ])
   },
   methods: {
-    async signOut () {
+    ...mapActions('account', [
+      'asyncInitAccountInfo'
+    ]),
+    async signOut() {
       const result = await api.account.signOut();
       if (result.code === 0) {
         await this.asyncInitAccountInfo();
@@ -81,7 +84,7 @@ export default {
       border: none;
     }
     .el-menu {
-      width: 83.33333%;
+      width: 79%;
       text-align: right;
       & > li {
         float: none !important;

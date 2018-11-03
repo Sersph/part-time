@@ -50,6 +50,10 @@ export default {
     height: 100%;
   }
 
+  #app {
+    min-width: 850px;
+  }
+
   .slide-bottom-enter-active,
   .slide-bottom-leave-active {
     transition: opacity .3s cubic-bezier(0.0, 0.0, 0.2, 1), transform .3s cubic-bezier(0.0, 0.0, 0.2, 1);

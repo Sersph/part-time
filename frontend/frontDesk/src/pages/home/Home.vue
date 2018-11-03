@@ -1,6 +1,6 @@
 <template>
   <section class="home-container">
-    <section class="part-time-container" :span="20">
+    <section class="part-time-container">
       <part-time-top/>
       <part-time-search-condition/>
       <part-time-search-result-list/>
@@ -33,7 +33,7 @@ export default {
       'currentCity'
     ])
   },
-  async created () {
+  async created() {
     NProgress.start();
     // 初始化搜索结果
     await this.asyncEditPartTimeSearchResultListByUrlParams();
@@ -41,14 +41,14 @@ export default {
   watch: {
     // 监听 regionList 城市是否加载完毕
     regionList: {
-      async handler () {
+      async handler() {
         // 初始化搜索结果
         await this.asyncEditPartTimeSearchResultListByUrlParams();
       }
     },
     // 监听 url 搜索兼职
     $route: {
-      async handler () {
+      async handler() {
         if (this.$route.path === '/home') {
           // 根据 url 参数初始化搜索结果
           await this.asyncEditPartTimeSearchResultListByUrlParams();
@@ -64,7 +64,7 @@ export default {
       'editPartTimeSearchCondition',
       'asyncEditPartTimeSearchResultList'
     ]),
-    async asyncEditPartTimeSearchResultListByUrlParams () {
+    async asyncEditPartTimeSearchResultListByUrlParams() {
       if (this.regionList.length <= 0) {
         return;
       }
@@ -81,8 +81,8 @@ export default {
           partTimeTypeId: '0',
           partTimeSpeciesId: '0',
           keyword: '',
-          limitStart: '0',
-          limitSize: '10'
+          pageNumber: '1',
+          pageSize: '10'
         }, partTimeSearchConditionURLParams)
       });
 
@@ -99,7 +99,7 @@ export default {
   .home-container {
     width: 100% !important;
     .part-time-container {
-      width: 83.33333%;
+      width: 79%;
       margin-left: auto;
       margin-right: auto;
     }

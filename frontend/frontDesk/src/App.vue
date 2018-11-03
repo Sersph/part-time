@@ -20,9 +20,10 @@ export default {
   components: {
     HeaderNav
   },
-  data () {
+  data() {
     return {
-      transitionName: ''
+      transitionName: '',
+      complete: false
     };
   },
   computed: {
@@ -30,7 +31,15 @@ export default {
       'accountInfo'
     ])
   },
-  async created () {
+  watch: {
+    // 深度监听 route 判断登陆权限, 防止路由器后退操作
+    $route: {
+      handler() {
+        this.checkSignIn(this.$route);
+      }
+    }
+  },
+  async created() {
     NProgress.start();
     // 初始化地区
     const initRegionListPromise = this.initRegionList();
@@ -46,10 +55,9 @@ export default {
 
     // 判断登陆权限
     this.checkSignIn(this.$route);
-
     // 监听路由判断登陆权限
     this.$router.beforeEach((to, from, next) => {
-      this.checkSignIn(to);
+      this.checkSignIn(to, 1);
       next();
     });
   },
@@ -63,14 +71,14 @@ export default {
     ...mapActions('partTime', [
       'asyncInitPartTimeBaseInfo'
     ]),
-    checkSignIn (route) {
+    checkSignIn(route) {
+      // 验证路由是否需要登陆才能访问
       if (route.meta.needSignIn) {
-        const type = route.path.indexOf('/account/enterprise') !== -1 ? 2 : 1;
-        // 验证路由是否需要登陆才能访问
+        const type = route.path.indexOf('/account/enterprise') !== -1 ? 2 : 3;
         // 验证路由是否需要企业登陆还是个人用户登陆
-        if (!this.accountInfo.id || this.accountInfo.type !== type) {
+        if (!this.accountInfo.id || this.accountInfo.roleId !== type) {
           // 未登录跳转登陆页面
-          this.$router.push(`/account/signIn?type=${type === 1 ? 'personal' : 'enterprise'}`);
+          this.$router.push(`/account/signIn?type=${type === 2 ? 'enterprise' : 'personal'}`);
         }
       }
     }
@@ -79,6 +87,15 @@ export default {
 </script>
 
 <style lang="scss">
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+  }
+
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
+
   body {
     overflow-y: scroll;
   }
@@ -92,10 +109,11 @@ export default {
   }
 
   #app {
+    min-width: 1000px;
     .wrapper-container {
       width: 100%;
       & > :first-child {
-        width: 83.33333%;
+        width: 79%;
         margin-left: auto;
         margin-right: auto;
       }
@@ -126,7 +144,7 @@ export default {
 
   .opacity-enter-active,
   .opacity-leave-active {
-    transition: opacity .5s;
+    transition: opacity .5s cubic-bezier(0.0, 0.0, 0.2, 1), transform .5s cubic-bezier(0.0, 0.0, 0.2, 1);
   }
 
   .opacity-enter,

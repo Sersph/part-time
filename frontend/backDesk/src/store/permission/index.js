@@ -1,4 +1,4 @@
-import types from '@/store/mutation-types';
+import types from '@/store/mutation-type';
 
 export default {
   namespaced: true,
@@ -7,12 +7,12 @@ export default {
     sidebarMenuList: {}
   },
   mutations: {
-    [types.EDIT_SIDEBAR_MENU_LIST] (state, { sidebarMenuList }) {
+    [types.EDIT_SIDEBAR_MENU_LIST](state, { sidebarMenuList }) {
       state.sidebarMenuList = sidebarMenuList;
     }
   },
   actions: {
-    editSidebarMenuList ({ commit }, { sidebarMenuList }) {
+    editSidebarMenuList({ commit }, { sidebarMenuList }) {
       // 修改可访问路由表
       commit(types.EDIT_SIDEBAR_MENU_LIST, {
         sidebarMenuList

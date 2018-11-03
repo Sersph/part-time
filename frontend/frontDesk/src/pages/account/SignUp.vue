@@ -2,7 +2,8 @@
   <section class="sign-up-container">
     <el-tabs class="tab" v-model="signUpType" :stretch="true">
       <el-tab-pane label="个人用户注册" name="personal">
-        <el-form :model="personalSignUpForm" :rules="personalSignUpFormRules" ref="personalSignUpForm" label-width="128px">
+        <el-form :model="personalSignUpForm" :rules="personalSignUpFormRules" ref="personalSignUpForm"
+                 label-width="128px">
           <el-form-item label="用户名" prop="username">
             <el-input v-model="personalSignUpForm.username"></el-input>
           </el-form-item>
@@ -10,14 +11,16 @@
             <el-input type="password" v-model="personalSignUpForm.password"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" :loading="doPersonalSignUpLoading" @click="doPersonalSignUp('personalSignUpForm')">
+            <el-button type="primary" :loading="doPersonalSignUpLoading"
+                       @click="doPersonalSignUp('personalSignUpForm')">
               立即注册
             </el-button>
           </el-form-item>
         </el-form>
       </el-tab-pane>
       <el-tab-pane label="企业用户注册" name="enterprise">
-        <el-form :model="enterpriseSignUpForm" :rules="enterpriseSignUpFormRules" ref="enterpriseSignUpForm" label-width="128px">
+        <el-form :model="enterpriseSignUpForm" :rules="enterpriseSignUpFormRules" ref="enterpriseSignUpForm"
+                 label-width="128px">
           <el-form-item label="企业名称" prop="enterpriseName">
             <el-input v-model="enterpriseSignUpForm.enterpriseName"></el-input>
           </el-form-item>
@@ -33,7 +36,8 @@
           </el-form-item>
           <el-form-item label="邮箱验证码" prop="emailCaptcha">
             <el-input placeholder="验证码" v-model="enterpriseSignUpForm.emailCaptcha">
-              <el-button :class="sendMailCaptchaCountdown > 0 ? 'disabled' : ''" slot="append" @click="sendMailCaptcha('enterpriseSignUpForm')">
+              <el-button :class="sendMailCaptchaCountdown > 0 ? 'disabled' : ''" slot="append"
+                         @click="sendMailCaptcha('enterpriseSignUpForm')">
                 {{ sendMailCaptchaCountdown > 0 ? `已发送 (${sendMailCaptchaCountdown}s)` : '发送' }}
               </el-button>
             </el-input>
@@ -42,7 +46,9 @@
             <el-input type="password" v-model="enterpriseSignUpForm.password"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" :loading="doEnterpriseSignUpLoading" @click="doEnterpriseSignUp('enterpriseSignUpForm')">立即注册</el-button>
+            <el-button type="primary" :loading="doEnterpriseSignUpLoading"
+                       @click="doEnterpriseSignUp('enterpriseSignUpForm')">立即注册
+            </el-button>
           </el-form-item>
         </el-form>
       </el-tab-pane>
@@ -57,7 +63,7 @@ import api from '@/api';
 
 export default {
   name: 'SignUp',
-  data () {
+  data() {
     return {
       signUpType: this.$route.query.type !== undefined ? this.$route.query.type : 'personal',
       doPersonalSignUpLoading: false,
@@ -107,7 +113,7 @@ export default {
     ...mapActions('account', [
       'asyncInitAccountInfo'
     ]),
-    doPersonalSignUp (formName) {
+    doPersonalSignUp(formName) {
       this.$refs[formName].validate(async (valid) => {
         if (valid) {
           this.doPersonalSignUpLoading = true;
@@ -118,14 +124,21 @@ export default {
           });
           if (result.code === 0) {
             // 注册成功逻辑
+            // 请求登陆接口, 自动登陆
+            const result = await api.account.personalSignIn({
+              username: this.personalSignUpForm.username,
+              password: this.personalSignUpForm.password
+            });
+            // 保存 token
+            window.localStorage.setItem('access_token', result.access_token);
+            // 更新 vuex 用户信息
+            await this.asyncInitAccountInfo();
             this.$notify({
               message: '注册成功',
               position: 'bottom-left',
               duration: 1500,
               showClose: false
             });
-            // 更新 vuex 用户信息
-            await this.asyncInitAccountInfo();
             NProgress.done();
             // 跳转首页
             setTimeout(() => {
@@ -147,13 +160,14 @@ export default {
         }
       });
     },
-    doEnterpriseSignUp (formName) {
+    doEnterpriseSignUp(formName) {
       this.$refs[formName].validate(async (valid) => {
         if (valid) {
           this.doEnterpriseSignUpLoading = true;
           NProgress.start();
           const result = await api.account.enterpriseSignUp({
-            enterpriseName: this.enterpriseSignUpForm.enterpriseName,
+            username: this.enterpriseSignUpForm.email,
+            name: this.enterpriseSignUpForm.enterpriseName,
             cityId: this.enterpriseSignUpForm.cityId[1],
             email: this.enterpriseSignUpForm.email,
             captcha: this.enterpriseSignUpForm.emailCaptcha,
@@ -161,14 +175,22 @@ export default {
           });
           if (result.code === 0) {
             // 注册成功逻辑
+            // 请求登陆接口, 自动登陆
+            const result = await api.account.enterpriseSignIn({
+              username: this.enterpriseSignUpForm.email,
+              password: this.enterpriseSignUpForm.password
+            });
+            // 保存 token
+            window.localStorage.setItem('access_token', result.access_token);
+            // 更新 vuex 用户信息
+            await this.asyncInitAccountInfo();
+            // 提示
             this.$notify({
               message: '注册成功',
               position: 'bottom-left',
               duration: 1500,
               showClose: false
             });
-            // 更新 vuex 用户信息
-            await this.asyncInitAccountInfo();
             NProgress.done();
             // 跳转首页
             setTimeout(() => {
@@ -191,7 +213,7 @@ export default {
         }
       });
     },
-    async sendMailCaptcha (formName) {
+    async sendMailCaptcha(formName) {
       // 验证邮箱表单
       this.$refs[formName].validateField('email', async errorMessage => {
         if (!errorMessage) {
@@ -235,6 +257,10 @@ export default {
   .sign-up-container {
     .el-input-group__append {
       padding: 0;
+      button.el-button {
+        background: #409EFF;
+        border-color: #409EFF;
+      }
       button.disabled {
         background-color: #dcdfe6;
         border-color: #dcdfe6;
@@ -270,9 +296,9 @@ export default {
         border-color: #409EFF;
       }
       button:hover {
-         background: #66b1ff;
-         border-color: #66b1ff;
-       }
+        background: #66b1ff;
+        border-color: #66b1ff;
+      }
       button:active {
         background: #3a8ee6;
         border-color: #3a8ee6;

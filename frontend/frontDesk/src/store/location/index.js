@@ -1,4 +1,4 @@
-import types from '@/store/mutation-types';
+import types from '@/store/mutation-type';
 import api from '@/api';
 
 export default {
@@ -12,18 +12,18 @@ export default {
     currentCity: {}
   },
   mutations: {
-    [types.EDIT_REGION_LIST] (state, { regionList }) {
+    [types.EDIT_REGION_LIST](state, { regionList }) {
       state.regionList = regionList;
     },
-    [types.EDIT_DEFAULT_CITY] (state, { defaultCity }) {
+    [types.EDIT_DEFAULT_CITY](state, { defaultCity }) {
       state.defaultCity = defaultCity;
     },
-    [types.EDIT_CURRENT_CITY] (state, { currentCity }) {
+    [types.EDIT_CURRENT_CITY](state, { currentCity }) {
       state.currentCity = currentCity;
     }
   },
   actions: {
-    async initRegionList ({ commit }) {
+    async initRegionList({ commit }) {
       // 当前城市和区域列表
       const result = await api.location.getRegionList();
       if (result.code === 0) {
@@ -37,7 +37,7 @@ export default {
         });
       }
     },
-    editCurrentCityByCityId ({ commit, state }, { cityId }) {
+    editCurrentCityByCityId({ commit, state }, { cityId }) {
       let currentCity = null;
       if (cityId !== '0') {
         state.regionList.find(provinceItem => {
@@ -58,7 +58,7 @@ export default {
     }
   },
   getters: {
-    cityList (state) {
+    cityList(state) {
       // 深度拷贝地区数据
       const newRegionList = JSON.parse(JSON.stringify(state.regionList));
       // 返回不带区域的地区数据

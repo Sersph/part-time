@@ -26,13 +26,13 @@
 <script>
 export default {
   name: 'HeaderNav',
-  data () {
+  data() {
     return {
       opacityFlag: true,
       currentRouteMatched: {}
     };
   },
-  async created () {
+  async created() {
     // 刷新面包屑导航
     this.editCurrentRouteMatched(this.$route);
     // 监听路由刷新面包屑导航
@@ -42,7 +42,7 @@ export default {
     });
   },
   methods: {
-    editCurrentRouteMatched (route) {
+    editCurrentRouteMatched(route) {
       this.opacityFlag = false;
       setTimeout(() => {
         this.currentRouteMatched = route.matched;

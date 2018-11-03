@@ -3,7 +3,7 @@
     <section class="part-time-search-condition-item">
       <div class="condition-name">区域</div>
       <div class="condition-list">
-        <el-radio-group v-model="areaId">
+        <el-radio-group v-model="partTimeSearchCondition.areaId">
           <div class="item" @click="setAreaId(0)">
             <el-radio-button :label="0">不限</el-radio-button>
           </div>
@@ -21,7 +21,7 @@
     <section class="part-time-search-condition-item">
       <div class="condition-name">类型</div>
       <div class="condition-list">
-        <el-radio-group v-model="partTimeTypeId">
+        <el-radio-group v-model="partTimeSearchCondition.partTimeTypeId">
           <div class="item" @click="setTypeId(0)">
             <el-radio-button :label="0">不限</el-radio-button>
           </div>
@@ -39,7 +39,7 @@
     <section class="part-time-search-condition-item">
       <div class="condition-name">种类</div>
       <div class="condition-list">
-        <el-radio-group v-model="partTimeSpeciesId">
+        <el-radio-group v-model="partTimeSearchCondition.partTimeSpeciesId">
           <div class="item" @click="setSpeciesId(0)">
             <el-radio-button :label="0">不限</el-radio-button>
           </div>
@@ -63,13 +63,6 @@ import routerUtils from '@/utils/router';
 
 export default {
   name: 'PartTimeSearchCondition',
-  data () {
-    return {
-      areaId: 0,
-      partTimeTypeId: 0,
-      partTimeSpeciesId: 0
-    };
-  },
   computed: {
     ...mapState('partTime', [
       'partTimeBaseInfo',
@@ -79,27 +72,8 @@ export default {
       'currentCity'
     ])
   },
-  watch: {
-    partTimeSearchCondition: {
-      deep: true,
-      handler (partTimeSearchCondition) {
-        // init 搜索地区
-        if (this.areaId !== partTimeSearchCondition.areId) {
-          this.areaId = partTimeSearchCondition.areaId;
-        }
-        // init 搜索类型
-        if (this.partTimeTypeId !== partTimeSearchCondition.partTimeTypeId) {
-          this.partTimeTypeId = partTimeSearchCondition.partTimeTypeId;
-        }
-        // init 搜索种类
-        if (this.partTimeSpeciesId !== partTimeSearchCondition.partTimeSpeciesId) {
-          this.partTimeSpeciesId = partTimeSearchCondition.partTimeSpeciesId;
-        }
-      }
-    }
-  },
   methods: {
-    async setAreaId (areaId) {
+    async setAreaId(areaId) {
       if (this.areaId === areaId) return;
       // url 更新兼职搜索地区
       this.$router.push({
@@ -109,7 +83,7 @@ export default {
         })
       });
     },
-    async setTypeId (partTimeTypeId) {
+    async setTypeId(partTimeTypeId) {
       if (this.partTimeTypeId === partTimeTypeId) return;
       // url 更新兼职搜索类型
       this.$router.push({
@@ -119,7 +93,7 @@ export default {
         })
       });
     },
-    async setSpeciesId (partTimeSpeciesId) {
+    async setSpeciesId(partTimeSpeciesId) {
       if (this.partTimeSpeciesId === partTimeSpeciesId) return;
       // url 更新兼职搜索类型
       this.$router.push({

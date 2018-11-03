@@ -1,100 +1,114 @@
 <template>
   <section class="part-time-search-result-list-container">
-    <div class="part-time-result-list">
-      <div class="part-time-item"
-                   v-for="(partTimeItem, index) in partTimeSearchResultList"
-                   :key="index">
-        <div class="part-time-base-info">
-          <router-link class="part-time-name" :to="`/partTime/detail/${index}`">
-            <p>简单小任务，在家躺赚</p>
-          </router-link>
-          <div class="part-time-base-info-list">
-            <div>
-              <span class="part-time-base-info-item">
-                <span>兼职类型: </span>
-                <span>长期可做</span>
-              </span>
-              <span class="part-time-base-info-item">
-                <span>兼职种类: </span>
-                <span>传单派发</span>
-              </span>
+    <transition name="opacity" mode="out-in">
+      <section class="part-time-search-result-list-wrapper"
+               v-show="opacityFlag">
+        <section class="part-time-result-list"
+                 v-if="partTimeSearchResult.rows && partTimeSearchResult.rows.length > 0">
+          <div class="part-time-item"
+               v-for="(partTimeItem, index) in partTimeSearchResult.rows"
+               :key="index">
+            <div class="part-time-base-info">
+              <router-link class="part-time-name" :to="`/partTime/detail/${partTimeItem.id}`">
+                <p>{{ partTimeItem.name }}</p>
+              </router-link>
+              <div class="part-time-base-info-list">
+                <div>
+                  <span class="part-time-base-info-item">
+                    <span>兼职类型: </span>
+                    <span>{{ partTimeItem.partTimeType }}</span>
+                  </span>
+                  <span class="part-time-base-info-item">
+                    <span>兼职种类: </span>
+                    <span>{{ partTimeItem.partTimeSpecies }}</span>
+                  </span>
+                </div>
+                <div>
+                  <span class="part-time-base-info-item">
+                    <span>工作地点: </span>
+                    <span>{{ partTimeItem.area }}</span>
+                  </span>
+                  <span class="part-time-base-info-item">
+                    <span>招聘人数: </span>
+                    <span>{{ partTimeItem.recruitmentCount }}</span>
+                  </span>
+                </div>
+              </div>
             </div>
-            <div>
-              <span class="part-time-base-info-item">
-                <span>工作地点: </span>
-                <span>罗湖区</span>
-              </span>
-              <span class="part-time-base-info-item">
-                <span>招聘人数: </span>
-                <span>500</span>
+            <div class="part-time-price-info">
+              <span class="price-info">
+                <span class="price">{{ partTimeItem.price }}</span>
+                <span>元 / {{ partTimeItem.calculationType }}</span>
+                <span class="settlement-type">{{ partTimeItem.settlementType }}</span>
               </span>
             </div>
           </div>
-        </div>
-        <div class="part-time-price-info">
-          <span class="price-info">
-            <span class="price">200</span>
-            <span>元 / 天</span>
-            <span class="settlement-type">日结</span>
-          </span>
-        </div>
-      </div>
-    </div>
-    <section class="part-time-search-result-p">
-      <el-pagination
-        background
-        layout="prev, pager, next"
-        @current-change="searchPartTime"
-        :page-size="pageSize"
-        :pager-count="pageCount"
-        :current-page="currentPage"
-        :total="total">
-      </el-pagination>
-    </section>
+        </section>
+        <section class="not-row"
+                 v-if="partTimeSearchResult.rows && partTimeSearchResult.rows.length === 0">
+          <p class="img"></p>
+          <p>暂无符合条件职位</p>
+        </section>
+        <section class="part-time-search-result-p"
+                 v-if="partTimeSearchResult.rows && partTimeSearchResult.rows.length > 0">
+          <el-pagination
+            :current-page="partTimeSearchResult.pageNumber"
+            :page-size="partTimeSearchResult.size"
+            :page-sizes="[10, 20, 50]"
+            :total="partTimeSearchResult.total"
+            layout="total, sizes, prev, pager, next, jumper"
+            @size-change="handlePageSize"
+            @current-change="handlePageNumber"
+          >
+          </el-pagination>
+        </section>
+      </section>
+    </transition>
   </section>
 </template>
 
 <script>
 import { mapState } from 'vuex';
 import routerUtils from '@/utils/router';
+import paginationHandler from '@/mixin/paginationHandler';
 
 export default {
   name: 'PartTimeList',
-  data () {
+  mixins: [
+    paginationHandler
+  ],
+  data() {
     return {
-      pageSize: 10,
-      pageCount: 11,
-      currentPage: 0,
-      total: 1000
+      opacityFlag: false
     };
   },
   computed: {
     ...mapState('partTime', [
       'partTimeSearchCondition',
-      'partTimeSearchResultList'
+      'partTimeSearchResult'
     ])
   },
   watch: {
-    partTimeSearchCondition: {
+    partTimeSearchResult: {
       deep: true,
-      handler (partTimeSearchCondition) {
-        // init 分页
-        if (this.currentPage !== partTimeSearchCondition.limitStart / 10) {
-          this.currentPage = partTimeSearchCondition.limitStart / 10;
-        }
+      handler() {
+        // 回到顶部
+        document.documentElement.scrollTop = 0;
+        this.opacityFlag = false;
+        setTimeout(() => {
+          this.opacityFlag = true;
+        }, 350);
       }
     }
   },
   methods: {
-    async searchPartTime (currentPage) {
-      const limitStart = currentPage * this.pageSize;
-      const limitSize = this.pageSize;
+    async searchData() {
       // url 更新兼职搜索分页
       this.$router.push({
-        path: this.$router.pah,
+        path: this.$router.path,
         query: routerUtils.getNewPartTimeSearchConditionUrlParams(this.$route.query, {
-          limitStart,
-          limitSize
+          pageNumber: this.pageNumber,
+          pageSize: this.pageSize
         })
       });
     }
@@ -106,6 +120,7 @@ export default {
   .part-time-search-result-list-container {
     box-shadow: 0 0 50px rgba(0, 0, 0, 0.1);
     margin-top: 20px;
+    margin-bottom: 20px;
     .part-time-result-list {
       box-shadow: 5px 5px 11px rgba(0, 0, 0, 0.1);
       .part-time-item {
@@ -157,11 +172,28 @@ export default {
         }
       }
     }
+    .not-row {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 215px;
+      .img {
+        width: 60px;
+        height: 60px;
+        background-image: url(../../assets/warn.png);
+      }
+      p:last-child {
+        font-size: 15px;
+        color: #999;
+        margin-top: 20px;
+      }
+    }
     .part-time-search-result-p {
       display: flex;
       justify-content: center;
-      padding-top: 30px;
-      padding-bottom: 100px;
+      padding-top: 50px;
+      padding-bottom: 55px;
       .el-pagination.is-background {
         button,
         li {

@@ -1,6 +1,24 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
+// 非路由懒加载
+import SignUp from '@/pages/account/SignUp';
+import SignIn from '@/pages/account/SignIn';
+import PersonalPartTime from '@/pages/account/personal/part-time/PersonalPartTime';
+import PersonalPartTimeApply from '@/pages/account/personal/part-time/PersonalPartTimeApply';
+import PersonalPartTimeApplyList from '@/pages/account/personal/part-time/PersonalPartTimeApplyList';
+import PersonalSetting from '@/pages/account/personal/setting/PersonalSetting';
+import PersonalSettingResume from '@/pages/account/personal/setting/PersonalSettingResume';
+import EnterprisePartTime from '@/pages/account/enterprise/part-time/EnterprisePartTime';
+import EnterprisePartTimePost from '@/pages/account/enterprise/part-time/EnterprisePartTimePost';
+import EnterprisePartTimePostList from '@/pages/account/enterprise/part-time/EnterprisePartTimePostList';
+import EnterprisePartTimePostOperation from '@/pages/account/enterprise/part-time/EnterprisePartTimePostOperation';
+import EnterprisePartTimeRecruitment from '@/pages/account/enterprise/part-time/EnterprisePartTimeRecruitment';
+import EnterprisePartTimeRecruitmentList from '@/pages/account/enterprise/part-time/EnterprisePartTimeRecruitmentList';
+import EnterpriseSetting from '@/pages/account/enterprise/setting/EnterpriseSetting';
+import EnterpriseSettingCertification from '@/pages/account/enterprise/setting/EnterpriseSettingCertification';
+import PartTimeDetail from '@/pages/part-time/PartTimeDetail';
+
 // 注入 Vue Router 插件
 Vue.use(VueRouter);
 
@@ -26,11 +44,11 @@ export default new VueRouter({
       children: [
         {
           path: '/account/signUp',
-          component: () => import('@/pages/account/SignUp')
+          component: SignUp
         },
         {
           path: '/account/signIn',
-          component: () => import('@/pages/account/SignIn')
+          component: SignIn
         },
         {
           path: '/account/personal',
@@ -39,7 +57,7 @@ export default new VueRouter({
           children: [
             {
               path: '/account/personal/partTime',
-              component: () => import('@/pages/account/personal/part-time/PersonalPartTime'),
+              component: PersonalPartTime,
               redirect: '/account/personal/partTime/partTimeApply',
               meta: {
                 needSignIn: true,
@@ -50,7 +68,7 @@ export default new VueRouter({
               children: [
                 {
                   path: '/account/personal/partTime/partTimeApply',
-                  component: () => import('@/pages/account/personal/part-time/PersonalPartTimeApply'),
+                  component: PersonalPartTimeApply,
                   redirect: '/account/personal/partTime/partTimeApply/list',
                   meta: {
                     needSignIn: true,
@@ -60,7 +78,7 @@ export default new VueRouter({
                   children: [
                     {
                       path: '/account/personal/partTime/partTimeApply/list',
-                      component: () => import('@/pages/account/personal/part-time/PersonalPartTimeApplyList'),
+                      component: PersonalPartTimeApplyList,
                       meta: {
                         needSignIn: true,
                         index: '1-1',
@@ -73,7 +91,7 @@ export default new VueRouter({
             },
             {
               path: '/account/personal/setting',
-              component: () => import('@/pages/account/personal/setting/PersonalSetting'),
+              component: PersonalSetting,
               redirect: '/account/personal/setting/resume',
               meta: {
                 needSignIn: true,
@@ -84,7 +102,7 @@ export default new VueRouter({
               children: [
                 {
                   path: '/account/personal/setting/resume',
-                  component: () => import('@/pages/account/personal/setting/PersonalSettingResume'),
+                  component: PersonalSettingResume,
                   meta: {
                     needSignIn: true,
                     index: '2-1',
@@ -102,7 +120,7 @@ export default new VueRouter({
           children: [
             {
               path: '/account/enterprise/partTime',
-              component: () => import('@/pages/account/enterprise/part-time/EnterprisePartTime'),
+              component: EnterprisePartTime,
               redirect: '/account/enterprise/partTime/partTimePost',
               meta: {
                 needSignIn: true,
@@ -113,7 +131,7 @@ export default new VueRouter({
               children: [
                 {
                   path: '/account/enterprise/partTime/partTimePost',
-                  component: () => import('@/pages/account/enterprise/part-time/EnterprisePartTimePost'),
+                  component: EnterprisePartTimePost,
                   redirect: '/account/enterprise/partTime/partTimePost/list',
                   meta: {
                     needSignIn: true,
@@ -123,7 +141,7 @@ export default new VueRouter({
                   children: [
                     {
                       path: '/account/enterprise/partTime/partTimePost/list',
-                      component: () => import('@/pages/account/enterprise/part-time/EnterprisePartTimePostList'),
+                      component: EnterprisePartTimePostList,
                       meta: {
                         needSignIn: true,
                         index: '1-1-1',
@@ -132,7 +150,7 @@ export default new VueRouter({
                     },
                     {
                       path: '/account/enterprise/partTime/partTimePost/add',
-                      component: () => import('@/pages/account/enterprise/part-time/EnterprisePartTimePostOperation'),
+                      component: EnterprisePartTimePostOperation,
                       meta: {
                         needSignIn: true,
                         index: '1-1-2',
@@ -143,7 +161,7 @@ export default new VueRouter({
                 },
                 {
                   path: '/account/enterprise/partTime/partTimeRecruitment',
-                  component: () => import('@/pages/account/enterprise/part-time/EnterprisePartTimeRecruitment'),
+                  component: EnterprisePartTimeRecruitment,
                   redirect: '/account/enterprise/partTime/partTimeRecruitment/list',
                   meta: {
                     needSignIn: true,
@@ -153,7 +171,7 @@ export default new VueRouter({
                   children: [
                     {
                       path: '/account/enterprise/partTime/partTimeRecruitment/list',
-                      component: () => import('@/pages/account/enterprise/part-time/EnterprisePartTimeRecruitmentList'),
+                      component: EnterprisePartTimeRecruitmentList,
                       meta: {
                         needSignIn: true,
                         index: '1-1-1',
@@ -166,7 +184,7 @@ export default new VueRouter({
             },
             {
               path: '/account/enterprise/setting',
-              component: () => import('@/pages/account/enterprise/setting/EnterpriseSetting'),
+              component: EnterpriseSetting,
               redirect: '/account/enterprise/partTime/setting/certification',
               meta: {
                 needSignIn: true,
@@ -177,7 +195,7 @@ export default new VueRouter({
               children: [
                 {
                   path: '/account/enterprise/setting/certification',
-                  component: () => import('@/pages/account/enterprise/setting/EnterpriseSettingCertification'),
+                  component: EnterpriseSettingCertification,
                   meta: {
                     needSignIn: true,
                     index: '2-2',
@@ -196,7 +214,7 @@ export default new VueRouter({
       children: [
         {
           path: '/partTime/detail/:id',
-          component: () => import('@/pages/part-time/PartTimeDetail')
+          component: PartTimeDetail
         }
       ]
     }

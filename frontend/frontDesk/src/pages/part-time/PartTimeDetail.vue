@@ -1,30 +1,29 @@
 <template>
   <section class="part-time-detail-container">
     <el-breadcrumb class="breadcrumb" separator="/">
-      <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item :to="{ path: '/' }">深圳兼职招聘</el-breadcrumb-item>
-      <el-breadcrumb-item :to="{ path: '/' }">派发传单兼职</el-breadcrumb-item>
-      <el-breadcrumb-item>轻松无责派单</el-breadcrumb-item>
+      <el-breadcrumb-item>{{ partTimeDetail.city }}兼职</el-breadcrumb-item>
+      <el-breadcrumb-item>{{ partTimeDetail.partTimeSpecies }}</el-breadcrumb-item>
+      <el-breadcrumb-item>{{ partTimeDetail.name }}</el-breadcrumb-item>
     </el-breadcrumb>
     <el-row>
       <el-col :span="16">
         <section class="part-time-detail-left">
           <section class="part-time-base-info">
             <p class="title">
-              <span>轻松无责派单</span>
+              <span>{{ partTimeDetail.name }}</span>
             </p>
             <p class="price-info">
               <span class="price">
-                <span>100</span>
-                <span>元/天</span>
+                <span>{{ partTimeDetail.price }}</span>
+                <span>元/{{ partTimeDetail.calculationType }}</span>
               </span>
               <span class="type">
-                <span>月结</span>
-                <span>传单派发</span>
+                <span>{{ partTimeDetail.settlementType }}</span>
+                <span>{{ partTimeDetail.partTimeSpecies }}</span>
               </span>
             </p>
             <p class="apply">
-              <el-button type="danger" class="apply">报名参加</el-button>
+              <el-button type="danger" class="apply" @click="toPartTimeApply">报名参加</el-button>
             </p>
           </section>
           <section class="part-time-detail-info">
@@ -32,74 +31,55 @@
             <ul class="part-time-detail-info-list">
               <li>
                 <span>招聘人数：</span>
-                <span>200</span>
+                <span>{{ partTimeDetail.recruitmentCount }}</span>
               </li>
               <li>
                 <span>兼职类型：</span>
-                <span>短期兼职</span>
+                <span>{{ partTimeDetail.partTimeType }}</span>
               </li>
               <li>
                 <span>兼职种类：</span>
-                <span>传单派发</span>
+                <span>{{ partTimeDetail.partTimeSpecies }}</span>
               </li>
             </ul>
             <p class="title">薪资待遇</p>
             <ul class="part-time-detail-info-list">
               <li>
                 <span>基本工资：</span>
-                <span>100元/天</span>
+                <span>{{ partTimeDetail.price }}元/{{ partTimeDetail.calculationType }}</span>
               </li>
               <li>
                 <span>结算方式：</span>
-                <span>月结</span>
+                <span>{{ partTimeDetail.settlementType }}</span>
               </li>
               <li>
                 <span>薪资描述：</span>
-                <span>带带我去带我去带我去带我去带我去带我去带我去带我去带我去带我去带我去带我去带我去带我去我去</span>
+                <span>{{ partTimeDetail.priceDescription ? partTimeDetail.priceDescription : '无' }}</span>
               </li>
             </ul>
             <p class="title">工作详情</p>
             <ul class="part-time-detail-info-list">
               <li>
                 <span>工作地址：</span>
-                <span>全国-不限</span>
+                <span>{{ partTimeDetail.city }} - {{ partTimeDetail.area }} - {{ partTimeDetail.address }}</span>
               </li>
               <li>
                 <span>工作日期：</span>
-                <span>2018-10-05 至 2018-10-13</span>
+                <span>{{ partTimeDetail.workingDateStart }} 至 {{ partTimeDetail.workingDateEnd }}</span>
               </li>
               <li>
                 <span>上班时间：</span>
-                <span>18:00 - 5:00</span>
+                <span>{{ partTimeDetail.workingTime }}</span>
               </li>
               <li>
                 <span>工作时间：</span>
-                <span>周一 ~ 周二</span>
+                <span>{{ partTimeDetail.workingTimeWeek }}</span>
               </li>
               <li>
                 <span>工作描述：</span>
                 <span>
                   <div class="part-time-detail-job-info">
-                    <p>
-                      【一】工作内容
-                      1、本次招聘为富士康人资公开免费招聘
-                    </p>
-                    <p>
-                      【一】工作内容
-                      1、本次招聘为富士康人资公开免费招聘
-                    </p>
-                    <p>
-                      【一】工作内容
-                      1、本次招聘为富士康人资公开免费招聘
-                    </p>
-                    <p>
-                      【一】工作内容
-                      1、本次招聘为富士康人资公开免费招聘
-                    </p>
-                    <p>
-                      【一】工作内容
-                      1、本次招聘为富士康人资公开免费招聘
-                    </p>
+                    {{ partTimeDetail.jobDescription }}
                   </div>
                 </span>
               </li>
@@ -111,17 +91,18 @@
         <section class="part-time-detail-right">
           <section class="enterprise">
             <div class="enterprise-img">
-              <img src="http://sta.doumistatic.com/src/image/company_default.png">
+              <img src="https://sta.doumistatic.com/src/image/company_default.png">
             </div>
-            <p class="enterprise-name">大吉利公司</p>
+            <p class="enterprise-name">{{ partTimeDetail.enterpriseName }}</p>
             <ul class="enterprise-info-list">
               <li>
                 <span>公司地址：</span>
-                <span>深圳市罗湖区</span>
+                <span>{{ partTimeDetail.enterpriseSite }}</span>
               </li>
             </ul>
           </section>
           <section class="recommend-part-time-list">
+            <h5>推荐职位</h5>
             <ul>
               <li>
                 <a href="javascript:void(0)">
@@ -154,21 +135,56 @@
         </section>
       </el-col>
     </el-row>
+    <part-time-apply ref="partTimeApply" :partTimeDetail="partTimeDetail"/>
   </section>
 </template>
 
 <script>
+import NProgress from 'nprogress';
+import api from '@/api';
+import PartTimeApply from '@/components/part-time/PartTimeApply';
+
 export default {
   name: 'PartTimeDetail',
-  beforeCreate () {
+  data() {
+    return {
+      partTimeDetail: {}
+    };
+  },
+  components: {
+    PartTimeApply
+  },
+  async beforeCreate() {
     document.documentElement.scrollTop = 0;
+    // 获取兼职详情
+    const { id } = this.$route.params;
+    NProgress.start();
+    const result = await api.partTime.getPartTimeDetail(id);
+    NProgress.done();
+    // 处理数据格式
+    // 处理工作时间
+    const weekList = ['', '周一', '周二', '周三', '周四', '周五', '周六', '周日'];
+    // 1,3,2
+    // 1.排序[1,2,3] 2.获取对应值[周一,周二,周三] 3.拼接字符串[周一、周二、周三]
+    result.workingTimeWeek = result.workingTimeWeek.split(',').sort().map(week => {
+      return `${weekList[week]}`;
+    }).join('、');
+    // 处理上班时间
+    result.workingTime = result.workingTime.split('-').join(' - ');
+    this.partTimeDetail = result;
+  },
+  methods: {
+    toPartTimeApply() {
+      this.$refs['partTimeApply'].partTimeApplyContainerVisibleFlag = true;
+    }
   }
 };
 </script>
 
 <style lang="scss">
   .part-time-detail-container {
-    width: 1100px !important;
+    max-width: 1100px !important;
+    min-width: 1000px!important;
     color: #666;
     p {
       margin: 0;
@@ -190,7 +206,7 @@ export default {
           color: #3b3b3b;
         }
         .apply {
-          font-size: 20px;
+          font-size: 15px;
         }
         .price-info {
           display: flex;
@@ -204,7 +220,7 @@ export default {
           .type {
             span {
               position: relative;
-              margin-left: 31px;
+              margin-left: 29px;
             }
             span:first-child::after {
               content: '|';
@@ -260,10 +276,9 @@ export default {
     }
     .part-time-detail-right {
       margin-left: 20px;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
       .enterprise {
         padding: 20px;
-        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
         .enterprise-img {
           display: flex;
           justify-content: center;
@@ -276,21 +291,36 @@ export default {
         }
         .enterprise-name {
           font-size: 25px;
-          text-align: left;
+          text-align: center;
           color: #3b3b3b;
         }
         .enterprise-info-list {
+          padding: 0 50px;
           list-style: none;
-          padding: 0;
           font-size: 16px;
-          span:first-child {
-            margin: 0 19px 0 0;
-            text-align: right;
-            color: #989393;
+          li {
+            display: flex;
+            span:first-child {
+              margin: 0 5px 0 0;
+              text-align: right;
+              color: #989393;
+            }
+            span:last-child {
+              flex: 1;
+            }
           }
         }
       }
       .recommend-part-time-list {
+        margin-top: 20px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        h5 {
+          margin: 0;
+          padding: 10px 20px;
+          border-bottom: 1px solid #dadada;
+          font-size: 15px;
+          font-weight: normal;
+        }
         ul {
           list-style-type: none;
           margin: 0;

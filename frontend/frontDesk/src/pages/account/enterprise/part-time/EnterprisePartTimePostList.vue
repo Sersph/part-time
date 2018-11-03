@@ -30,7 +30,7 @@
 <script>
 export default {
   name: 'EnterprisePartTimePostList',
-  data () {
+  data() {
     return {
       enterprisePartTimePostList: [{
         date: '2016-05-02',
@@ -52,7 +52,7 @@ export default {
     };
   },
   methods: {
-    tableRowClassName ({ row, rowIndex }) {
+    tableRowClassName({ row, rowIndex }) {
       if (rowIndex === 1) {
         return 'warning-row';
       } else if (rowIndex === 3) {

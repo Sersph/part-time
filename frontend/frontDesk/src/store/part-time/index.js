@@ -1,4 +1,4 @@
-import types from '@/store/mutation-types';
+import types from '@/store/mutation-type';
 import api from '@/api';
 
 export default {
@@ -17,149 +17,27 @@ export default {
       limitSize: 10
     },
     // 搜索兼职结果
-    partTimeSearchResultList: [
-      {
-        id: 0,
-        type: '派单',
-        title: '运营实习生',
-        location: '罗湖区',
-        viewCount: 233,
-        createdAt: '2011-01-01 11:11',
-        price: '3000',
-        priceType: '月'
-      },
-      {
-        id: 0,
-        type: '派单',
-        title: '运营实习生',
-        location: '罗湖区',
-        viewCount: 233,
-        createdAt: '2011-01-01 11:11',
-        price: '3000',
-        priceType: '月'
-      },
-      {
-        id: 0,
-        type: '派单',
-        title: '运营实习生',
-        location: '罗湖区',
-        viewCount: 233,
-        createdAt: '2011-01-01 11:11',
-        price: '3000',
-        priceType: '月'
-      },
-      {
-        id: 0,
-        type: '派单',
-        title: '运营实习生',
-        location: '罗湖区',
-        viewCount: 233,
-        createdAt: '2011-01-01 11:11',
-        price: '3000',
-        priceType: '月'
-      },
-      {
-        id: 0,
-        type: '派单',
-        title: '运营实习生',
-        location: '罗湖区',
-        viewCount: 233,
-        createdAt: '2011-01-01 11:11',
-        price: '3000',
-        priceType: '月'
-      },
-      {
-        id: 0,
-        type: '派单',
-        title: '运营实习生',
-        location: '罗湖区',
-        viewCount: 233,
-        createdAt: '2011-01-01 11:11',
-        price: '3000',
-        priceType: '月'
-      },
-      {
-        id: 0,
-        type: '派单',
-        title: '运营实习生',
-        location: '罗湖区',
-        viewCount: 233,
-        createdAt: '2011-01-01 11:11',
-        price: '3000',
-        priceType: '月'
-      },
-      {
-        id: 0,
-        type: '派单',
-        title: '运营实习生',
-        location: '罗湖区',
-        viewCount: 233,
-        createdAt: '2011-01-01 11:11',
-        price: '3000',
-        priceType: '月'
-      },
-      {
-        id: 0,
-        type: '派单',
-        title: '运营实习生',
-        location: '罗湖区',
-        viewCount: 233,
-        createdAt: '2011-01-01 11:11',
-        price: '3000',
-        priceType: '月'
-      },
-      {
-        id: 0,
-        type: '派单',
-        title: '运营实习生',
-        location: '罗湖区',
-        viewCount: 233,
-        createdAt: '2011-01-01 11:11',
-        price: '3000',
-        priceType: '月'
-      },
-      {
-        id: 0,
-        type: '派单',
-        title: '运营实习生',
-        location: '罗湖区',
-        viewCount: 233,
-        createdAt: '2011-01-01 11:11',
-        price: '3000',
-        priceType: '月'
-      },
-      {
-        id: 0,
-        type: '派单',
-        title: '运营实习生',
-        location: '罗湖区',
-        viewCount: 233,
-        createdAt: '2011-01-01 11:11',
-        price: '3000',
-        priceType: '月'
-      },
-      {
-        id: 0,
-        type: '派单',
-        title: '运营实习生',
-        location: '罗湖区',
-        viewCount: 233,
-        createdAt: '2011-01-01 11:11',
-        price: '3000',
-        priceType: '月'
-      }
-    ]
+    partTimeSearchResult: {
+      total: 0,
+      pages: 0,
+      pageNumber: 1,
+      pageSize: 10,
+      rows: []
+    }
   },
   mutations: {
-    [types.EDIT_PART_TIME_SEARCH_CONDITION] (state, { partTimeSearchCondition }) {
+    [types.EDIT_PART_TIME_SEARCH_CONDITION](state, { partTimeSearchCondition }) {
       state.partTimeSearchCondition = partTimeSearchCondition;
     },
-    [types.EDIT_PART_TIME_BASE_INFO] (state, { partTimeBaseInfo }) {
+    [types.EDIT_PART_TIME_SEARCH_RESULT](state, { partTimeSearchResult }) {
+      state.partTimeSearchResult = partTimeSearchResult;
+    },
+    [types.EDIT_PART_TIME_BASE_INFO](state, { partTimeBaseInfo }) {
       state.partTimeBaseInfo = partTimeBaseInfo;
     }
   },
   actions: {
-    async asyncInitPartTimeBaseInfo ({ commit }) {
+    async asyncInitPartTimeBaseInfo({ commit }) {
       const result = await api.partTime.getBaseInfo();
       // 必须为新对象, 需要触发 watch
       let partTimeBaseInfo = {
@@ -178,16 +56,24 @@ export default {
         partTimeBaseInfo: partTimeBaseInfo
       });
     },
-    editPartTimeSearchCondition ({ commit }, { partTimeSearchCondition }) {
+    editPartTimeSearchCondition({ commit }, { partTimeSearchCondition }) {
       commit(types.EDIT_PART_TIME_SEARCH_CONDITION, { partTimeSearchCondition });
     },
-    async asyncEditPartTimeSearchResultList ({ commit, state }) {
-      console.log(JSON.stringify(state.partTimeSearchCondition));
-      return new Promise((resolve, reject) => {
-        setTimeout(() => {
-          resolve();
-        }, 200);
-      });
+    async asyncEditPartTimeSearchResultList({ commit, state }) {
+      const searchCondition = {
+        cityId: state.partTimeSearchCondition.cityId,
+        areaId: state.partTimeSearchCondition.areaId,
+        partTimeTypeId: state.partTimeSearchCondition.partTimeTypeId,
+        partTimeSpeciesId: state.partTimeSearchCondition.partTimeSpeciesId,
+        pageNumber: state.partTimeSearchCondition.pageNumber,
+        pageSize: state.partTimeSearchCondition.pageSize
+      };
+      if (state.partTimeSearchCondition.keyword) {
+        // 模糊匹配拼接
+        searchCondition.keyword = `%${state.partTimeSearchCondition.keyword}%`;
+      }
+      const result = await api.partTime.getPartTime(searchCondition);
+      commit(types.EDIT_PART_TIME_SEARCH_RESULT, { partTimeSearchResult: result });
     }
   },
   getters: {}

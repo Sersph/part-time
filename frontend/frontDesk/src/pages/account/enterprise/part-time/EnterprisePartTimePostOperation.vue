@@ -169,26 +169,32 @@ import api from '@/api';
 
 export default {
   name: 'EnterprisePartTimePostOperation',
-  data () {
+  data() {
     return {
       doPartTimeSaveFormLoading: false,
       partTimeForm: {
-        name: '123',
-        recruitmentCount: '12',
-        partTimeTypeId: 1,
-        partTimeSpeciesId: 1,
-        price: '1',
-        calculationTypeId: 1,
-        settlementTypeId: 1,
-        priceDescription: 1,
-        regionIds: [440000, 440100, 440103],
-        detailAddress: '1',
-        workingDate: [new Date(2333, 1, 1, 9, 0), new Date(2333, 1, 1, 18, 0)],
-        workingTime: [new Date(2000, 1, 1, 9, 0), new Date(2000, 1, 1, 18, 0)],
-        workingTimeWeek: [1],
-        jobDescription: '1',
-        contactPeople: '1',
-        contactPhone: '2312312'
+        name: '',
+        partTimeTypeId: '',
+        partTimeSpeciesId: '',
+        calculationTypeId: '',
+        settlementTypeId: '',
+        priceDescription: '',
+        regionIds: [],
+        detailAddress: '艺展中心1栋1楼1房',
+        workingDate: [],
+        workingTimeWeek: [],
+        jobDescription: '【工作内容】\n' +
+          '根据客服小哥哥小姐姐的指导完成，完成后发截图给客服审核，全程简单轻松，在家躺着赚钱；\n' +
+          '【报名条件】\n' +
+          '宝妈、学生、上班族等只要你有空，有手机或电脑都可以做，利用闲暇时间，随时随地都可以；\n' +
+          '【薪资待遇】\n' +
+          '多劳多得，按照要求完成任务反馈客服可算后可领每个1-30元的金额，工资可以通过微信、支付宝 绝不拖欠，\n' +
+          '也绝不收费，诚信经营\n' +
+          '【工作时间和地点】9:00-23:00 基本上全天候\n' +
+          '最后声明，绝不收费，不要受外面不健康兼职的影响。\n' +
+          '利用闲暇时间赚钱，好玩有乐趣！',
+        contactPeople: '科创工作室',
+        contactPhone: '15000000000'
       },
       partTimeFormRules: {
         name: [
@@ -197,7 +203,7 @@ export default {
         ],
         recruitmentCount: [
           { required: true, message: '请输入招聘人数', trigger: 'change' },
-          { min: 1, max: 5, message: '招聘人数最多5位数字', trigger: 'change' }
+          { min: 1, max: 4, message: '招聘人数最多4位数字', trigger: 'change' }
         ],
         partTimeTypeId: [
           { required: true, message: '请选择兼职类型', trigger: 'change' }
@@ -207,7 +213,7 @@ export default {
         ],
         price: [
           { required: true, message: '请输入薪资', trigger: 'change' },
-          { min: 1, max: 11, message: '薪资最多11位数字', trigger: 'change' }
+          { min: 1, max: 5, message: '薪资最多5位数字', trigger: 'change' }
         ],
         calculationTypeId: [
           { required: true, message: '请选择资新类型', trigger: 'change' }
@@ -264,14 +270,14 @@ export default {
       'regionList'
     ])
   },
-  beforeCreate () {
+  beforeCreate() {
     document.documentElement.scrollTop = 0;
   },
   methods: {
     ...mapActions('partTime', [
       'asyncInitPartTimeBaseInfo'
     ]),
-    doPartTimeSaveForm (formName) {
+    doPartTimeSaveForm(formName) {
       this.$refs[formName].validate(async (valid) => {
         if (valid) {
           const data = {
@@ -287,8 +293,8 @@ export default {
             cityId: this.partTimeForm.regionIds[1],
             areaId: this.partTimeForm.regionIds[2],
             detailAddress: this.partTimeForm.detailAddress,
-            workingDateStart: this.partTimeForm.workingDate[0].getTime() / 1000,
-            workingDateEnd: this.partTimeForm.workingDate[1].getTime() / 1000,
+            workingDateStart: this.partTimeForm.workingDate[0].getTime(),
+            workingDateEnd: this.partTimeForm.workingDate[1].getTime(),
             workingTime:
               this.partTimeForm.workingTime[0].getHours() + ':' + this.partTimeForm.workingTime[0].getMinutes() + ':' + this.partTimeForm.workingTime[0].getSeconds() +
               '-' +
@@ -301,7 +307,7 @@ export default {
 
           this.doPartTimeSaveFormLoading = true;
           NProgress.start();
-          const result = await api.partTime.partTimeAdd(data);
+          const result = await api.partTime.addPartTime(data);
           if (result.code === 0) {
             // 保存成功逻辑
             this.$notify({
@@ -342,13 +348,12 @@ export default {
     .el-form {
       overflow: hidden;
       max-width: 800px;
-      min-width: 600px;
       margin-left: auto;
       margin-right: auto;
     }
     .linear {
       width: 100%;
-      border-bottom: 3px dashed #ddd;
+      border-bottom: 3px dashed #a1a1a1;
       margin: 0 0 31px 100px;
     }
     .price-tooltip {
