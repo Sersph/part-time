@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tidc.part.time.monarch.mapper.PartTimeMapper">
+
+    <!-- 获取兼职类型 -->
+    <select id="getListPartTimeType" resultType="com.tidc.part.time.monarch.domain.PartTimeInfo">
+        select * from part_time_type
+    </select>
+
+    <!-- 获取兼职种类 -->
+    <select id="partTimeSpecies" resultType="com.tidc.part.time.monarch.domain.PartTimeInfo">
+        select * from part_time_species
+    </select>
+
+    <!-- 获取工资计算方式 -->
+    <select id="calculationTypes" resultType="com.tidc.part.time.monarch.domain.PartTimeInfo">
+        select * from calculation_type
+    </select>
+
+    <!-- 获取工资结算方式 日结 周结 -->
+    <select id="settlementTypes" resultType="com.tidc.part.time.monarch.domain.PartTimeInfo">
+        select * from settlement_type
+    </select>
+
+    <!-- 根据 id 获取单个兼职的详细关系 -->
+    <select id="findPartTimeById" parameterType="int" resultType="com.tidc.part.time.monarch.vo.PartTimeVO">
+        SELECT
+               `partTime`.`id`,
+               `partTime`.`name`,
+               `province`.`name` AS 'province',
+               `city`.`name` AS 'city',
+               `area`.`name` AS 'area',
+               `partTime`.`detail_address` AS 'address',
+               `partTime`.`recruitment_count`,
+               `partTime`.`price`,
+               `calculation`.`name` AS 'calculationType',
+               `settlement`.`name` AS 'settlementType',
+               `user`.`name` AS 'enterprise_name',
+               `partTime`.`job_description`,
+               `partTime`.`contact_people`,
+               `partTime`.`contact_phone`,
+               `partTime`.`working_date_start`,
+               `partTime`.`working_date_end`,
+               `partTime`.`working_time_week`,
+               `partTime`.`working_time`,
+               `partTime`.`price_description`,
+               `partTimeType`.`name` AS 'partTimeType',
+               `partTimeSpecies`.`name` AS 'partTimeSpecies'
+        FROM
+             `city` province,
+             `city`,
+             `city` area,
+             `calculation_type` calculation,
+             `settlement_type` settlement,
+             `user_info` `user`,
+             `part_time_type` partTimeType,
+             `part_time_species` partTimeSpecies,
+             `part_time` partTime
+        WHERE
+            `partTime`.`id` = #{id}
+          AND `province`.`id` = `partTime`.`province_id`
+          AND `city`.`id` = `partTime`.`city_id`
+          AND `area`.`id` = `partTime`.`area_id`
+          AND `calculation`.`id` = `partTime`.`calculation_type_id`
+          AND `settlement`.`id` = `partTime`.`settlement_type_id`
+          AND `user`.`user_id` = `partTime`.`user_id`
+          AND `partTimeType`.`id` = `partTime`.`part_time_type_id`
+          AND `partTimeSpecies`.`id` = `partTime`.`part_time_species_id`
+    </select>
+
+    <!-- 添加兼职 -->
+    <insert id="addPartTime" parameterType="com.tidc.part.time.monarch.domain.PartTime">
+        INSERT INTO part_time (
+            NAME,
+            province_id,
+            city_id,
+            area_id,
+            detail_address,
+            recruitment_count,
+            price,
+            calculation_type_id,
+            settlement_type_id,
+            user_id,
+            job_description,
+            contact_people,
+            contact_phone,
+            working_date_start,
+            working_date_end,
+            working_time_week,
+            working_time,
+            price_description,
+            part_time_type_id,
+            part_time_species_id
+        )
+        VALUES
+        ( #{name}, #{provinceId}, #{cityId}, #{areaId}, #{detailAddress}, #{recruitmentCount}, #{price},
+          #{calculationTypeId},#{settlementTypeId},#{userId},#{jobDescription},#{contactPeople},#{contactPhone},
+          #{workingDateStart}, #{workingDateEnd}, #{workingTimeWeek}, #{workingTime}, #{priceDescription},
+          #{partTimeTypeId}, #{partTimeSpeciesId}
+        )
+    </insert>
+
+    <!-- 根据 id 删除一条数据 -->
+    <delete id="deletePartTimeById" parameterType="int">
+        delete from part_time where id = #{id}
+    </delete>
+
+    <!-- 条件搜索兼职 -->
+    <select id="selectPartTime" parameterType="com.tidc.part.time.monarch.domain.SelectPartTimeCondition" resultType="com.tidc.part.time.monarch.vo.PartTimeVO">
+        SELECT
+               pt.id id,
+               pt.NAME NAME,
+               pt.price price,
+               pt.recruitment_count recruitment_count,
+               c.NAME AS area,
+               ct.NAME AS calculation_type,
+               pts.NAME AS part_time_species,
+               ptt.NAME AS part_time_type,
+               st.NAME AS settlement_type
+        FROM
+             part_time pt,
+             city c,
+             calculation_type ct,
+             part_time_species pts,
+             part_time_type ptt,
+             settlement_type st
+        WHERE
+            pt.city_id = #{cityId}
+          AND (#{areaId} = 0 or pt.area_id = #{areaId})
+          AND (#{partTimeTypeId} = 0 or pt.part_time_type_id = #{partTimeTypeId})
+          AND (#{partTimeSpeciesId} = 0 or pt.part_time_species_id = #{partTimeSpeciesId})
+          AND (#{keyword} = '' or pt.name like #{keyword})
+          AND c.id = pt.area_id
+          AND ct.id = pt.calculation_type_id
+          AND pts.id = pt.part_time_species_id
+          AND ptt.id = pt.part_time_type_id
+          AND st.id = pt.settlement_type_id
+    </select>
+
+    <!-- 根据兼职id查询兼职名 -->
+    <select id="findPartTimeNameByPartTimeId" parameterType="int" resultType="String">
+        select name from part_time where id = #{partTimeId}
+    </select>
+
+    <!-- 获取相同城市的其他兼职 -->
+    <select id="listRandomDataByCityId" resultType="com.tidc.part.time.monarch.vo.PartTimeVO">
+        SELECT
+               `pt`.`id`,
+               `pt`.`name`,
+               `pt`.`price`,
+               `c`.`name` 'city',
+               `st`.`name` 'settlementType',
+               `ct`.`name` 'calculationType'
+        FROM
+             `part_time` pt,
+             `city` c,
+             `settlement_type` st,
+             `calculation_type` ct
+        WHERE
+            `pt`.`city_id` = #{cityId}
+          AND `pt`.`id` != #{partTimeId}
+          AND `c`.`id` = `pt`.`area_id`
+          AND `st`.`id` = `pt`.`settlement_type_id`
+          AND `ct`.`id` = `pt`.`calculation_type_id`
+    </select>
+</mapper>

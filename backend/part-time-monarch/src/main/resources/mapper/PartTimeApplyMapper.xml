@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tidc.part.time.monarch.mapper.PartTimeApplyMapper">
+
+    <insert id="addPartTimeApply" parameterType="com.tidc.part.time.monarch.domain.PartTimeApply">
+        INSERT INTO part_time_apply ( user_id, part_time_id, name, phone, create_time )
+        VALUES
+               (#{userId}, #{partTimeId}, #{name}, #{phone}, #{createTime})
+    </insert>
+
+</mapper>

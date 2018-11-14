@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tidc.part.time.monarch.mapper.UserInfoMapper">
+
+    <!-- 添加用户信息 -->
+    <insert id="addUserInfo" parameterType="com.tidc.part.time.monarch.domain.UserInfo">
+        INSERT INTO user_info ( NAME, user_id, role_id, email, city_id, created_at, updated_at, last_sign_in_at )
+        VALUES
+        (#{name}, #{userId}, #{roleId}, #{email}, #{cityId}, #{createdAt}, #{updatedAt}, #{lastSignInAt})
+    </insert>
+
+
+    <!-- 根据用户 Id 获取用户信息 -->
+    <select id="selectUserInfoByUserId" resultType="com.tidc.part.time.monarch.domain.UserInfo">
+        select * from user_info where user_id = #{userId}
+    </select>
+
+    <!-- 根据邮箱获取用户名 -->
+    <select id="selectUserInfoByEmail" resultType="String">
+        select username from user where username = #{email}
+    </select>
+
+    <!-- 根据兼职 id 获取用户邮箱 -->
+    <select id="findUserEmailByPartTimeId" resultType="String">
+        select ui.email from user_info ui, part_time pt where pt.id = #{partTimeId} and ui.user_id = pt.user_id
+    </select>
+</mapper>

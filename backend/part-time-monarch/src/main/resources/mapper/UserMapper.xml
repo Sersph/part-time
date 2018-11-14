@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tidc.part.time.monarch.mapper.UserMapper">
+
+    <!-- 根据用户名获取用户 id -->
+    <select id="selectUserIdByUsername" resultType="int">
+        select id from user where username = #{username}
+    </select>
+
+    <!-- 注册用户 -->
+    <insert id="addUser" parameterType="com.tidc.part.time.monarch.domain.User" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO user(username, password) VALUES (#{username},#{password})
+    </insert>
+
+</mapper>

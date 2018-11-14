@@ -1,6 +1,8 @@
 server:
   port: 8080
 spring:
+  profiles:
+    active: dev
   datasource:
     url: jdbc:mysql://39.105.96.239:3306/part_time_monarch?useSSL=false
     driver-class-name: com.mysql.jdbc.Driver
@@ -43,7 +45,7 @@ mybatis:
   type-aliases-package: com.tidc.parttimemonarch.mapper
   configuration:
     map-underscore-to-camel-case: true
-
+  mapper-locations: classpath:mapper/*.xml
 pagehelper:
   helperDialect: mysql
   reasonable: true
@@ -51,14 +53,9 @@ pagehelper:
   params: count=countSql
 
 
-logging:
-  level:
-    com.tidc.parttimemonarch.mapper: DEBUG
 
 swagger:
   show: true
-
-
 
 # 用户认证地址(自定义配置)
 ResourceServerConfiguration:
@@ -78,3 +75,7 @@ jasypt:
 email:
   util:
     email: 2675835744@qq.com
+
+
+logging:
+  config: classpath:logback-spring-dev.xml
