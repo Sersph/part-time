@@ -12,7 +12,7 @@ export default {
   personalSignIn(params) {
     return ajax(
       'POST',
-      `${config.API_ROOT}/account/personal/signIn`,
+      `${config.API_ROOT}/account/signIn`,
       params
     );
   },
@@ -26,7 +26,7 @@ export default {
   enterpriseSignIn(params) {
     return ajax(
       'POST',
-      `${config.API_ROOT}/account/personal/signIn`,
+      `${config.API_ROOT}/account/signIn`,
       params
     );
   },

@@ -1,6 +1,6 @@
 <template>
   <section class="part-time-apply-container">
-    <el-dialog title="轻松无责派单" :visible.sync="partTimeApplyContainerVisibleFlag">
+    <el-dialog :title="partTimeDetail.name" :visible.sync="partTimeApplyContainerVisibleFlag">
       <section class="complete-apply-container">
         <div class="alert">完善报名信息</div>
         <el-form ref="partTimeApplyForm" :rules="partTimeApplyFormRules" :model="partTimeApplyForm" label-width="100px">
@@ -21,11 +21,11 @@
           <el-form-item label="工作日期">
             <el-input :value="`${partTimeDetail.workingDateStart} 至 ${partTimeDetail.workingDateEnd}`" disabled></el-input>
           </el-form-item>
-          <el-form-item label="上班时间">
-            <el-input :value="`${partTimeDetail.workingTime}`" disabled></el-input>
-          </el-form-item>
           <el-form-item label="工作时间">
             <el-input :value="`${partTimeDetail.workingTimeWeek}`" disabled></el-input>
+          </el-form-item>
+          <el-form-item label="上班时间">
+            <el-input :value="`${partTimeDetail.workingTime}`" disabled></el-input>
           </el-form-item>
         </el-form>
       </section>
@@ -38,6 +38,9 @@
 </template>
 
 <script>
+import NProgress from 'nprogress';
+import api from '@/api';
+
 export default {
   name: 'PartTimeApply',
   data() {
@@ -53,8 +56,8 @@ export default {
           { min: 2, max: 20, message: '性名由2~20位字符组成', trigger: 'change' }
         ],
         phone: [
-          { required: true, message: '请输入电话号码', trigger: 'change' },
-          { pattern: /^1[3|4|5|7|8][0-9]\d{8}$/, message: '电话号码不正确', trigger: 'change' }
+          { required: true, message: '请输入手机号', trigger: 'change' },
+          { pattern: /^1[3|4|5|7|8][0-9]\d{8}$/, message: '手机号不正确', trigger: 'change' }
         ]
       }
     };
@@ -76,12 +79,34 @@ export default {
   },
   methods: {
     confirm() {
-      this.$refs['partTimeApplyForm'].validate((valid) => {
+      this.$refs['partTimeApplyForm'].validate(async valid => {
         if (valid) {
-          // 关闭区域选择框
-          this.partTimeApplyForm = false;
-          // 清空表单
-          this.$refs['partTimeApplyForm'].resetFields();
+          NProgress.start();
+          const result = await api.partTime.applyPartTime({
+            partTimeId: this.$route.params.id,
+            name: this.partTimeApplyForm.username,
+            phone: this.partTimeApplyForm.phone
+          });
+          NProgress.done();
+          if (result.code === 0) {
+            this.$notify({
+              message: '报名成功',
+              position: 'bottom-left',
+              duration: 3000,
+              showClose: false
+            });
+            // 关闭区域选择框
+            this.partTimeApplyContainerVisibleFlag = false;
+            // 清空表单
+            this.$refs['partTimeApplyForm'].resetFields();
+          } else {
+            this.$notify({
+              message: result.message,
+              position: 'bottom-left',
+              duration: 3000,
+              showClose: false
+            });
+          }
         }
       });
     }

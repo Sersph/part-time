@@ -42,7 +42,6 @@ export default {
     },
     height: {
       type: Number,
-      required: false,
       default: 360
     }
   },
@@ -84,7 +83,7 @@ export default {
   deactivated() {
     this.destroyTinymce();
   },
-  destroyed() {
+  componentWillUnmount() {
     this.destroyTinymce();
   },
   methods: {

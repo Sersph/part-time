@@ -1,5 +1,7 @@
 <template>
-  <section class="part-time-detail-container">
+  <section class="part-time-detail-container"
+           :class="{loading: loadingFlag}"
+  >
     <el-breadcrumb class="breadcrumb" separator="/">
       <el-breadcrumb-item>{{ partTimeDetail.city }}兼职</el-breadcrumb-item>
       <el-breadcrumb-item>{{ partTimeDetail.partTimeSpecies }}</el-breadcrumb-item>
@@ -68,12 +70,12 @@
                 <span>{{ partTimeDetail.workingDateStart }} 至 {{ partTimeDetail.workingDateEnd }}</span>
               </li>
               <li>
-                <span>上班时间：</span>
-                <span>{{ partTimeDetail.workingTime }}</span>
-              </li>
-              <li>
                 <span>工作时间：</span>
                 <span>{{ partTimeDetail.workingTimeWeek }}</span>
+              </li>
+              <li>
+                <span>上班时间：</span>
+                <span>{{ partTimeDetail.workingTime }}</span>
               </li>
               <li>
                 <span>工作描述：</span>
@@ -103,32 +105,24 @@
           </section>
           <section class="recommend-part-time-list">
             <h5>推荐职位</h5>
-            <ul>
-              <li>
-                <a href="javascript:void(0)">
-                  <p class="part-time-name">长期 摄影助理</p>
+            <ul
+              v-if="partTimeDetail.random"
+            >
+              <li
+                v-for="(partTime, index) in partTimeDetail.random"
+                :key="index"
+              >
+                <router-link :to="`/partTime/detail/${partTime.id}`">
+                  <p class="part-time-name">{{ partTime.name }}</p>
                   <p class="part-time-city">
-                    <span>福田</span>
-                    <span>月结</span>
+                    <span>{{ partTime.city }}</span>
+                    <span>{{ partTime.settlementType }}</span>
                   </p>
                   <p class="part-time-price">
-                    <span>20</span>
-                    <span>元/天</span>
+                    <span>{{ partTime.price }}</span>
+                    <span>元/{{ partTime.calculationType }}</span>
                   </p>
-                </a>
-              </li>
-              <li>
-                <a href="javascript:void(0)">
-                  <p class="part-time-name">长期 摄影助理</p>
-                  <p class="part-time-city">
-                    <span>福田</span>
-                    <span>月结</span>
-                  </p>
-                  <p class="part-time-price">
-                    <span>20</span>
-                    <span>元/天</span>
-                  </p>
-                </a>
+                </router-link>
               </li>
             </ul>
           </section>
@@ -140,41 +134,76 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import NProgress from 'nprogress';
 import api from '@/api';
 import PartTimeApply from '@/components/part-time/PartTimeApply';
 
 export default {
   name: 'PartTimeDetail',
-  data() {
-    return {
-      partTimeDetail: {}
-    };
-  },
   components: {
     PartTimeApply
   },
-  async beforeCreate() {
-    document.documentElement.scrollTop = 0;
-    // 获取兼职详情
-    const { id } = this.$route.params;
-    NProgress.start();
-    const result = await api.partTime.getPartTimeDetail(id);
-    NProgress.done();
-    // 处理数据格式
-    // 处理工作时间
-    const weekList = ['', '周一', '周二', '周三', '周四', '周五', '周六', '周日'];
-    // 1,3,2
-    // 1.排序[1,2,3] 2.获取对应值[周一,周二,周三] 3.拼接字符串[周一、周二、周三]
-    result.workingTimeWeek = result.workingTimeWeek.split(',').sort().map(week => {
-      return `${weekList[week]}`;
-    }).join('、');
-    // 处理上班时间
-    result.workingTime = result.workingTime.split('-').join(' - ');
-    this.partTimeDetail = result;
+  data() {
+    return {
+      loadingFlag: false,
+      partTimeDetail: {}
+    };
+  },
+  computed: {
+    ...mapState('account', [
+      'accountInfo'
+    ])
+  },
+  mounted() {
+    this.refreshPartTimeDetailData(this.$route.params.id);
+  },
+  beforeRouteUpdate(to, from, next) {
+    this.refreshPartTimeDetailData(to.params.id);
+    next();
   },
   methods: {
+    async refreshPartTimeDetailData(id) {
+      document.documentElement.scrollTop = 0;
+      // 获取兼职详情
+      this.loadingFlag = true;
+      NProgress.start();
+      const result = await api.partTime.getPartTimeDetail(id);
+      NProgress.done();
+      this.loadingFlag = false;
+      // 处理数据格式
+      // 处理工作时间
+      const weekList = ['', '周一', '周二', '周三', '周四', '周五', '周六', '周日'];
+      // 1,3,2
+      // 1.排序[1,2,3] 2.获取对应值[周一,周二,周三] 3.拼接字符串[周一、周二、周三]
+      result.workingTimeWeek = result.workingTimeWeek.split(',').sort().map(week => {
+        return `${weekList[week]}`;
+      }).join('、');
+      // 处理上班时间
+      result.workingTime = result.workingTime.split('-').join(' ~ ');
+      this.partTimeDetail = result;
+    },
     toPartTimeApply() {
+      // 判断是否登陆
+      if (!this.accountInfo.id) {
+        // 登陆成功逻辑
+        this.$notify({
+          message: '请先登录',
+          position: 'bottom-left',
+          duration: 3000,
+          showClose: false
+        });
+        this.$router.push('/account/signIn?type=personal');
+      } else if (this.accountInfo.roleId === 2) {
+        // 登陆成功逻辑
+        this.$notify({
+          message: '企业用户无法报名参加, 请切换至个人用户',
+          position: 'bottom-left',
+          duration: 3000,
+          showClose: false
+        });
+        return;
+      }
       this.$refs['partTimeApply'].partTimeApplyContainerVisibleFlag = true;
     }
   }
@@ -182,9 +211,13 @@ export default {
 </script>
 
 <style lang="scss">
+  .loading {
+    opacity: .5;
+  }
   .part-time-detail-container {
     max-width: 1100px !important;
-    min-width: 1000px!important;
+    min-width: 1000px !important;
+    transition: opacity .1s;
     color: #666;
     p {
       margin: 0;
@@ -276,6 +309,7 @@ export default {
     }
     .part-time-detail-right {
       margin-left: 20px;
+      padding-bottom: 30px;
       .enterprise {
         padding: 20px;
         box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);

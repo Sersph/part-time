@@ -22,6 +22,7 @@ export default {
   },
   data() {
     return {
+      firstLoad: true,
       transitionName: '',
       complete: false
     };
@@ -35,7 +36,12 @@ export default {
     // 深度监听 route 判断登陆权限, 防止路由器后退操作
     $route: {
       handler() {
-        this.checkSignIn(this.$route);
+        // 第一次加载不检测交给 created 方法去检测
+        if (this.firstLoad) {
+          this.firstLoad = false;
+        } else {
+          this.checkSignIn(this.$route);
+        }
       }
     }
   },
@@ -152,6 +158,10 @@ export default {
     opacity: 0;
   }
 
+  .v-modal {
+    opacity: .3 !important;
+  }
+
   .el-form-item.is-success .el-input__inner, .el-form-item.is-success .el-input__inner:focus, .el-form-item.is-success .el-textarea__inner, .el-form-item.is-success .el-textarea__inner:focus {
     border-color: #409eff !important;
   }
@@ -188,6 +198,7 @@ export default {
 
   // nprogress
   #nprogress .bar {
+    z-index: 99999 !important;
     height: 5px !important;
     background: #0425c0 !important;;
     box-shadow: 0 0 10px rgba(17, 255, 242, 0.7) !important;;

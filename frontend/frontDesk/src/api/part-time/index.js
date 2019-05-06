@@ -29,5 +29,12 @@ export default {
       `${config.API_ROOT}/partTime/getPartTime/${id}`,
       {}
     );
+  },
+  applyPartTime(params) {
+    return ajax(
+      'POST',
+      `${config.API_ROOT}/partTime/applyPartTime`,
+      params
+    );
   }
 };
